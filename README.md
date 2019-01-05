@@ -44,15 +44,19 @@ The buildbot is accessible on http://localhost:8010/
 ### Cleanup everything:
 
 Shutdown:
+
     sudo docker-compose down
 
 Remove all containers:
+
     sudo docker rm $(sudo docker ps -aq)
 
 Remove all images:
+
     sudo docker rmi $(sudo docker images -q)
 
 Remove volume:
+
     sudo docker volume rm $(sudo docker volume ls -qf dangling=true)
 
 
