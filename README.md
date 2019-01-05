@@ -1,3 +1,6 @@
+:strawberry: Strawberry Buildbot
+=======================
+
 This repository contains Strawberry's buildbot instance running on http://buildbot.strawbs.net/
 It contains the configration and Dockerfiles to build the master, volumes and workers.
 
@@ -6,19 +9,19 @@ Currently the master runs with Python 3, but all the workers use Python 2, I hav
 
 Containers are built, started and stopped with docker-compose.
 
-Create the configuration:
+### Create the configuration:
 
   ./update_config.py
 
 
-Build the containers:
+### Build the containers:
 
   sudo docker-compose build --no-cache --pull
 
 (This may take hours depending on your machine).
 
 
-Start buildbot:
+### Start buildbot:
 
   docker-compose up -d
 
@@ -26,18 +29,18 @@ Start buildbot:
 The buildbot is accessible on http://localhost:8010/
 
 
-View the log:
+### View the log:
 
   docker-compose run --entrypoint cat master /persistent-data/master/twistd.log
 
 
-Rebuild and restart worker to update a distros packages:
+### Rebuild and restart worker to update a distros packages:
 
   docker-compose build --no-cache --pull worker-opensuse-tumbleweed
   docker-compose up -d worker-opensuse-tumbleweed
 
 
-Cleanup everything:
+### Cleanup everything:
 
 Shutdown:
   sudo docker-compose down
