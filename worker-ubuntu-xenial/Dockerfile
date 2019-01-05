@@ -1,0 +1,27 @@
+from ubuntu:xenial
+
+run apt-get update
+run apt-get install -y \
+                    python-pip python-dev git make cmake gcc fakeroot dpkg-dev wget curl \
+                    libglib2.0-dev libdbus-1-dev libboost-dev libprotobuf-dev protobuf-compiler libsqlite3-dev sqlite3 \
+                    libasound2-dev libpulse-dev libxine2-dev libvlc-dev libphonon4qt5-dev \
+                    qt5-default qt5-qmake qtbase5-dev qtbase5-dev-tools qtbase5-private-dev \
+                    libqt5core5a libqt5gui5 libqt5widgets5 libqt5concurrent5 libqt5network5 libqt5sql5 \
+                    libqt5x11extras5-dev libqt5dbus5 \
+                    gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
+                    gstreamer1.0-plugins-bad gstreamer1.0-plugins-bad-faad gstreamer1.0-plugins-ugly \
+                    gstreamer1.0-alsa gstreamer1.0-pulseaudio gstreamer1.0-libav \
+                    libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev \
+                    libchromaprint-dev \
+                    libcdio-dev libmtp-dev libgpod-dev libimobiledevice-dev libplist-dev libusbmuxd-dev
+
+run pip install --upgrade pip
+run pip install buildbot_worker==1.6.0
+
+run wget https://files.jkvinge.net/packages/strawberry/libdeezer.tar.bz2
+run tar -xjf libdeezer.tar.bz2 -C /
+
+run echo "ubuntu-xenial" > /worker-name
+run useradd -r -m -s /bin/false buildbot
+
+cmd ["/usr/bin/python", "/config/worker/start.py"]

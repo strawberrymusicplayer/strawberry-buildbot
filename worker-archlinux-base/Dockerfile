@@ -1,0 +1,19 @@
+from base/archlinux
+
+run pacman -Sy --noconfirm
+run pacman -S --noconfirm \
+                    git make cmake gcc fakeroot sudo pkgconf python2-pip desktop-file-utils hicolor-icon-theme \
+                    udisks2 dbus sqlite3 alsa-lib pulseaudio boost protobuf \
+                    qt5-base qt5-x11extras \
+                    gst-plugins-base gst-plugins-good xine-lib vlc phonon-qt5 \
+                    taglib chromaprint \
+                    libcdio libmtp libgpod libusbmuxd libplist libimobiledevice
+
+run pip2 install --upgrade pip
+run pip2 install buildbot_worker==1.6.0
+
+run echo "archlinux-base" > /worker-name
+run echo "PACKAGER=\"Jonas Kvinge <jonas@strawbs.net>\"" >>/etc/makepkg.conf
+run useradd -r -m -s /bin/false buildbot
+
+cmd ["/usr/bin/python2", "/config/worker/start.py"]

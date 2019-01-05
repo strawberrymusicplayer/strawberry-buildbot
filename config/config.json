@@ -1,0 +1,12 @@
+{
+  "linux": {
+    "opensuse": ["leap", "tumbleweed"],
+    "fedora": ["28", "29"],
+    "ubuntu": ["bionic", "cosmic"],
+    "debian": ["stretch", "buster"],
+    "archlinux": ["base"]
+  },
+ "special_workers": [
+    "mingw"
+  ]
+}

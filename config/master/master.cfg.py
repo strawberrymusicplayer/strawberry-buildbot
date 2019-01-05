@@ -1,0 +1,164 @@
+# Strawberry Buildbot
+# -*- python -*-
+# ex: set syntax=python:
+
+import functools
+import imp
+import json
+import os
+import pprint
+import re
+
+from buildbot import worker
+from buildbot import locks
+from buildbot import util
+from buildbot.plugins import util
+from buildbot.schedulers import basic
+from buildbot.schedulers import filter
+from buildbot.schedulers import forcesched
+from buildbot.schedulers import timed
+
+from strawberry import builders
+
+LINUX_FACTORIES = {
+  'opensuse': functools.partial(builders.MakeRPMBuilder, 'opensuse'),
+  'fedora': functools.partial(builders.MakeRPMBuilder, 'fedora'),
+  'debian': functools.partial(builders.MakeDebBuilder, 'debian'),
+  'ubuntu': functools.partial(builders.MakeDebBuilder, 'ubuntu'),
+  'archlinux': functools.partial(builders.MakePacmanBuilder, 'archlinux'),
+}
+
+CONFIG = json.load(open('/config/config.json'))
+PASSWORDS = json.load(open('/config/passwords.json'))
+
+class StrawberryBuildbot(object):
+  def __init__(self):
+    self.workers = []
+    self.builders = []
+    self.auto_builder_names = []
+    self.local_builder_lock = locks.MasterLock("local", maxCount=2)
+    self.deps_lock = locks.WorkerLock("deps", maxCount = 1)
+
+    # Add Linux workers and builders.
+    for linux_distro, versions in CONFIG['linux'].items():
+      factory = LINUX_FACTORIES[linux_distro]
+      for version in versions:
+        self._AddBuilderAndWorker(linux_distro, version, factory)
+
+    # Add special workers.
+    for name in CONFIG['special_workers']:
+      self._AddWorker(name)
+
+    # Source.
+    self._AddBuilder(name='Source', worker='opensuse-tumbleweed', build_factory=builders.MakeSourceBuilder())
+
+    # AppImage.
+    self._AddBuilder(name='AppImage', worker='opensuse-tumbleweed', build_factory=builders.MakeAppImageBuilder(name=""))
+
+    # AppImage with Deezer
+    # libdeezer links to curl symbols that are Debian/Ubuntu specialized and don't work on newer distros. Needs Xenial to compile.
+    #self._AddBuilder(name='AppImage-Deezer', worker='ubuntu-xenial-64', build_factory=builders.MakeAppImageBuilder(name="-Deezer"))
+
+    # MXE.
+    self._AddBuilder(name='MXE', worker='mingw', build_factory=builders.MakeMXEBuilder(), auto=False, deps_lock='exclusive')
+
+    # Windows.
+    self._AddBuilder(name='Windows Release x86', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=False, is_64=False), deps_lock='counting')
+    self._AddBuilder(name='Windows Release x64', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=False, is_64=True), deps_lock='counting')
+    self._AddBuilder(name='Windows Debug x86', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=False), deps_lock='counting')
+    self._AddBuilder(name='Windows Debug x64', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=True), deps_lock='counting')
+
+
+  def _AddBuilderAndWorker(self, distro, version, factory):
+    worker = '%s-%s' % (distro, version)
+    self._AddBuilder(
+        name='%s %s' % (distro.title(), version.title()),
+        worker=worker,
+        build_factory=factory(version),
+    )
+    self._AddWorker(worker)
+
+  def _AddBuilder(self, name, worker, build_factory, auto=True, local_lock=True, deps_lock=None):
+    locks = []
+    if local_lock:
+      locks.append(self.local_builder_lock.access('counting'))
+    if deps_lock is not None:
+      locks.append(self.deps_lock.access(deps_lock))
+
+    self.builders.append({
+        'name':      str(name),
+        'builddir':  str(re.sub(r'[^a-z0-9_-]', '-', name.lower())),
+        'workername': str(worker),
+        'factory':   build_factory,
+        'locks':     locks,
+    })
+
+    if auto:
+      self.auto_builder_names.append(name)
+
+  def _AddWorker(self, name):
+    self.workers.append(worker.Worker(str(name), PASSWORDS[name]))
+
+  def Config(self):
+    return {
+      'projectName':  "Strawberry",
+      'projectURL':   "http://www.strawbs.org/",
+      'buildbotURL':  "http://buildbot.strawbs.net/",
+      'protocols': {
+	  "pb": {
+	    "port": "tcp:9989:interface=0.0.0.0"
+	  }
+      },
+      'workers': self.workers,
+      'builders': self.builders,
+      'change_source': [
+        builders.GitPoller("strawberry", "master"),
+        builders.GitPoller("strawberry-mxe", "master"),
+      ],
+      'www': {
+        'port': 8010,
+        'authz': util.Authz(
+            allowRules=[util.AnyControlEndpointMatcher(role="admins", defaultDeny=True)],
+            roleMatchers=[
+               util.RolesFromEmails(admins=["jonas@jkvinge.net"]),
+               util.RolesFromOwner(role="owner"),
+                 ]
+            ),
+        'auth': util.GitHubAuth("x", "x"),
+        'plugins': {
+          'waterfall_view': True,
+          'console_view': True,
+          'grid_view': True,
+          }
+      },
+      'schedulers': [
+        basic.SingleBranchScheduler(
+          name="automatic",
+          change_filter=filter.ChangeFilter(project="strawberry", branch="master"),
+          treeStableTimer=2*60,
+          builderNames=self.auto_builder_names,
+        ),
+        basic.SingleBranchScheduler(
+          name="mxe",
+          change_filter=filter.ChangeFilter(project="strawberry-mxe", branch="master"),
+          treeStableTimer=2*60,
+          builderNames=[
+            'MXE',
+          ],
+        ),
+        forcesched.ForceScheduler(
+          name="force",
+          builderNames=[x['name'] for x in self.builders],
+          buttonName="Start Custom Build",
+        ),
+        #timed.Nightly(
+        #  name="nightly",
+        #  minute=0,
+        #  branch="master",
+        #  builderNames=[x['name'] for x in self.builders],
+        #),
+      ],
+    }
+
+BuildmasterConfig = StrawberryBuildbot().Config()
+pprint.pprint(BuildmasterConfig)
