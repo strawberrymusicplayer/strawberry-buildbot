@@ -2,7 +2,7 @@
   "linux": {
     "opensuse": ["leap", "tumbleweed"],
     "fedora": ["28", "29"],
-    "ubuntu": ["bionic", "cosmic"],
+    "ubuntu": ["bionic", "cosmic", "xenial"],
     "debian": ["stretch", "buster"],
     "archlinux": ["base"]
   },
