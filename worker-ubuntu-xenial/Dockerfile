@@ -18,8 +18,8 @@ run apt-get install -y \
 run pip install --upgrade pip
 run pip install buildbot_worker==1.6.0
 
-run wget https://files.jkvinge.net/packages/strawberry/libdeezer.tar.bz2
-run tar -xjf libdeezer.tar.bz2 -C /
+#run wget https://files.jkvinge.net/packages/strawberry/libdeezer.tar.bz2
+#run tar -xjf libdeezer.tar.bz2 -C /
 
 run echo "ubuntu-xenial" > /worker-name
 run useradd -r -m -s /bin/false buildbot
