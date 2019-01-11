@@ -24,7 +24,7 @@ Containers are built, started and stopped with docker-compose.
 
 ### Start buildbot:
 
-    docker-compose up -d
+    sudo docker-compose up -d
 
 
 The buildbot is accessible on http://localhost:8010/
@@ -32,13 +32,13 @@ The buildbot is accessible on http://localhost:8010/
 
 ### View the log:
 
-    docker-compose run --entrypoint cat master /persistent-data/master/twistd.log
+    sudo docker-compose run --entrypoint cat master /persistent-data/master/twistd.log
 
 
 ### Rebuild and restart worker to update a distros packages:
 
-    docker-compose build --no-cache --pull worker-opensuse-tumbleweed
-    docker-compose up -d worker-opensuse-tumbleweed
+    sudo docker-compose build --no-cache --pull worker-opensuse-tumbleweed
+    sudo docker-compose up -d worker-opensuse-tumbleweed
 
 
 ### Cleanup everything:
