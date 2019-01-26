@@ -30,6 +30,7 @@ LINUX_FACTORIES = {
 
 CONFIG = json.load(open('/config/config.json'))
 PASSWORDS = json.load(open('/config/passwords.json'))
+GITHUB_AUTH = json.load(open('/config/github-auth.json'))
 
 class StrawberryBuildbot(object):
   def __init__(self):
@@ -124,7 +125,7 @@ class StrawberryBuildbot(object):
                util.RolesFromOwner(role="owner"),
                  ]
             ),
-        'auth': util.GitHubAuth("x", "x"),
+        'auth': util.GitHubAuth(GITHUB_AUTH["clientid"], GITHUB_AUTH["clientsecret"]),
         'plugins': {
           'waterfall_view': True,
           'console_view': True,
