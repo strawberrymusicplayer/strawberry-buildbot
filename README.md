@@ -5,8 +5,6 @@ This repository contains Strawberry's buildbot instance running on http://buildb
 
 It contains the configration and Dockerfiles to build the master, volumes and workers.
 
-Currently the master runs with Python 3, but all the workers use Python 2, I have not figured out how to fix the workers for Python 3.
-
 
 Containers are built, started and stopped with docker-compose.
 

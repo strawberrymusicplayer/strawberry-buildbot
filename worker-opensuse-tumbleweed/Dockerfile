@@ -1,10 +1,10 @@
-from opensuse:tumbleweed
+from opensuse/tumbleweed
 
 run zypper --non-interactive --gpg-auto-import-keys ref
 run zypper --non-interactive --gpg-auto-import-keys dup -l -y
 
 run zypper --non-interactive --gpg-auto-import-keys install \
-    lsb-release python-base python-devel python2-pip \
+    lsb-release python3-base python3-devel python3-pip \
     git tar rpm-build rpmdevtools make cmake gcc gcc-c++ pkg-config \
     desktop-file-utils update-desktop-files hicolor-icon-theme appstream-glib AppStream \
     fuse libfuse2 \
@@ -15,12 +15,12 @@ run zypper --non-interactive --gpg-auto-import-keys install \
     libqt5-qtx11extras-devel libqt5-qtbase-common-devel libQt5Sql5-sqlite libqt5-qtwayland \
     libcdio-devel libgpod-devel libplist-devel libmtp-devel libusbmuxd-devel libchromaprint-devel
 
-run pip install --upgrade pip
-run pip install buildbot_worker==1.6.0
+run pip3 install --upgrade pip
+run pip3 install buildbot_worker==1.6.0
 
 run echo "opensuse-tumbleweed" > /worker-name
 run useradd -r -m -s /bin/false buildbot
 
 run mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
     chown buildbot /home/buildbot/rpmbuild/{,BUILD,RPMS,SOURCES,SPECS,SRPMS}
-cmd ["/usr/bin/python", "/config/worker/start.py"]
+cmd ["/usr/bin/python3", "/config/worker/start.py"]

@@ -2,7 +2,7 @@ from ubuntu:cosmic
 
 run apt-get update
 run apt-get install -y \
-                    python-pip python-dev git make cmake gcc fakeroot dpkg-dev libglib2.0-dev libdbus-1-dev \
+                    python3-pip python3-dev git make cmake gcc fakeroot dpkg-dev libglib2.0-dev libdbus-1-dev \
                     libboost-dev libprotobuf-dev protobuf-compiler libsqlite3-dev sqlite3 \
                     libasound2-dev libpulse-dev libxine2-dev libvlc-dev libphonon4qt5-dev \
                     qtbase5-dev qtbase5-dev-tools qtbase5-private-dev \
@@ -12,10 +12,10 @@ run apt-get install -y \
                     libchromaprint-dev \
                     libcdio-dev libmtp-dev libgpod-dev libimobiledevice-dev libplist-dev libusbmuxd-dev
 
-run pip install --upgrade pip
-run pip install buildbot_worker==1.6.0
+run pip3 install --upgrade pip
+run pip3 install buildbot_worker==1.6.0
 
 run echo "ubuntu-cosmic" > /worker-name
 run useradd -r -m -s /bin/false buildbot
 
-cmd ["/usr/bin/python", "/config/worker/start.py"]
+cmd ["/usr/bin/python3", "/config/worker/start.py"]

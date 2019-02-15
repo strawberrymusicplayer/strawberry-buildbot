@@ -6,7 +6,7 @@ run zypper --non-interactive --gpg-auto-import-keys ref
 run zypper --non-interactive --gpg-auto-import-keys up -l -y
 
 run zypper --non-interactive --gpg-auto-import-keys install \
-    lsb-release python-base python-devel python2-pip \
+    lsb-release python3-base python3-devel python3-pip \
     git tar rpm-build rpmdevtools make cmake gcc gcc-c++  pkg-config desktop-file-utils update-desktop-files appstream-glib hicolor-icon-theme \
     glibc-devel glib2-devel glib2-tools dbus-1-devel alsa-devel libpulse-devel libnotify-devel \
     boost-devel protobuf-devel sqlite3-devel taglib-devel \
@@ -17,12 +17,12 @@ run zypper --non-interactive --gpg-auto-import-keys install \
 
 run zypper --non-interactive --gpg-auto-import-keys dup --from repo-building
 
-run pip install --upgrade pip
-run pip install buildbot_worker==1.6.0
+run pip3 install --upgrade pip
+run pip3 install buildbot_worker==1.6.0
 
 run echo "opensuse-leap" > /worker-name
 run useradd -r -m -s /bin/false buildbot
 
 run mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
     chown buildbot /home/buildbot/rpmbuild/{,BUILD,RPMS,SOURCES,SPECS,SRPMS}
-cmd ["/usr/bin/python", "/config/worker/start.py"]
+cmd ["/usr/bin/python3", "/config/worker/start.py"]
