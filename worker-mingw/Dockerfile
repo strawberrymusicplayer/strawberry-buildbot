@@ -8,7 +8,7 @@ run zypper --non-interactive --gpg-auto-import-keys dup -l -y
 run zypper --non-interactive --gpg-auto-import-keys up -l -y
 
 run zypper --non-interactive --gpg-auto-import-keys install \
-    python3-base python3-devel python3-pip \
+    python-base python-devel python3-base python3-devel python3-pip \
     which wget patch tar gperf unzip p7zip gettext-tools gtk-doc \
     git make cmake libtool gcc-c++ pkg-config autoconf automake intltool ruby scons bison flex  \
     gdk-pixbuf-devel \
