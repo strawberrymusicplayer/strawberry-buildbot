@@ -11,7 +11,7 @@ run pacman -S --noconfirm \
                     libcdio libmtp libgpod libusbmuxd libplist libimobiledevice
 
 run pip3 install --upgrade pip
-run pip3 install buildbot_worker==1.8.1
+run pip3 install buildbot_worker==2.0.1
 
 run echo "archlinux-base" > /worker-name
 run echo "PACKAGER=\"Jonas Kvinge <jonas@strawbs.net>\"" >>/etc/makepkg.conf
