@@ -18,7 +18,7 @@ run zypper --non-interactive --gpg-auto-import-keys install \
 run zypper --non-interactive --gpg-auto-import-keys dup --from repo-building
 
 run pip3 install --upgrade pip
-run pip3 install buildbot_worker==1.6.0
+run pip3 install buildbot_worker==1.8.1
 
 run echo "opensuse-leap" > /worker-name
 run useradd -r -m -s /bin/false buildbot
