@@ -85,10 +85,10 @@ def MakeSourceBuilder():
 
   f.addStep(
     shell.ShellCommand(
-      name="rm -rf *",
-      workdir="source/build",
+      name="rm -rf build",
+      workdir="source",
       haltOnFailure=True,
-      command=["rm", "-rf", "*"]
+      command=["rm", "-rf", "build"]
     )
   )
 
@@ -145,10 +145,10 @@ def MakeRPMBuilder(distro, version):
   )
   f.addStep(
     shell.ShellCommand(
-      name="rm -rf *",
-      workdir="source/build",
+      name="rm -rf build",
+      workdir="source",
       haltOnFailure=True,
-      command=["rm", "-rf", "*"]
+      command=["rm", "-rf", "build"]
     )
   )
   f.addStep(
@@ -223,10 +223,10 @@ def MakeDebBuilder(distro, version):
 
   f.addStep(
     shell.ShellCommand(
-      name="rm -rf *",
-      workdir="source/build",
+      name="rm -rf build",
+      workdir="source",
       haltOnFailure=True,
-      command=["rm", "-rf", "*"]
+      command=["rm", "-rf", "build"]
     )
   )
 
@@ -284,10 +284,10 @@ def MakePacmanBuilder(distro, version):
 
   f.addStep(
     shell.ShellCommand(
-      name="rm -rf *",
-      workdir="source/build",
+      name="rm -rf build",
+      workdir="source",
       haltOnFailure=True,
-      command=["rm", "-rf", "*"]
+      command=["rm", "-rf", "build"]
     )
   )
 
@@ -341,14 +341,14 @@ def MakeAppImageBuilder(name):
   f = factory.BuildFactory()
   f.addStep(git.Git(**GitArgs("strawberry", "master")))
 
-  f.addStep(
-    shell.ShellCommand(
-      name="rm",
-      workdir="source/build",
-      haltOnFailure=True,
-      command=["rm", "-rf", "*"]
-    )
-  )
+  #f.addStep(
+  #  shell.ShellCommand(
+  #    name="rm -rf build",
+  #    workdir="source",
+  #    haltOnFailure=True,
+  #    command=["rm", "-rf", "build"]
+  #  )
+  #)
 
   f.addStep(
     shell.ShellCommand(
@@ -387,6 +387,38 @@ def MakeAppImageBuilder(name):
   )
   f.addStep(
     shell.ShellCommand(
+      name="Remove screenshot from appdata file",
+      workdir="source/build",
+      command=["sed", "-i", '/.*caption.*/d', "./AppDir/usr/share/metainfo/strawberry.appdata.xml"],
+      haltOnFailure=True,
+    )
+  )
+  f.addStep(
+    shell.ShellCommand(
+      name="Remove screenshot from appdata file",
+      workdir="source/build",
+      command=["sed", "-i", '/.*screenshot.*/d', "./AppDir/usr/share/metainfo/strawberry.appdata.xml"],
+      haltOnFailure=True,
+    )
+  )
+  f.addStep(
+    shell.ShellCommand(
+      name="Change appdata filename",
+      workdir="source/build",
+      haltOnFailure=True,
+      command=["mv", "./AppDir/usr/share/metainfo/strawberry.appdata.xml", "./AppDir/usr/share/metainfo/org.strawbs.strawberry.appdata.xml"]
+    )
+  )
+  f.addStep(
+    shell.ShellCommand(
+      name="Change desktop filename",
+      workdir="source/build",
+      haltOnFailure=True,
+      command=["mv", "./AppDir/usr/share/applications/strawberry.desktop", "./AppDir/usr/share/applications/org.strawbs.strawberry.desktop"]
+    )
+  )
+  f.addStep(
+    shell.ShellCommand(
       name="curl linuxdeploy-x86_64.AppImage",
       workdir="source/build",
       haltOnFailure=True,
@@ -415,14 +447,6 @@ def MakeAppImageBuilder(name):
       workdir="source/build",
       haltOnFailure=True,
       command="chmod +x linuxdeploy*.AppImage"
-    )
-  )
-  f.addStep(
-    shell.ShellCommand(
-      name="rm strawberry.appdata.xml",
-      workdir="source/build",
-      haltOnFailure=True,
-      command=["rm", "-f", "./AppDir/usr/share/metainfo/strawberry.appdata.xml"]
     )
   )
   f.addStep(
@@ -480,31 +504,8 @@ def MakeMXEBuilder():
   f.addStep(git.Git(**GitArgs("strawberry-mxe", "master")))
 
   #f.addStep(
-  #    shell.ShellCommand(
-  #        name="remove strawberry.mk",
-  #        workdir="source",
-  #        command="rm -f src/strawberry.mk"))
-
-  #f.addStep(
   #  shell.ShellCommand(
-  #    name="add patch to remove icon from resourcefile",
-  #    workdir="source/src",
-  #    command=[
-  #      "cp",
-  #      "/config/dist/strawberry-1-fixes.patch",
-  #      "."
-  #    ],
-  #    haltOnFailure=True,
-  #  )
-  #)
-
-  f.addStep(
-    shell.ShellCommand(
-      name="clean", workdir="source", command=["make", "clean"]))
-
-  #f.addStep(
-    #shell.ShellCommand(
-      #name="checkout", workdir="source", command=["git", "checkout", "c5c0196"]))
+  #    name="clean", workdir="source", command=["make", "clean"]))
 
   f.addStep(
     shell.Compile(
@@ -515,20 +516,6 @@ def MakeMXEBuilder():
       haltOnFailure=True,
     )
   )
-
-  #f.addStep(steps.SetPropertyFromCommand(
-  #  name="get output filename",
-  #  command=[
-  #    "sh",
-  #    "-c",
-  #    "ls -dt " + "usr/i686-w64-mingw32.shared/apps/strawberry/bin/StrawberrySetup-*.exe" + " | head -n 1"
-  #  ],
-  #  workdir="source",
-  #  property="output-filepath",
-  #))
-  #f.addStep(steps.SetProperties(properties=get_base_filename))
-
-  #f.addStep(UploadPackage("windows"))
 
   f.addStep(
       shell.ShellCommand(
@@ -590,7 +577,6 @@ def MakeWindowsBuilder(is_debug, is_64):
 
   strip_command = "/persistent-data/mingw/mxe/source/usr/bin/" + mingw32_name + "-strip"
   nsi_filename = ("strawberry-debug-x64.nsi" if is_debug and is_64 else ("strawberry-debug-x86.nsi" if is_debug else ("strawberry-x64.nsi" if is_64 else "strawberry-x86.nsi")))
-  #releasename = ("Debug" if is_debug else "Release")
 
   nsi_files = [
     "strawberry-x86.nsi",
@@ -677,14 +663,14 @@ def MakeWindowsBuilder(is_debug, is_64):
   f = factory.BuildFactory()
   f.addStep(git.Git(**GitArgs("strawberry", "master")))
 
-  f.addStep(
-    shell.ShellCommand(
-      name="rm -rf *",
-      workdir="source/build",
-      haltOnFailure=True,
-      command=["rm", "-rf", "*"],
-    )
-  )
+  #f.addStep(
+  #  shell.ShellCommand(
+  #    name="rm -rf build",
+  #    workdir="source",
+  #    haltOnFailure=True,
+  #    command=["rm", "-rf", "build"],
+  #  )
+  #)
   f.addStep(
     shell.ShellCommand(
       name="cmake",
@@ -692,14 +678,6 @@ def MakeWindowsBuilder(is_debug, is_64):
       env=env,
       haltOnFailure=True,
       command=cmake_cmd,
-    )
-  )
-  f.addStep(
-    shell.ShellCommand(
-      name="make clean",
-      command=["make", "clean"],
-      workdir="source/build",
-      haltOnFailure=False,
     )
   )
   f.addStep(
@@ -840,15 +818,6 @@ def MakeWindowsBuilder(is_debug, is_64):
       ]
     )
   )
-
-  #f.addStep(
-  #  shell.ShellCommand(
-  #    name="set setup filename in strawberry.nsi",
-  #    workdir="source/build",
-  #    command="sed -i 's/OutFile .*.exe.*/OutFile \"\${PRODUCT_NAME}Setup-\${PRODUCT_DISPLAY_VERSION}-" + releasename + ".exe\"/g' #strawberry*.nsi",
-  #    haltOnFailure=True,
-  #  )
-  #)
 
   f.addStep(
     shell.ShellCommand(
