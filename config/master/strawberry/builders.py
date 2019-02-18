@@ -427,14 +427,6 @@ def MakeAppImageBuilder(name):
   )
   f.addStep(
     shell.ShellCommand(
-      name="reduce MimeType length in strawberry.desktop",
-      workdir="source/build",
-      command="sed -i 's/MimeType=.*/MimeType=x-content\/audio-player;application\/ogg;audio\/flac;audio\/ogg;audio\/x-wav;audio\/x-flac;/g' ./AppDir/usr/share/applications/strawberry.desktop",
-      haltOnFailure=True,
-    )
-  )
-  f.addStep(
-    shell.ShellCommand(
       name="linuxdeploy --appimage-extract",
       workdir="source/build",
       haltOnFailure=True,
