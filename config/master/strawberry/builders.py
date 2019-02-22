@@ -403,22 +403,6 @@ def MakeAppImageBuilder(name):
   )
   f.addStep(
     shell.ShellCommand(
-      name="Change appdata filename",
-      workdir="source/build",
-      haltOnFailure=True,
-      command=["mv", "./AppDir/usr/share/metainfo/strawberry.appdata.xml", "./AppDir/usr/share/metainfo/org.strawbs.strawberry.appdata.xml"]
-    )
-  )
-  f.addStep(
-    shell.ShellCommand(
-      name="Change desktop filename",
-      workdir="source/build",
-      haltOnFailure=True,
-      command=["mv", "./AppDir/usr/share/applications/strawberry.desktop", "./AppDir/usr/share/applications/org.strawbs.strawberry.desktop"]
-    )
-  )
-  f.addStep(
-    shell.ShellCommand(
       name="curl linuxdeploy-x86_64.AppImage",
       workdir="source/build",
       haltOnFailure=True,
