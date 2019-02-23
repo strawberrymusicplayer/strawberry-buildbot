@@ -348,10 +348,10 @@ def MakePacmanBuilder(distro, version):
   f.addStep(
     steps.SetPropertyFromCommand(
       name="get output filename",
-      workdir="source/build",
+      workdir="source",
       command=[
         "sh", "-c",
-        "ls -dt " + "strawberry-*.pkg.tar.xz" + " | head -n 1"
+        "ls -dt " + "build/strawberry-*.pkg.tar.xz" + " | head -n 1"
       ],
       property="output-filepath",
       haltOnFailure=True
