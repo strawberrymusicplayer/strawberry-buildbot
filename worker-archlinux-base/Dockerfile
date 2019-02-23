@@ -2,10 +2,10 @@ from archlinux/base
 
 run pacman -Sy --noconfirm
 run pacman -S --noconfirm \
-                    git make cmake gcc fakeroot sudo pkgconf python-pip \
+                    git make cmake gcc fakeroot sudo pkgconf python-pip gettext \
                     desktop-file-utils hicolor-icon-theme \
                     udisks2 dbus sqlite3 alsa-lib pulseaudio boost protobuf \
-                    qt5-base qt5-x11extras \
+                    qt5-base qt5-x11extras qt5-tools \
                     gst-plugins-base gst-plugins-good xine-lib vlc phonon-qt5 \
                     taglib chromaprint \
                     libcdio libmtp libgpod libusbmuxd libplist libimobiledevice

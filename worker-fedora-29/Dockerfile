@@ -2,7 +2,7 @@ from fedora:29
 
 run dnf install --assumeyes \
     redhat-lsb-core python3 python3-devel \
-    git tar rpmdevtools make cmake glib glibc gcc-c++ man \
+    git tar rpmdevtools make cmake glib glibc gcc-c++ man gettext \
     desktop-file-utils libappstream-glib hicolor-icon-theme \
     dbus-devel boost-devel protobuf-devel protobuf-compiler sqlite-devel alsa-lib-devel pulseaudio-libs-devel libnotify-devel \
     qt5-devel qt5-qtbase-devel qt5-qtx11extras-devel qt5-qttools-devel \

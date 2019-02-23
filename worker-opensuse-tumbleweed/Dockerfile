@@ -4,15 +4,16 @@ run zypper --non-interactive --gpg-auto-import-keys ref
 run zypper --non-interactive --gpg-auto-import-keys dup -l -y
 
 run zypper --non-interactive --gpg-auto-import-keys install \
-    lsb-release python3-base python3-devel python3-pip \
-    git tar rpm-build rpmdevtools make cmake gcc gcc-c++ pkg-config \
-    desktop-file-utils update-desktop-files hicolor-icon-theme appstream-glib AppStream \
+    lsb-release rpm-build rpmdevtools \
+    git tar make cmake gcc gcc-c++ pkg-config gettext-tools \
+    desktop-file-utils update-desktop-files appstream-glib AppStream hicolor-icon-theme \
     fuse libfuse2 \
+    python3-base python3-devel python3-pip \
     glibc-devel glib2-devel glib2-tools dbus-1-devel alsa-devel libpulse-devel libnotify-devel \
     boost-devel protobuf-devel sqlite3-devel taglib-devel \
     gstreamer-devel gstreamer-plugins-base-devel libxine-devel vlc-devel \
     libQt5Core-devel libQt5Gui-devel libQt5Widgets-devel libQt5Concurrent-devel libQt5Network-devel libQt5Sql-devel libQt5DBus-devel \
-    libqt5-qtx11extras-devel libqt5-qtbase-common-devel libQt5Sql5-sqlite libqt5-qtwayland libqt5-qtdeclarative-tools \
+    libqt5-qtx11extras-devel libqt5-qtbase-common-devel libQt5Sql5-sqlite libqt5-qtwayland libqt5-qtdeclarative-tools libqt5-linguist-devel \
     libcdio-devel libgpod-devel libplist-devel libmtp-devel libusbmuxd-devel libchromaprint-devel
 
 run pip3 install --upgrade pip

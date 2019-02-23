@@ -2,16 +2,19 @@ from ubuntu:xenial
 
 run apt-get update
 run apt-get install -y \
-                    python3-pip python3-dev git make cmake gcc fakeroot dpkg-dev wget curl \
-                    libglib2.0-dev libdbus-1-dev libboost-dev libprotobuf-dev protobuf-compiler libsqlite3-dev sqlite3 \
+                    git make cmake gcc fakeroot wget curl gettext \
+                    dpkg-dev libglib2.0-dev libdbus-1-dev \
+                    python3-pip python3-dev \
+                    libboost-dev libprotobuf-dev protobuf-compiler libsqlite3-dev sqlite3 \
                     libasound2-dev libpulse-dev libxine2-dev libvlc-dev libphonon4qt5-dev \
                     qt5-default qt5-qmake qtbase5-dev qtbase5-dev-tools qtbase5-private-dev \
                     libqt5core5a libqt5gui5 libqt5widgets5 libqt5concurrent5 libqt5network5 libqt5sql5 \
-                    libqt5x11extras5-dev libqt5dbus5 \
+                    libqt5x11extras5-dev libqt5dbus5 qttools5-dev \
+                    libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev \
+                    gstreamer1.0-alsa gstreamer1.0-pulseaudio \
                     gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
                     gstreamer1.0-plugins-bad gstreamer1.0-plugins-bad-faad gstreamer1.0-plugins-ugly \
-                    gstreamer1.0-alsa gstreamer1.0-pulseaudio gstreamer1.0-libav \
-                    libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev \
+                    gstreamer1.0-libav \
                     libchromaprint-dev \
                     libcdio-dev libmtp-dev libgpod-dev libimobiledevice-dev libplist-dev libusbmuxd-dev
 
