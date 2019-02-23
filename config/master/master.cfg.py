@@ -1,4 +1,3 @@
-# Strawberry Buildbot
 # -*- python -*-
 # ex: set syntax=python:
 

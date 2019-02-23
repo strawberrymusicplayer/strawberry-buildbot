@@ -1,5 +1,3 @@
-# Strawberry Buildbot
-
 import os.path
 import pprint
 
@@ -13,7 +11,7 @@ from buildbot.steps.source import git
 
 UPLOADBASE = "/srv/www/htdocs/builds"
 UPLOADURL = "http://builds.strawbs.org"
-
+MAKE_JOBS = '4'
 
 def GitBaseUrl(repository):
   return "https://github.com/jonaski/%s.git" % repository
@@ -75,57 +73,57 @@ def MakeSourceBuilder():
   git_args["mode"] = "full"
   git_args["method"] = "fresh"
 
-  cmake_cmd = [
-    "cmake",
-    "..",
-  ]
-
   f = factory.BuildFactory()
   f.addStep(git.Git(**git_args))
 
   f.addStep(
     shell.ShellCommand(
-      name="rm -rf build",
+      name="clean build",
       workdir="source",
-      haltOnFailure=True,
-      command=["rm", "-rf", "build"]
+      command=["rm", "-rf", "build"],
+      haltOnFailure=True
     )
   )
 
   f.addStep(
     shell.ShellCommand(
-      name="cmake",
-      command=cmake_cmd,
-      haltOnFailure=True,
-      workdir="source/build"
+      name="run cmake",
+      workdir="source/build",
+      command=["cmake", ".." ],
+      haltOnFailure=True
     )
   )
 
   f.addStep(
     shell.ShellCommand(
-      name="rm -f *.bz2",
+      name="remove old tarballs",
       workdir="source/dist/scripts",
-      haltOnFailure=True,
-      command=["rm", "-f", "*.bz2"]
+      command=["rm", "-f", "*.bz2"],
+      haltOnFailure=True
     )
   )
-    
+
   f.addStep(
     shell.ShellCommand(
+      name="run maketarball",
+      workdir="source/dist/scripts",
       command=["./maketarball.sh"],
-      haltOnFailure=True,
-      workdir="source/dist/scripts")
+      haltOnFailure=True
+    )
   )
 
-  f.addStep(steps.SetPropertyFromCommand(
-    name="get output filename",
-    command=[
-      "sh", "-c",
-      "ls -dt " + "dist/scripts/strawberry-*.tar.xz" + " | head -n 1"
-    ],
-    workdir="source",
-    property="output-filepath",
-  ))
+  f.addStep(
+    steps.SetPropertyFromCommand(
+      name="get output filename",
+      workdir="source",
+      command=[
+        "sh", "-c",
+        "ls -dt " + "dist/scripts/strawberry-*.tar.xz" + " | head -n 1"
+      ],
+      property="output-filepath",
+      haltOnFailure=True
+    )
+  )
   f.addStep(steps.SetProperties(properties=get_base_filename))
   f.addStep(UploadPackage("source"))
   return f
@@ -138,68 +136,72 @@ def MakeRPMBuilder(distro, version):
 
   f.addStep(
     shell.ShellCommand(
-      name="clean rmpbuild",
+      name="clean rpmbuild",
       workdir="source/build",
       command="find ~/rpmbuild/ -type f -delete"
     )
   )
   f.addStep(
     shell.ShellCommand(
-      name="rm -rf build",
+      name="clean build",
       workdir="source",
-      haltOnFailure=True,
-      command=["rm", "-rf", "build"]
+      command=["rm", "-rf", "build"],
+      haltOnFailure=True
     )
   )
   f.addStep(
     shell.ShellCommand(
-      name="cmake",
+      name="run cmake",
       workdir="source/build",
-      haltOnFailure=True,
-      command=["cmake", "../"]
+      command=["cmake", ".."],
+      haltOnFailure=True
     )
   )
   f.addStep(
     shell.ShellCommand(
-      name="make clean",
+      name="run make clean",
       workdir="source/build",
-      haltOnFailure=True,
-      command=["make", "clean"]
+      command=["make", "clean"],
+      haltOnFailure=True
     )
   )
   f.addStep(
     shell.ShellCommand(
-      name="maketarball",
+      name="run maketarball",
       workdir="source/build",
-      haltOnFailure=True,
-      command=["../dist/scripts/maketarball.sh"]
+      command=["../dist/scripts/maketarball.sh"],
+      haltOnFailure=True
     )
   )
   f.addStep(
     shell.ShellCommand(
-      name="movetarball",
+      name="move tarball to SOURCES",
       workdir="source/build",
-      haltOnFailure=True,
-      command="mv strawberry-*.tar.xz ~/rpmbuild/SOURCES")
+      command="mv strawberry-*.tar.xz ~/rpmbuild/SOURCES",
+      haltOnFailure=True
+    )
   )
   f.addStep(
     shell.Compile(
-      name="rpmbuild",
+      name="run rpmbuild",
       workdir="source/build",
-      haltOnFailure=True,
-      command=["rpmbuild", "-ba", "../dist/" + distro + "/strawberry.spec"]
+      command=["rpmbuild", "-ba", "../dist/" + distro + "/strawberry.spec"],
+      haltOnFailure=True
     )
   )
 
-  f.addStep(steps.SetPropertyFromCommand(
-    name="get output filename",
-    command=[
-      "sh", "-c",
-      "ls -dt " + "~/rpmbuild/RPMS/*/strawberry-*.rpm" + " | grep -v debuginfo | grep -v debugsource | head -n 1"
-    ],
-    workdir="source",
-    property="output-filepath",
-  ))
+  f.addStep(
+    steps.SetPropertyFromCommand(
+      name="get output filename",
+      workdir="source",
+      command=[
+        "sh", "-c",
+        "ls -dt " + "~/rpmbuild/RPMS/*/strawberry-*.rpm" + " | grep -v debuginfo | grep -v debugsource | head -n 1"
+      ],
+      property="output-filepath",
+      haltOnFailure=True
+    )
+  )
   f.addStep(steps.SetProperties(properties=get_base_filename))
   f.addStep(UploadPackage(distro + "/" + version))
   return f
@@ -223,54 +225,61 @@ def MakeDebBuilder(distro, version):
 
   f.addStep(
     shell.ShellCommand(
-      name="rm -rf build",
+      name="clean build",
       workdir="source",
-      haltOnFailure=True,
-      command=["rm", "-rf", "build"]
+      command=["rm", "-rf", "build"],
+      haltOnFailure=True
     )
   )
 
   f.addStep(
     shell.ShellCommand(
-      name="cmake",
+      name="run cmake",
+      workdir="source/build",
       command=cmake_cmd,
-      haltOnFailure=True,
-      workdir="source/build"))
-
-  f.addStep(
-    shell.ShellCommand(
-      name="make clean",
-      workdir="source/build",
-      haltOnFailure=True,
-      command=["make", "clean"]
+      haltOnFailure=True
     )
   )
 
   f.addStep(
     shell.ShellCommand(
-      name="copy deb",
+      name="run make clean",
       workdir="source/build",
-      haltOnFailure=True,
-      command="cp -v -r ../dist/debian ."))
+      command=["make", "clean"],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="copy debian files to build directory",
+      workdir="source/build",
+      command="cp -v -r ../dist/debian .",
+      haltOnFailure=True
+    )
+  )
 
   f.addStep(
     shell.Compile(
-      name="dpkg-buildpackage",
-      command=[
-        "dpkg-buildpackage", "-b", "-d", "-uc", "-us",
-      ],
-      haltOnFailure=True,
-      workdir="source/build"))
+      name="run dpkg-buildpackage",
+      workdir="source/build",
+      command=["dpkg-buildpackage", "-b", "-d", "-uc", "-us"],
+      haltOnFailure=True
+    )
+  )
 
-  f.addStep(steps.SetPropertyFromCommand(
-    name="get output filename",
-    command=[
-      "sh", "-c",
-      "ls -dt " + "strawberry_*.deb" + " | grep -v debuginfo | head -n 1"
-    ],
-    workdir="source",
-    property="output-filepath",
-  ))
+  f.addStep(
+    steps.SetPropertyFromCommand(
+      name="get output filename",
+      workdir="source",
+      command=[
+        "sh", "-c",
+        "ls -dt " + "strawberry_*.deb" + " | grep -v debuginfo | head -n 1"
+      ],
+      property="output-filepath",
+      haltOnFailure=True
+    )
+  )
   f.addStep(steps.SetProperties(properties=get_base_filename))
 
   f.addStep(UploadPackage("%s/%s" % (distro, version)))
@@ -284,51 +293,70 @@ def MakePacmanBuilder(distro, version):
 
   f.addStep(
     shell.ShellCommand(
-      name="rm -rf build",
+      name="clean build",
       workdir="source",
-      haltOnFailure=True,
-      command=["rm", "-rf", "build"]
+      command=["rm", "-rf", "build"],
+      haltOnFailure=True
     )
   )
 
   f.addStep(
     shell.ShellCommand(
-      name="cmake",
-      workdir="source/build",
-      haltOnFailure=True,
-      command=["cmake", "../"]
+      name="mkdir build",
+      workdir="source",
+      command=["mkdir", "-p", "build"],
+      haltOnFailure=True
     )
   )
 
   f.addStep(
     shell.ShellCommand(
-      name="make clean",
+      name="run cmake",
       workdir="source/build",
-      haltOnFailure=True,
-      command=["make", "clean"]
+      command=["cmake", ".."],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="run maketarball",
+      workdir="source/build",
+      command=["../dist/scripts/maketarball.sh"],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="copy PKGBUILD",
+      workdir="source/build",
+      command=["cp", "../dist/pacman/PKGBUILD", "."],
+      haltOnFailure=True
     )
   )
 
   f.addStep(
     shell.Compile(
-      name="makepkg",
-      command=[
-        "makepkg", "-f"
-      ],
-      haltOnFailure=True,
-      workdir="source/dist/pacman"
+      name="run makepkg",
+      workdir="source/build",
+      command=["makepkg", "-f"],
+      haltOnFailure=True
     )
   )
 
-  f.addStep(steps.SetPropertyFromCommand(
-    name="get output filename",
-    command=[
-      "sh", "-c",
-      "ls -dt " + "dist/pacman/strawberry-*.pkg.tar.xz" + " | head -n 1"
-    ],
-    workdir="source",
-    property="output-filepath",
-  ))
+  f.addStep(
+    steps.SetPropertyFromCommand(
+      name="get output filename",
+      workdir="source/build",
+      command=[
+        "sh", "-c",
+        "ls -dt " + "strawberry-*.pkg.tar.xz" + " | head -n 1"
+      ],
+      property="output-filepath",
+      haltOnFailure=True
+    )
+  )
   f.addStep(steps.SetProperties(properties=get_base_filename))
 
   f.addStep(UploadPackage(distro))
@@ -341,142 +369,147 @@ def MakeAppImageBuilder(name):
   f = factory.BuildFactory()
   f.addStep(git.Git(**GitArgs("strawberry", "master")))
 
-  #f.addStep(
-  #  shell.ShellCommand(
-  #    name="rm -rf build",
-  #    workdir="source",
-  #    haltOnFailure=True,
-  #    command=["rm", "-rf", "build"]
-  #  )
-  #)
-
   f.addStep(
     shell.ShellCommand(
-      name="cmake",
-      workdir="source/build",
-      haltOnFailure=True,
-      command=["cmake", "..", "-DCMAKE_INSTALL_PREFIX=/usr"]
+      name="clean build",
+      workdir="source",
+      command=["rm", "-rf", "build"],
+      haltOnFailure=True
     )
   )
 
-  f.addStep(steps.SetPropertyFromCommand(
-    name="git describe --tags --always",
-    command=["git", "describe", "--tags", "--always"],
-    workdir="source",
-    property="output-version",
-  ))
+  f.addStep(
+    shell.ShellCommand(
+      name="run cmake",
+      workdir="source/build",
+      command=["cmake", "..", "-DCMAKE_INSTALL_PREFIX=/usr"],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    steps.SetPropertyFromCommand(
+      name="get version",
+      workdir="source",
+      command=["git", "describe", "--tags", "--always"],
+      property="output-version",
+      haltOnFailure=True
+    )
+  )
   env_output = {
     "OUTPUT": util.Interpolate("Strawberry%(kw:name)s-%(prop:output-version)s.AppImage", name=name)
   }
 
   f.addStep(
     shell.Compile(
-      name="make",
+      name="compile",
       workdir="source/build",
-      haltOnFailure=True,
-      command=["make", "-j", "8"]
+      command=["make", "-j", MAKE_JOBS],
+      haltOnFailure=True
     )
   )
   f.addStep(
     shell.ShellCommand(
-      name="make install",
+      name="run make install",
       workdir="source/build",
-      haltOnFailure=True,
-      command=["make", "install", "DESTDIR=AppDir"]
+      command=["make", "install", "DESTDIR=AppDir"],
+      haltOnFailure=True
     )
   )
   f.addStep(
     shell.ShellCommand(
-      name="Remove screenshot from appdata file",
+      name="remove screenshot from appdata file (1)",
       workdir="source/build",
-      command=["sed", "-i", '/.*caption.*/d', "./AppDir/usr/share/metainfo/strawberry.appdata.xml"],
-      haltOnFailure=True,
+      command=["sed", "-i", '/.*caption.*/d', "./AppDir/usr/share/metainfo/org.strawbs.strawberry.appdata.xml"],
+      haltOnFailure=True
     )
   )
   f.addStep(
     shell.ShellCommand(
-      name="Remove screenshot from appdata file",
+      name="remove screenshot from appdata file (2)",
       workdir="source/build",
-      command=["sed", "-i", '/.*screenshot.*/d', "./AppDir/usr/share/metainfo/strawberry.appdata.xml"],
-      haltOnFailure=True,
+      command=["sed", "-i", '/.*screenshot.*/d', "./AppDir/usr/share/metainfo/org.strawbs.strawberry.appdata.xml"],
+      haltOnFailure=True
     )
   )
   f.addStep(
     shell.ShellCommand(
       name="curl linuxdeploy-x86_64.AppImage",
       workdir="source/build",
-      haltOnFailure=True,
-      command=["curl", "-O", "-L", "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"]
+      command=["curl", "-O", "-L", "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"],
+      haltOnFailure=True
     )
   )
   f.addStep(
     shell.ShellCommand(
       name="curl linuxdeploy-plugin-appimage-x86_64.AppImage",
       workdir="source/build",
-      haltOnFailure=True,
-      command=["curl", "-O", "-L", "https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppImage"]
+      command=["curl", "-O", "-L", "https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppImage"],
+      haltOnFailure=True
     )
   )
   f.addStep(
     shell.ShellCommand(
       name="curl linuxdeploy-plugin-qt-x86_64.AppImage",
       workdir="source/build",
-      haltOnFailure=True,
-      command=["curl", "-O", "-L", "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"]
+      command=["curl", "-O", "-L", "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"],
+      haltOnFailure=True
     )
   )
   f.addStep(
     shell.ShellCommand(
-      name="chmod",
+      name="run chmod",
       workdir="source/build",
-      haltOnFailure=True,
-      command="chmod +x linuxdeploy*.AppImage"
+      command="chmod +x linuxdeploy*.AppImage",
+      haltOnFailure=True
     )
   )
   f.addStep(
     shell.ShellCommand(
-      name="linuxdeploy --appimage-extract",
+      name="run linuxdeploy --appimage-extract",
       workdir="source/build",
-      haltOnFailure=True,
-      command=["./linuxdeploy-x86_64.AppImage", "--appimage-extract"]
+      command=["./linuxdeploy-x86_64.AppImage", "--appimage-extract"],
+      haltOnFailure=True
     )
   )
   f.addStep(
     shell.ShellCommand(
-      name="linuxdeploy-plugin-appimage --appimage-extract",
+      name="run linuxdeploy-plugin-appimage --appimage-extract",
       workdir="source/build",
-      haltOnFailure=True,
-      command=["./linuxdeploy-plugin-appimage-x86_64.AppImage", "--appimage-extract"]
+      command=["./linuxdeploy-plugin-appimage-x86_64.AppImage", "--appimage-extract"],
+      haltOnFailure=True
     )
   )
   f.addStep(
     shell.ShellCommand(
-      name="linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract",
+      name="run linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract",
       workdir="source/build",
-      haltOnFailure=True,
-      command=["./linuxdeploy-plugin-qt-x86_64.AppImage", "--appimage-extract"]
+      command=["./linuxdeploy-plugin-qt-x86_64.AppImage", "--appimage-extract"],
+      haltOnFailure=True
     )
   )
   f.addStep(
     shell.ShellCommand(
-      name="linuxdeploy",
+      name="run linuxdeploy",
       workdir="source/build",
+      command=["./squashfs-root/usr/bin/linuxdeploy", "--appdir", "AppDir", "-e", "strawberry", "--plugin", "qt", "--output", "appimage"],
       env=env_output,
-      haltOnFailure=True,
-      command=["./squashfs-root/usr/bin/linuxdeploy", "--appdir", "AppDir", "-e", "strawberry", "--plugin", "qt", "--output", "appimage"]
+      haltOnFailure=True
     )
   )
 
-  f.addStep(steps.SetPropertyFromCommand(
-    name="get output filename",
-    command=[
-      "sh", "-c",
-      "ls -dt " + "build/Strawberry*.AppImage" + " | head -n 1"
-    ],
-    workdir="source",
-    property="output-filepath",
-    haltOnFailure=True,
-  ))
+  f.addStep(
+    steps.SetPropertyFromCommand(
+      name="get output filename",
+      workdir="source",
+      command=[
+        "sh", "-c",
+        "ls -dt " + "build/Strawberry*.AppImage" + " | head -n 1"
+      ],
+      property="output-filepath",
+      haltOnFailure=True
+    )
+  )
   f.addStep(steps.SetProperties(properties=get_base_filename))
   f.addStep(UploadPackage("appimage"))
   return f
@@ -489,29 +522,39 @@ def MakeMXEBuilder():
 
   #f.addStep(
   #  shell.ShellCommand(
-  #    name="clean", workdir="source", command=["make", "clean"]))
+  #    name="clean build",
+  #    workdir="source",
+  #    command=["make", "clean"]
+  #  )
+  #)
 
   f.addStep(
     shell.Compile(
       name="compile",
       workdir="source",
-      command=["make", "-j8"],
+      command=["make", "-j", MAKE_JOBS],
       timeout=108000,
       haltOnFailure=True,
     )
   )
 
   f.addStep(
-      shell.ShellCommand(
-          name="remove strawberry*.exe (686-w64-mingw32.shared)",
-          workdir="source/usr/i686-w64-mingw32.shared/apps/strawberry/bin",
-          command="rm -f strawberry*.exe StrawberrySetup*.exe"))
+    shell.ShellCommand(
+      name="remove strawberry*.exe (686-w64-mingw32.shared)",
+      workdir="source/usr/i686-w64-mingw32.shared/apps/strawberry/bin",
+      command="rm -f strawberry*.exe StrawberrySetup*.exe",
+      haltOnFailure=True
+    )
+  )
 
   f.addStep(
-      shell.ShellCommand(
-          name="remove strawberry*.exe (x86_64-w64-mingw32.shared)",
-          workdir="source/usr/x86_64-w64-mingw32.shared/apps/strawberry/bin",
-          command="rm -f strawberry*.exe StrawberrySetup*.exe"))
+    shell.ShellCommand(
+      name="remove strawberry*.exe (x86_64-w64-mingw32.shared)",
+      workdir="source/usr/x86_64-w64-mingw32.shared/apps/strawberry/bin",
+      command="rm -f strawberry*.exe StrawberrySetup*.exe",
+      haltOnFailure=True
+    )
+  )
 
   return f
 
@@ -649,32 +692,35 @@ def MakeWindowsBuilder(is_debug, is_64):
 
   #f.addStep(
   #  shell.ShellCommand(
-  #    name="rm -rf build",
+  #    name="clean build",
   #    workdir="source",
-  #    haltOnFailure=True,
   #    command=["rm", "-rf", "build"],
+  #    haltOnFailure=True
   #  )
   #)
   f.addStep(
     shell.ShellCommand(
-      name="cmake",
+      name="run cmake",
       workdir="source/build",
-      env=env,
-      haltOnFailure=True,
       command=cmake_cmd,
+      env=env,
+      haltOnFailure=True
     )
   )
   f.addStep(
     shell.Compile(
-      command=["make", "-j8"], workdir="source/build", haltOnFailure=True)
+      name="compile",
+      command=["make", "-j", MAKE_JOBS],
+      workdir="source/build",
+      haltOnFailure=True
+    )
   )
   f.addStep(
     shell.ShellCommand(
-      name="strip",
+      name="run strip",
       workdir="source/build",
-      haltOnFailure=True,
-      #env=env,
-      command=[strip_command] + executable_files
+      command=[strip_command] + executable_files,
+      haltOnFailure=True
     )
   )
 
@@ -682,7 +728,6 @@ def MakeWindowsBuilder(is_debug, is_64):
     shell.ShellCommand(
       name="mkdir platforms/sqldrivers/imageformats/gstreamer-plugins/xine-plugins",
       workdir="source/build",
-      haltOnFailure=True,
       command=[
         "mkdir",
         "-p",
@@ -691,7 +736,8 @@ def MakeWindowsBuilder(is_debug, is_64):
         "imageformats",
         "gstreamer-plugins",
         "xine-plugins",
-      ]
+      ],
+      haltOnFailure=True
     )
   )
 
@@ -699,12 +745,12 @@ def MakeWindowsBuilder(is_debug, is_64):
     shell.ShellCommand(
       name="copy qwindows.dll",
       workdir="source/build/platforms",
-      haltOnFailure=True,
       command=[
         "cp",
         "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/qt5/plugins/platforms/qwindows.dll",
         ".",
-      ]
+      ],
+      haltOnFailure=True
     )
   )
 
@@ -712,12 +758,12 @@ def MakeWindowsBuilder(is_debug, is_64):
     shell.ShellCommand(
       name="copy qsqlite.dll",
       workdir="source/build/sqldrivers",
-      haltOnFailure=True,
       command=[
         "cp",
         "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/qt5/plugins/sqldrivers/qsqlite.dll",
         ".",
-      ]
+      ],
+      haltOnFailure=True
     )
   )
 
@@ -725,12 +771,12 @@ def MakeWindowsBuilder(is_debug, is_64):
     shell.ShellCommand(
       name="copy imageformats",
       workdir="source/build/imageformats",
-      haltOnFailure=True,
       command=[
         "cp",
         imageformats_files,
         ".",
-      ]
+      ],
+      haltOnFailure=True
     )
   )
 
@@ -738,12 +784,12 @@ def MakeWindowsBuilder(is_debug, is_64):
     shell.ShellCommand(
       name="copy gstreamer-plugins",
       workdir="source/build/gstreamer-plugins",
-      haltOnFailure=True,
       command=[
         "cp",
         gstreamer_plugins_files,
         ".",
-      ]
+      ],
+      haltOnFailure=True
     )
   )
 
@@ -751,12 +797,12 @@ def MakeWindowsBuilder(is_debug, is_64):
     shell.ShellCommand(
       name="copy xine-plugins",
       workdir="source/build/xine-plugins",
-      haltOnFailure=True,
       command=[
         "cp",
         xine_plugins_files,
         ".",
-      ]
+      ],
+      haltOnFailure=True
     )
   )
 
@@ -764,7 +810,6 @@ def MakeWindowsBuilder(is_debug, is_64):
     shell.ShellCommand(
       name="copydlldeps.sh",
       workdir="source/build",
-      haltOnFailure=True,
       command=[
         "/persistent-data/mingw/mxe/source/tools/copydlldeps.sh",
         "-c",
@@ -786,7 +831,8 @@ def MakeWindowsBuilder(is_debug, is_64):
         "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/apps",
         "-R",
         "/persistent-data/mingw/mxe/source/usr/" + mingw32_name,
-      ]
+      ],
+      haltOnFailure=True
     )
   )
 
@@ -794,35 +840,34 @@ def MakeWindowsBuilder(is_debug, is_64):
     shell.ShellCommand(
       name="copy nsi files",
       workdir="source/dist/windows",
-      haltOnFailure=True,
-      command=[
-        "cp",
-        nsi_files,
-        "../../build/",
-      ]
+      command=["cp", nsi_files, "../../build/" ],
+      haltOnFailure=True
     )
   )
 
   f.addStep(
     shell.ShellCommand(
-      name="makensis",
-      env=env_lang,
+      name="run makensis",
       command=["makensis", nsi_filename],
       workdir="source/build",
-      haltOnFailure=True,
+      env=env_lang,
+      haltOnFailure=True
     )
   )
 
-  f.addStep(steps.SetPropertyFromCommand(
-    name="get output filename",
-    command=[
-      "sh",
-      "-c",
-      "ls -dt " + "build/StrawberrySetup-*.exe" + " | head -n 1"
-    ],
-    workdir="source",
-    property="output-filepath",
-  ))
+  f.addStep(
+    steps.SetPropertyFromCommand(
+      name="get output filename",
+      workdir="source",
+      command=[
+        "sh",
+        "-c",
+        "ls -dt " + "build/StrawberrySetup-*.exe" + " | head -n 1"
+      ],
+      property="output-filepath",
+      haltOnFailure=True
+    )
+  )
   f.addStep(steps.SetProperties(properties=get_base_filename))
 
   f.addStep(UploadPackage("windows"))
