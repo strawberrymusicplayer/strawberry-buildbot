@@ -1,6 +1,6 @@
 {
   "linux": {
-    "opensuse": ["leap", "tumbleweed"],
+    "opensuse": ["tumbleweed", "lp150", "lp151"],
     "fedora": ["28", "29"],
     "ubuntu": ["bionic", "cosmic", "xenial"],
     "debian": ["stretch", "buster"],

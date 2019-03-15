@@ -1,4 +1,4 @@
-from opensuse/leap
+from opensuse/leap:15.0
 
 run zypper -n ar -c -f -n 'repo-building' https://download.opensuse.org/repositories/devel:/tools:/building/openSUSE_Leap_15.0/ repo-building
 
@@ -22,7 +22,7 @@ run zypper --non-interactive --gpg-auto-import-keys dup --from repo-building
 run pip3 install --upgrade pip
 run pip3 install buildbot_worker==2.0.1
 
-run echo "opensuse-leap" > /worker-name
+run echo "opensuse-lp150" > /worker-name
 run useradd -r -m -s /bin/false buildbot
 
 run mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
