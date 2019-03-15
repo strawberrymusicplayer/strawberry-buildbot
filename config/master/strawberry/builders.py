@@ -203,7 +203,10 @@ def MakeRPMBuilder(distro, version):
     )
   )
   f.addStep(steps.SetProperties(properties=get_base_filename))
-  f.addStep(UploadPackage(distro + "/" + version))
+
+  if not version in ['tumbleweed']:
+    f.addStep(UploadPackage(distro + "/" + version))
+
   return f
 
 
@@ -359,7 +362,7 @@ def MakePacmanBuilder(distro, version):
   )
   f.addStep(steps.SetProperties(properties=get_base_filename))
 
-  f.addStep(UploadPackage(distro))
+  #f.addStep(UploadPackage(distro))
 
   return f
 
