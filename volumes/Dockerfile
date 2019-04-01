@@ -1,4 +1,4 @@
-from opensuse:tumbleweed
+from opensuse/tumbleweed
 
 volume ["/persistent-data"]
 
