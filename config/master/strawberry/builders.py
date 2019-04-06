@@ -530,6 +530,26 @@ def MakeAppImageBuilder(name):
     shell.ShellCommand(
       name="run linuxdeploy",
       workdir="source/build",
+      command=["./squashfs-root/usr/bin/linuxdeploy", "--appdir", "AppDir", "-e", "strawberry", "--plugin", "qt"],
+      env=env_output,
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="copy gstreamer plugins",
+      workdir="source/build",
+      command=["cp", "-r", "-f", "/usr/libexec/gstreamer-1.0/gst-plugin-scanner", "/usr/lib64/gstreamer-1.0", "./AppDir/usr/lib/"],
+      env=env_output,
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="run linuxdeploy output appimage",
+      workdir="source/build",
       command=["./squashfs-root/usr/bin/linuxdeploy", "--appdir", "AppDir", "-e", "strawberry", "--plugin", "qt", "--output", "appimage"],
       env=env_output,
       haltOnFailure=True
