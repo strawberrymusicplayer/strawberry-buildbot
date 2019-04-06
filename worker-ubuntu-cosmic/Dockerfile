@@ -1,6 +1,7 @@
 from ubuntu:cosmic
 
-run apt-get update
+run apt-get -y update
+run apt-get -y upgrade
 run apt-get install -y \
                     git make cmake gcc fakeroot wget curl gettext \
                     dpkg-dev libglib2.0-dev libdbus-1-dev \
@@ -17,7 +18,7 @@ run apt-get install -y \
                     libcdio-dev libmtp-dev libgpod-dev libimobiledevice-dev libplist-dev libusbmuxd-dev
 
 run pip3 install --upgrade pip
-run pip3 install buildbot_worker==2.0.1
+run pip3 install buildbot_worker==2.1.0
 
 run echo "ubuntu-cosmic" > /worker-name
 run useradd -r -m -s /bin/false buildbot
