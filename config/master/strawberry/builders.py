@@ -141,6 +141,7 @@ def MakeRPMBuilder(distro, version):
       command="find ~/rpmbuild/ -type f -delete"
     )
   )
+
   f.addStep(
     shell.ShellCommand(
       name="clean build",
@@ -149,6 +150,16 @@ def MakeRPMBuilder(distro, version):
       haltOnFailure=True
     )
   )
+
+  #f.addStep(
+  #  shell.ShellCommand(
+  #    name="copy new spec file",
+  #    workdir="source",
+  #    command=["cp", "/config/dist/strawberry.spec.in", "./dist/rpm/"],
+  #    haltOnFailure=True
+  #  )
+  #)
+
   f.addStep(
     shell.ShellCommand(
       name="run cmake",
@@ -157,6 +168,7 @@ def MakeRPMBuilder(distro, version):
       haltOnFailure=True
     )
   )
+
   f.addStep(
     shell.ShellCommand(
       name="run make clean",
@@ -165,6 +177,7 @@ def MakeRPMBuilder(distro, version):
       haltOnFailure=True
     )
   )
+
   f.addStep(
     shell.ShellCommand(
       name="run maketarball",
@@ -173,6 +186,7 @@ def MakeRPMBuilder(distro, version):
       haltOnFailure=True
     )
   )
+
   f.addStep(
     shell.ShellCommand(
       name="move tarball to SOURCES",
@@ -181,11 +195,12 @@ def MakeRPMBuilder(distro, version):
       haltOnFailure=True
     )
   )
+
   f.addStep(
     shell.Compile(
       name="run rpmbuild",
       workdir="source/build",
-      command=["rpmbuild", "-ba", "../dist/" + distro + "/strawberry.spec"],
+      command=["rpmbuild", "-ba", "../dist/rpm/strawberry.spec"],
       haltOnFailure=True
     )
   )
@@ -419,22 +434,35 @@ def MakeAppImageBuilder(name):
       haltOnFailure=True
     )
   )
+
+  #f.addStep(
+  #  shell.ShellCommand(
+  #    name="remove screenshot from appdata file (1)",
+  #    workdir="source/build",
+  #    command=["sed", "-i", '/.*caption.*/d', "./AppDir/usr/share/metainfo/org.strawbs.strawberry.appdata.xml"],
+  #    haltOnFailure=True
+  #  )
+  #)
+  #f.addStep(
+  #  shell.ShellCommand(
+  #    name="remove screenshot from appdata file (2)",
+  #    workdir="source/build",
+  #    command=["sed", "-i", '/.*screenshot.*/d', "./AppDir/usr/share/metainfo/org.strawbs.strawberry.appdata.xml"],
+  #    haltOnFailure=True
+  #  )
+  #)
+
+  # Remove appdata file because of symbol issues:
+  #/usr/bin/appstream-util: symbol lookup error: /lib64/libappstream-glib.so.8: undefined symbol: g_strv_contains
   f.addStep(
     shell.ShellCommand(
-      name="remove screenshot from appdata file (1)",
+      name="remove appdata",
       workdir="source/build",
-      command=["sed", "-i", '/.*caption.*/d', "./AppDir/usr/share/metainfo/org.strawbs.strawberry.appdata.xml"],
-      haltOnFailure=True
+      haltOnFailure=True,
+      command=["rm", "./AppDir/usr/share/metainfo/org.strawbs.strawberry.appdata.xml"]
     )
   )
-  f.addStep(
-    shell.ShellCommand(
-      name="remove screenshot from appdata file (2)",
-      workdir="source/build",
-      command=["sed", "-i", '/.*screenshot.*/d', "./AppDir/usr/share/metainfo/org.strawbs.strawberry.appdata.xml"],
-      haltOnFailure=True
-    )
-  )
+
   f.addStep(
     shell.ShellCommand(
       name="curl linuxdeploy-x86_64.AppImage",
@@ -443,6 +471,7 @@ def MakeAppImageBuilder(name):
       haltOnFailure=True
     )
   )
+
   f.addStep(
     shell.ShellCommand(
       name="curl linuxdeploy-plugin-appimage-x86_64.AppImage",
@@ -451,6 +480,7 @@ def MakeAppImageBuilder(name):
       haltOnFailure=True
     )
   )
+
   f.addStep(
     shell.ShellCommand(
       name="curl linuxdeploy-plugin-qt-x86_64.AppImage",
@@ -459,6 +489,7 @@ def MakeAppImageBuilder(name):
       haltOnFailure=True
     )
   )
+
   f.addStep(
     shell.ShellCommand(
       name="run chmod",
@@ -467,6 +498,7 @@ def MakeAppImageBuilder(name):
       haltOnFailure=True
     )
   )
+
   f.addStep(
     shell.ShellCommand(
       name="run linuxdeploy --appimage-extract",
@@ -475,6 +507,7 @@ def MakeAppImageBuilder(name):
       haltOnFailure=True
     )
   )
+
   f.addStep(
     shell.ShellCommand(
       name="run linuxdeploy-plugin-appimage --appimage-extract",
@@ -483,6 +516,7 @@ def MakeAppImageBuilder(name):
       haltOnFailure=True
     )
   )
+
   f.addStep(
     shell.ShellCommand(
       name="run linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract",
@@ -491,6 +525,7 @@ def MakeAppImageBuilder(name):
       haltOnFailure=True
     )
   )
+
   f.addStep(
     shell.ShellCommand(
       name="run linuxdeploy",
