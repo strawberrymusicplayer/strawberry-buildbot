@@ -22,6 +22,8 @@ from strawberry import builders
 LINUX_FACTORIES = {
   'opensuse': functools.partial(builders.MakeRPMBuilder, 'opensuse'),
   'fedora': functools.partial(builders.MakeRPMBuilder, 'fedora'),
+  'centos': functools.partial(builders.MakeRPMBuilder, 'centos'),
+  'mageia': functools.partial(builders.MakeRPMBuilder, 'mageia'),
   'debian': functools.partial(builders.MakeDebBuilder, 'debian'),
   'ubuntu': functools.partial(builders.MakeDebBuilder, 'ubuntu'),
   'archlinux': functools.partial(builders.MakePacmanBuilder, 'archlinux'),
@@ -53,11 +55,7 @@ class StrawberryBuildbot(object):
     self._AddBuilder(name='Source', worker='opensuse-tumbleweed', build_factory=builders.MakeSourceBuilder())
 
     # AppImage.
-    self._AddBuilder(name='AppImage', worker='opensuse-tumbleweed', build_factory=builders.MakeAppImageBuilder(name=""))
-
-    # AppImage with Deezer
-    # libdeezer links to curl symbols that are Debian/Ubuntu specialized and don't work on newer distros. Needs Xenial to compile.
-    #self._AddBuilder(name='AppImage-Deezer', worker='ubuntu-xenial-64', build_factory=builders.MakeAppImageBuilder(name="-Deezer"))
+    self._AddBuilder(name='AppImage', worker='opensuse-lp150', build_factory=builders.MakeAppImageBuilder(name=""))
 
     # MXE.
     self._AddBuilder(name='MXE', worker='mingw', build_factory=builders.MakeMXEBuilder(), auto=False, deps_lock='exclusive')
