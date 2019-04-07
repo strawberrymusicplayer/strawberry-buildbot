@@ -536,11 +536,107 @@ def MakeAppImageBuilder(name):
     )
   )
 
+  gstreamer_plugins_files = [
+    '/usr/lib64/gstreamer-1.0/libgstapetag.so',
+    '/usr/lib64/gstreamer-1.0/libgstapp.so',
+    '/usr/lib64/gstreamer-1.0/libgstaudioconvert.so',
+    '/usr/lib64/gstreamer-1.0/libgstaudiofx.so',
+    '/usr/lib64/gstreamer-1.0/libgstaudiomixer.so',
+    '/usr/lib64/gstreamer-1.0/libgstaudioparsers.so',
+    '/usr/lib64/gstreamer-1.0/libgstaudiorate.so',
+    '/usr/lib64/gstreamer-1.0/libgstaudioresample.so',
+    '/usr/lib64/gstreamer-1.0/libgstaudiotestsrc.so',
+    '/usr/lib64/gstreamer-1.0/libgstaudiovisualizers.so',
+    '/usr/lib64/gstreamer-1.0/libgstauparse.so',
+    '/usr/lib64/gstreamer-1.0/libgstautoconvert.so',
+    '/usr/lib64/gstreamer-1.0/libgstautodetect.so',
+    '/usr/lib64/gstreamer-1.0/libgstcoreelements.so',
+    '/usr/lib64/gstreamer-1.0/libgstequalizer.so',
+    '/usr/lib64/gstreamer-1.0/libgstgio.so',
+    '/usr/lib64/gstreamer-1.0/libgsticydemux.so',
+    '/usr/lib64/gstreamer-1.0/libgstid3demux.so',
+    '/usr/lib64/gstreamer-1.0/libgstlevel.so',
+    '/usr/lib64/gstreamer-1.0/libgstalsa.so',
+    '/usr/lib64/gstreamer-1.0/libgstoss4.so',
+    '/usr/lib64/gstreamer-1.0/libgstossaudio.so',
+    '/usr/lib64/gstreamer-1.0/libgstpulseaudio.so',
+    '/usr/lib64/gstreamer-1.0/libgstplayback.so',
+    '/usr/lib64/gstreamer-1.0/libgstrawparse.so',
+    '/usr/lib64/gstreamer-1.0/libgstrealmedia.so',
+    '/usr/lib64/gstreamer-1.0/libgstreplaygain.so',
+    '/usr/lib64/gstreamer-1.0/libgstsoup.so',
+    '/usr/lib64/gstreamer-1.0/libgstspectrum.so',
+    '/usr/lib64/gstreamer-1.0/libgsttypefindfunctions.so',
+    '/usr/lib64/gstreamer-1.0/libgstvolume.so',
+    '/usr/lib64/gstreamer-1.0/libgstxingmux.so',
+    '/usr/lib64/gstreamer-1.0/libgsttcp.so',
+    '/usr/lib64/gstreamer-1.0/libgstudp.so',
+    '/usr/lib64/gstreamer-1.0/libgstcdio.so',
+
+    '/usr/lib64/gstreamer-1.0/libgstflac.so',
+    '/usr/lib64/gstreamer-1.0/libgstwavparse.so',
+    '/usr/lib64/gstreamer-1.0/libgstwavpack.so',
+    '/usr/lib64/gstreamer-1.0/libgstogg.so',
+    '/usr/lib64/gstreamer-1.0/libgstvorbis.so',
+    '/usr/lib64/gstreamer-1.0/libgstopus.so',
+    '/usr/lib64/gstreamer-1.0/libgstopusparse.so',
+    '/usr/lib64/gstreamer-1.0/libgstspeex.so',
+    '/usr/lib64/gstreamer-1.0/libgstasf.so',
+    '/usr/lib64/gstreamer-1.0/libgsttaglib.so',
+    '/usr/lib64/gstreamer-1.0/libgstisomp4.so',
+    '/usr/lib64/gstreamer-1.0/libgstlame.so',
+    '/usr/lib64/gstreamer-1.0/libgstasfmux.so',
+    '/usr/lib64/gstreamer-1.0/libgstaiff.so',
+    '/usr/lib64/gstreamer-1.0/libgstmusepack.so',
+    '/usr/lib64/gstreamer-1.0/libgsttwolame.so',
+    '/usr/lib64/gstreamer-1.0/libgstlibav.so',
+    #'/usr/lib64/gstreamer-1.0/libgstfaac.so',
+    #'/usr/lib64/gstreamer-1.0/libgstfaad.so',
+  ]
+
+  f.addStep(
+    shell.ShellCommand(
+      name="mkdir gstreamer-1.0",
+      workdir="source/build",
+      command=[ "mkdir", "-p", "./AppDir/usr/lib/gstreamer-1.0" ],
+      haltOnFailure=True
+    )
+  )
+
   f.addStep(
     shell.ShellCommand(
       name="copy gstreamer plugins",
       workdir="source/build",
-      command=["cp", "-r", "-f", "/usr/libexec/gstreamer-1.0/gst-plugin-scanner", "/usr/lib64/gstreamer-1.0", "./AppDir/usr/lib/"],
+      command=[ "cp", "-f", gstreamer_plugins_files, "./AppDir/usr/lib/gstreamer-1.0" ],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="copy gstreamer plugin scanner",
+      workdir="source/build",
+      command=["cp", "-r", "-f", "/usr/libexec/gstreamer-1.0/gst-plugin-scanner", "./AppDir/usr/lib/"],
+      env=env_output,
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="unlink AppRun",
+      workdir="source/build",
+      command=["unlink", "./AppDir/AppRun"],
+      env=env_output,
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="copy AppRun",
+      workdir="source/build",
+      command=["cp", "-f", "/config/dist/AppRun", "./AppDir/"],
       env=env_output,
       haltOnFailure=True
     )

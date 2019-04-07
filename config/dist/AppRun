@@ -1,0 +1,26 @@
+#!/bin/bash
+
+HERE="$(dirname "$(readlink -f "${0}")")"
+
+export GST_PLUGIN_SCANNER=$(readlink -f $(dirname "$0")/usr/lib/gst-plugin-scanner)
+export GST_PLUGIN_SYSTEM_PATH=$(readlink -f $(dirname "$0")/usr/lib/gstreamer-1.0)
+
+if [ ! -z $APPIMAGE ] ; then
+  BINARY_NAME=$(basename "$ARGV0")
+  APPIMAGE=$APPIMAGE
+  CALLED_SUBCMD=$( basename $1 2>/dev/null )
+  if [ -e "$HERE/usr/bin/$CALLED_SUBCMD" ] && [ "x$CALLED_SUBCMD" != "x" ]; then
+    #echo befor shift dollar_at=$@
+    shift
+    #echo after shift dollar_at=$@
+    #echo CALLED_SUBCMD=$CALLED_SUBCMD
+    exec "$HERE/usr/bin/$CALLED_SUBCMD" "$@"
+  elif [ -e "$HERE/usr/bin/$BINARY_NAME" ] ; then
+    shift
+    exec "$HERE/usr/bin/$BINARY_NAME" "$@"
+  else
+    exec "$HERE/usr/bin/strawberry" "$@"
+  fi
+else
+  exec "$HERE/usr/bin/strawberry" "$@"
+fi
