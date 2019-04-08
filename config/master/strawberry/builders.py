@@ -454,14 +454,14 @@ def MakeAppImageBuilder(name):
 
   # Remove appdata file because of symbol issues:
   #/usr/bin/appstream-util: symbol lookup error: /lib64/libappstream-glib.so.8: undefined symbol: g_strv_contains
-  #f.addStep(
-  #  shell.ShellCommand(
-  #    name="remove appdata",
-  #    workdir="source/build",
-  #    haltOnFailure=True,
-  #    command=["rm", "./AppDir/usr/share/metainfo/org.strawbs.strawberry.appdata.xml"]
-  #  )
-  #)
+  f.addStep(
+    shell.ShellCommand(
+      name="remove appdata",
+      workdir="source/build",
+      haltOnFailure=True,
+      command=["rm", "./AppDir/usr/share/metainfo/org.strawbs.strawberry.appdata.xml"]
+    )
+  )
 
   f.addStep(
     shell.ShellCommand(
@@ -782,7 +782,6 @@ def MakeWindowsBuilder(is_debug, is_64):
     "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/gstreamer-1.0/libgstaudioresample.dll",
     "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/gstreamer-1.0/libgstaudiotestsrc.dll",
     "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/gstreamer-1.0/libgstautodetect.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/gstreamer-1.0/libgstautoconvert.dll",
     "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/gstreamer-1.0/libgstplayback.dll",
     "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/gstreamer-1.0/libgstvolume.dll",
     "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/gstreamer-1.0/libgstspectrum.dll",
