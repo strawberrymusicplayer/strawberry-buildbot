@@ -272,7 +272,7 @@ def MakeDebBuilder(distro, version):
     shell.ShellCommand(
       name="copy debian files to build directory",
       workdir="source/build",
-      command="cp -v -r ../dist/debian .",
+      command="cp -v -r ../debian .",
       haltOnFailure=True
     )
   )
