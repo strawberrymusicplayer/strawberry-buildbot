@@ -8,6 +8,7 @@ run urpmi --force notification-daemon
 run urpmi --force git tar rpmdevtools make cmake glibc gcc-c++ man gettext
 run urpmi --force desktop-file-utils appstream-util libappstream-glib8 hicolor-icon-theme
 run urpmi --force dbus-devel
+run urpmi --force libgnutls-devel
 run urpmi --force lib64boost-devel
 run urpmi --force lib64protobuf-devel
 run urpmi --force protobuf-compiler

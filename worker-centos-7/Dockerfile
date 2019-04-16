@@ -10,7 +10,7 @@ run yum install --assumeyes \
     redhat-lsb-core \
     git tar rpmdevtools make cmake glib glibc gcc-c++ man gettext wget fuse fuse-libs \
     desktop-file-utils libappstream-glib appstream-data \
-    dbus-devel boost-devel protobuf-devel protobuf-compiler sqlite-devel alsa-lib-devel pulseaudio-libs-devel libnotify-devel \
+    dbus-devel boost-devel protobuf-devel protobuf-compiler sqlite-devel alsa-lib-devel pulseaudio-libs-devel libnotify-devel gnutls-devel \
     qt5-devel qt5-qtbase-devel qt5-qtx11extras-devel qt5-qttools-devel \
     libcdio-devel libgpod-devel libplist-devel libusbmuxd-devel libmtp-devel \
     taglib-devel libchromaprint-devel \

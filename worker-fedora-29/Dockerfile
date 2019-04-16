@@ -5,7 +5,7 @@ run dnf install --assumeyes \
     redhat-lsb-core python3 python3-devel \
     git tar rpmdevtools make cmake glib glibc gcc-c++ man gettext \
     desktop-file-utils libappstream-glib hicolor-icon-theme \
-    dbus-devel boost-devel protobuf-devel protobuf-compiler sqlite-devel alsa-lib-devel pulseaudio-libs-devel libnotify-devel \
+    dbus-devel boost-devel protobuf-devel protobuf-compiler sqlite-devel alsa-lib-devel pulseaudio-libs-devel libnotify-devel gnutls-devel \
     qt5-devel qt5-qtbase-devel qt5-qtx11extras-devel qt5-qttools-devel \
     gstreamer1-devel gstreamer1-plugins-base-devel \
     libcdio-devel libgpod-devel libplist-devel libusbmuxd-devel libmtp-devel \

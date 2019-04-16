@@ -9,7 +9,7 @@ run zypper --non-interactive --gpg-auto-import-keys install \
     desktop-file-utils update-desktop-files appstream-glib AppStream hicolor-icon-theme \
     fuse libfuse2 \
     python3-base python3-devel python3-pip \
-    glibc-devel glib2-devel glib2-tools dbus-1-devel alsa-devel libpulse-devel libnotify-devel \
+    glibc-devel glib2-devel glib2-tools dbus-1-devel alsa-devel libpulse-devel libnotify-devel libgnutls-devel \
     boost-devel libboost_headers-devel protobuf-devel sqlite3-devel taglib-devel \
     gstreamer-devel gstreamer-plugins-base-devel libxine-devel vlc-devel \
     libQt5Core-devel libQt5Gui-devel libQt5Widgets-devel libQt5Concurrent-devel libQt5Network-devel libQt5Sql-devel libQt5DBus-devel \
