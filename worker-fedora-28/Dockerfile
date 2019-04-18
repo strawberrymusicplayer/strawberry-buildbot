@@ -12,6 +12,8 @@ run dnf install --assumeyes \
     taglib-devel libchromaprint-devel \
     dbus-x11 xorg-x11-server-Xvfb xorg-x11-xauth
 
+run dnf install --assumeyes fftw-devel
+
 run pip3 install --upgrade pip
 run pip3 install buildbot_worker==2.1.0
 
