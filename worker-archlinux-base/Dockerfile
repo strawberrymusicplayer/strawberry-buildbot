@@ -10,6 +10,8 @@ run pacman -S --noconfirm \
                     taglib chromaprint \
                     libcdio libmtp libgpod libusbmuxd libplist libimobiledevice
 
+run pacman -S --noconfirm fftw
+
 run pip3 install --upgrade pip
 run pip3 install buildbot_worker==2.1.0
 

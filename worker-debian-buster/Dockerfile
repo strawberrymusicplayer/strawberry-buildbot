@@ -11,7 +11,7 @@ run apt-get install -y \
                     libqt5core5a libqt5gui5 libqt5widgets5 libqt5concurrent5 libqt5network5 libqt5sql5 \
                     libqt5x11extras5-dev libqt5dbus5 qttools5-dev \
                     libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-alsa gstreamer1.0-pulseaudio \
-                    libchromaprint-dev \
+                    libchromaprint-dev libfftw3-dev \
                     libcdio-dev libmtp-dev libgpod-dev libimobiledevice-dev libplist-dev libusbmuxd-dev
 
 run pip3 install --upgrade pip

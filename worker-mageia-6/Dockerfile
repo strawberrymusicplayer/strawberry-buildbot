@@ -23,6 +23,7 @@ run urpmi --force lib64cdio-devel lib64gpod-devel lib64plist-devel lib64usbmuxd-
 run urpmi --force lib64raw1394-devel
 run urpmi --force lib64taglib-devel
 run urpmi --force lib64chromaprint-devel
+run urpmi --force libfftw-devel
 run urpmi --force python3 libpython3-devel
 
 run pip3 install --upgrade pip

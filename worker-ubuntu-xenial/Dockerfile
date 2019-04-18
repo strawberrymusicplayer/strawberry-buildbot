@@ -16,7 +16,7 @@ run apt-get install -y \
                     gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
                     gstreamer1.0-plugins-bad gstreamer1.0-plugins-bad-faad gstreamer1.0-plugins-ugly \
                     gstreamer1.0-libav \
-                    libchromaprint-dev \
+                    libchromaprint-dev libfftw3-dev \
                     libcdio-dev libmtp-dev libgpod-dev libimobiledevice-dev libplist-dev libusbmuxd-dev
 
 run pip3 install --upgrade pip

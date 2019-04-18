@@ -12,7 +12,7 @@ run yum install --assumeyes \
     desktop-file-utils libappstream-glib appstream-data \
     dbus-devel boost-devel protobuf-devel protobuf-compiler sqlite-devel alsa-lib-devel pulseaudio-libs-devel libnotify-devel gnutls-devel \
     qt5-devel qt5-qtbase-devel qt5-qtx11extras-devel qt5-qttools-devel \
-    libcdio-devel libgpod-devel libplist-devel libusbmuxd-devel libmtp-devel \
+    libcdio-devel libgpod-devel libplist-devel libusbmuxd-devel libmtp-devel fftw-devel \
     taglib-devel libchromaprint-devel \
     dbus-x11 xorg-x11-server-Xvfb xorg-x11-xauth \
     ffmpeg-devel fftw-devel \
