@@ -592,20 +592,21 @@ def MakeAppImageBuilder(name):
     #'/usr/lib64/gstreamer-1.0/libgstfaad.so',
   ]
 
-  f.addStep(
-    shell.ShellCommand(
-      name="mkdir gstreamer-1.0",
-      workdir="source/build",
-      command=[ "mkdir", "-p", "./AppDir/usr/lib/gstreamer-1.0" ],
-      haltOnFailure=True
-    )
-  )
+  #f.addStep(
+  #  shell.ShellCommand(
+  #    name="mkdir gstreamer-1.0",
+  #    workdir="source/build",
+  #    command=[ "mkdir", "-p", "./AppDir/usr/lib/gstreamer-1.0" ],
+  #    haltOnFailure=True
+  #  )
+  #)
 
   f.addStep(
     shell.ShellCommand(
       name="copy gstreamer plugins",
       workdir="source/build",
-      command=[ "cp", "-f", gstreamer_plugins_files, "./AppDir/usr/lib/gstreamer-1.0" ],
+      #command=[ "cp", "-f", gstreamer_plugins_files, "./AppDir/usr/lib/gstreamer-1.0" ],
+      command=[ "cp", "-f", gstreamer_plugins_files, "./AppDir/usr/lib" ],
       haltOnFailure=True
     )
   )

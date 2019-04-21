@@ -3,7 +3,8 @@
 HERE="$(dirname "$(readlink -f "${0}")")"
 
 export GST_PLUGIN_SCANNER=$(readlink -f $(dirname "$0")/usr/lib/gst-plugin-scanner)
-export GST_PLUGIN_SYSTEM_PATH=$(readlink -f $(dirname "$0")/usr/lib/gstreamer-1.0)
+#export GST_PLUGIN_SYSTEM_PATH=$(readlink -f $(dirname "$0")/usr/lib/gstreamer-1.0)
+export GST_PLUGIN_SYSTEM_PATH=$(readlink -f $(dirname "$0")/usr/lib)
 
 if [ ! -z $APPIMAGE ] ; then
   BINARY_NAME=$(basename "$ARGV0")
