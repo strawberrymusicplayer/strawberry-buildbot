@@ -1,7 +1,7 @@
 {
   "linux": {
     "opensuse": ["tumbleweed", "lp423", "lp150", "lp151"],
-    "fedora": ["28", "29"],
+    "fedora": ["28", "29", "30"],
     "centos": ["7"],
     "mageia": ["6"],
     "ubuntu": ["bionic", "cosmic", "xenial"],
