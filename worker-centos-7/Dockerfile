@@ -13,7 +13,7 @@ run yum install --assumeyes \
     dbus-devel boost-devel protobuf-devel protobuf-compiler sqlite-devel alsa-lib-devel pulseaudio-libs-devel libnotify-devel gnutls-devel \
     qt5-devel qt5-qtbase-devel qt5-qtx11extras-devel qt5-qttools-devel \
     libcdio-devel libgpod-devel libplist-devel libusbmuxd-devel libmtp-devel fftw-devel \
-    taglib-devel libchromaprint-devel \
+    libchromaprint-devel \
     dbus-x11 xorg-x11-server-Xvfb xorg-x11-xauth \
     ffmpeg-devel fftw-devel \
     hicolor-icon-theme adwaita-qt5
@@ -35,9 +35,14 @@ run useradd -r -m -s /bin/false buildbot
 run mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
     chown buildbot /home/buildbot/rpmbuild/{,BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
-run cd /tmp && wget https://github.com/acoustid/chromaprint/releases/download/v1.4.3/chromaprint-1.4.3.tar.gz
-run cd /tmp && tar -xf chromaprint-1.4.3.tar.gz
-run cd /tmp && cd chromaprint-v1.4.3 && \
-  cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=ON -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SUFFIX=64 . && make install
+# TagLib
+run cd /tmp && git clone https://github.com/taglib/taglib
+run cd /tmp/taglib && git pull
+#run cd /tmp/taglib/taglib/toolkit && sed -i 's/#define TAGLIB_PATCH_VERSION 1/#define TAGLIB_PATCH_VERSION 2/g' taglib.h
+run cd /tmp/taglib && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SUFFIX=64 . && make install
+
+# Chromaprint
+run cd /tmp && wget https://github.com/acoustid/chromaprint/releases/download/v1.4.3/chromaprint-1.4.3.tar.gz && tar -xf chromaprint-1.4.3.tar.gz
+run cd /tmp/chromaprint-v1.4.3 && cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=ON -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SUFFIX=64 . && make install
 
 cmd ["/usr/bin/python3.6", "/config/worker/start.py"]
