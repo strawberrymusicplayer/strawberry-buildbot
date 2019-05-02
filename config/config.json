@@ -4,7 +4,7 @@
     "fedora": ["28", "29", "30"],
     "centos": ["7"],
     "mageia": ["6"],
-    "ubuntu": ["bionic", "cosmic", "xenial"],
+    "ubuntu": ["bionic", "cosmic", "xenial", "disco"],
     "debian": ["stretch", "buster"],
     "archlinux": ["base"]
   },
