@@ -27,7 +27,7 @@ run urpmi --force libfftw-devel
 run urpmi --force python3 libpython3-devel
 
 run pip3 install --upgrade pip
-run pip3 install buildbot_worker==2.1.0
+run pip3 install buildbot_worker==2.3.0
 
 run echo "mageia-6" > /worker-name
 run useradd -r -m -s /bin/false buildbot

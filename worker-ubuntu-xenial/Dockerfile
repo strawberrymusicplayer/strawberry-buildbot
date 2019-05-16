@@ -20,7 +20,7 @@ run apt-get install -y \
                     libcdio-dev libmtp-dev libgpod-dev libimobiledevice-dev libplist-dev libusbmuxd-dev
 
 run pip3 install --upgrade pip
-run pip3 install buildbot_worker==2.1.0
+run pip3 install buildbot_worker==2.3.0
 
 run echo "ubuntu-xenial" > /worker-name
 run useradd -r -m -s /bin/false buildbot

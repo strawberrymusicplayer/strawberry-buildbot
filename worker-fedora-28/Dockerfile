@@ -15,7 +15,7 @@ run dnf install --assumeyes \
 run dnf install --assumeyes fftw-devel
 
 run pip3 install --upgrade pip
-run pip3 install buildbot_worker==2.1.0
+run pip3 install buildbot_worker==2.3.0
 
 run echo "fedora-28" > /worker-name
 run useradd -r -m -s /bin/false buildbot

@@ -27,7 +27,7 @@ run yum install --assumeyes python36-pip python36-devel
 run yum clean all && yum update --assumeyes
 
 run pip3.6 install --upgrade pip
-run pip3.6 install buildbot_worker==2.1.0
+run pip3.6 install buildbot_worker==2.3.0
 
 run echo "centos-7" > /worker-name
 run useradd -r -m -s /bin/false buildbot

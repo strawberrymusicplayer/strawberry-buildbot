@@ -13,7 +13,7 @@ run pacman -S --noconfirm \
 run pacman -S --noconfirm fftw
 
 run pip3 install --upgrade pip
-run pip3 install buildbot_worker==2.1.0
+run pip3 install buildbot_worker==2.3.0
 
 run echo "archlinux-base" > /worker-name
 run echo "PACKAGER=\"Jonas Kvinge <jonas@strawbs.net>\"" >>/etc/makepkg.conf
