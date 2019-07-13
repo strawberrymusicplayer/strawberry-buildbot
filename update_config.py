@@ -45,16 +45,14 @@ def WriteComposeYaml():
     },
     'volumes': {
       'command': '/bin/true',
-      'image': 'opensuse',
+      'image': 'opensuse/tumbleweed',
       'volumes': ['/persistent-data'],
     }
   }
 
   for distro, versions in CONFIG['linux'].iteritems():
     for version in versions:
-      #for bits in [64]:
-        #Add(compose, str('worker-%s-%s-%d' % (distro, version, bits)))
-        Add(compose, str('worker-%s-%s' % (distro, version)))
+      Add(compose, str('worker-%s-%s' % (distro, version)))
 
   for worker in CONFIG['special_workers']:
     Add(compose, str('worker-' + worker))
@@ -70,9 +68,7 @@ def WritePasswords():
   workers.extend(CONFIG['special_workers'])
   for distro, versions in CONFIG['linux'].iteritems():
     for version in versions:
-      #for bits in [64]:
-        #workers.append('%s-%s-%d' % (distro, version, bits))
-        workers.append('%s-%s' % (distro, version))
+      workers.append('%s-%s' % (distro, version))
 
   passwords = {name: CreatePassword() for name in workers}
 
