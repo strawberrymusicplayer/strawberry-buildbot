@@ -7,7 +7,7 @@ run apt-get install -y \
                     dpkg-dev libglib2.0-dev libdbus-1-dev \
                     python3-pip python3-dev \
                     libboost-dev libprotobuf-dev protobuf-compiler libsqlite3-dev sqlite3 libgnutls28-dev \
-                    libasound2-dev libpulse-dev libxine2-dev libvlc-dev libphonon4qt5-dev \
+                    libasound2-dev libpulse-dev \
                     qtbase5-dev qtbase5-dev-tools qtbase5-private-dev \
                     libqt5core5a libqt5gui5 libqt5widgets5 libqt5concurrent5 libqt5network5 libqt5sql5 \
                     libqt5x11extras5-dev libqt5dbus5 qttools5-dev \
