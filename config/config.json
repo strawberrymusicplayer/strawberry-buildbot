@@ -5,7 +5,7 @@
     "centos": ["7"],
     "mageia": ["6"],
     "ubuntu": ["bionic", "cosmic", "xenial", "disco"],
-    "debian": ["stretch", "buster"],
+    "debian": ["stretch", "buster", "bullseye"],
     "archlinux": ["base"]
   },
  "special_workers": [
