@@ -17,7 +17,7 @@ run zypper --non-interactive --gpg-auto-import-keys install \
     gstreamer-plugins-base gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly
 
 run pip3 install --upgrade pip
-run pip3 install buildbot_worker==2.3.0
+run pip3 install buildbot_worker==2.3.1
 
 run echo "opensuse-lp423" > /worker-name
 run useradd -r -m -s /bin/false buildbot
