@@ -25,6 +25,7 @@ run urpmi --force lib64raw1394-devel
 run urpmi --force lib64chromaprint-devel
 run urpmi --force libfftw-devel
 run urpmi --force python3 libpython3-devel
+run urpmi --force gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-pulse
 
 run pip3 install --upgrade pip
 run pip3 install buildbot_worker==2.3.1
