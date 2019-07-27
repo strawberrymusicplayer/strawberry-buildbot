@@ -55,7 +55,7 @@ class StrawberryBuildbot(object):
     self._AddBuilder(name='Source', worker='opensuse-tumbleweed', build_factory=builders.MakeSourceBuilder())
 
     # AppImage.
-    self._AddBuilder(name='AppImage', worker='mageia-6', build_factory=builders.MakeAppImageBuilder(name=""))
+    self._AddBuilder(name='AppImage', worker='centos-7', build_factory=builders.MakeAppImageBuilder(name=""))
 
     # MXE.
     self._AddBuilder(name='MXE', worker='mingw', build_factory=builders.MakeMXEBuilder(), auto=False, deps_lock='exclusive')

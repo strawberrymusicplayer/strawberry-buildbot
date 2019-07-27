@@ -10,7 +10,7 @@ run yum install --assumeyes \
     redhat-lsb-core \
     git tar rpmdevtools make cmake glib glibc gcc-c++ man gettext wget fuse fuse-libs \
     desktop-file-utils libappstream-glib appstream-data \
-    dbus-devel boost-devel protobuf-devel protobuf-compiler sqlite-devel alsa-lib-devel pulseaudio-libs-devel libnotify-devel gnutls-devel \
+    dbus-devel boost-devel protobuf-devel protobuf-compiler alsa-lib-devel pulseaudio-libs-devel libnotify-devel gnutls-devel \
     qt5-devel qt5-qtbase-devel qt5-qtx11extras-devel qt5-qttools-devel \
     libcdio-devel libgpod-devel libplist-devel libusbmuxd-devel libmtp-devel fftw-devel \
     libchromaprint-devel \
@@ -34,6 +34,16 @@ run useradd -r -m -s /bin/false buildbot
 
 run mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
     chown buildbot /home/buildbot/rpmbuild/{,BUILD,RPMS,SOURCES,SPECS,SRPMS}
+
+# SQLite3 with FTS5 support
+# Compile newest version of sqlite3 because centos provides too old version without FTS5
+
+run cd /tmp && wget https://www.sqlite.org/2019/sqlite-autoconf-3290000.tar.gz
+run cd /tmp && tar -xvf sqlite-autoconf-3290000.tar.gz
+run cd /tmp/sqlite-autoconf-3290000 && ./configure --prefix=/usr --libdir=/usr/lib64 --disable-static --disable-static-shell --enable-fts4 --enable-fts3 --enable-fts5
+run cd /tmp/sqlite-autoconf-3290000 && make
+run cd /tmp/sqlite-autoconf-3290000 && make install
+run ldconfig
 
 # TagLib
 #run cd /tmp && git clone https://github.com/taglib/taglib
