@@ -1,2 +1,3 @@
+config/github-auth.json
 docker-compose.yml
 config/passwords.json
