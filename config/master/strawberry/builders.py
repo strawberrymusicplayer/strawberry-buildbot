@@ -741,13 +741,13 @@ def MakeWindowsBuilder(is_debug, is_64):
     "..",
     "-DCMAKE_TOOLCHAIN_FILE=/config/dist/" + ("Toolchain-x86_64-w64-mingw32.cmake" if is_64 else "Toolchain-i686-w64-mingw32.cmake"),
     "-DCMAKE_BUILD_TYPE=" + ("Debug" if is_debug else "Release"),
+    "-DARCH=" + "x86_64" if is_64 else "x86",
     "-DENABLE_WIN32_CONSOLE=" + ("ON" if is_debug else "OFF"),
     "-DENABLE_DBUS=OFF",
     "-DENABLE_LIBGPOD=OFF",
     "-DENABLE_IMOBILEDEVICE=OFF",
     "-DENABLE_LIBMTP=OFF",
     "-DENABLE_XINE=" + ("ON" if is_debug else "OFF"),
-    "-DENABLE_DEEZER=ON",
   ]
 
   executable_files = [
@@ -756,13 +756,10 @@ def MakeWindowsBuilder(is_debug, is_64):
   ]
 
   strip_command = "/persistent-data/mingw/mxe/source/usr/bin/" + mingw32_name + "-strip"
-  nsi_filename = ("strawberry-debug-x64.nsi" if is_debug and is_64 else ("strawberry-debug-x86.nsi" if is_debug else ("strawberry-x64.nsi" if is_64 else "strawberry-x86.nsi")))
+  nsi_filename = "strawberry.nsi"
 
   nsi_files = [
-    "strawberry-x86.nsi",
-    "strawberry-x64.nsi",
-    "strawberry-debug-x86.nsi",
-    "strawberry-debug-x64.nsi",
+    "strawberry.nsi",
     "Capabilities.nsh",
     "FileAssociation.nsh",
     "strawberry.ico",
