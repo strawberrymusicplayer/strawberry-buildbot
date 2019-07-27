@@ -5,6 +5,7 @@ run urpmi.update -a
 run urpmi --auto-update
 run urpmi --force lib64mesaegl1
 run urpmi --force notification-daemon
+run urpmi --force urpmi-debuginfo-install python lib64python2.7-stdlib
 run urpmi --force git tar rpmdevtools make cmake glibc gcc-c++ man gettext
 run urpmi --force desktop-file-utils appstream-util libappstream-glib8 hicolor-icon-theme
 run urpmi --force dbus-devel
@@ -24,7 +25,7 @@ run urpmi --force lib64raw1394-devel
 run urpmi --force lib64taglib-devel
 run urpmi --force lib64chromaprint-devel
 run urpmi --force libfftw-devel
-run urpmi --force python3 libpython3-devel
+run urpmi --force python3 libpython3-devel python3-pip
 
 run pip3 install --upgrade pip
 run pip3 install buildbot_worker==2.3.1
