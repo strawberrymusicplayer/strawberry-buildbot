@@ -22,7 +22,6 @@ from strawberry import builders
 LINUX_FACTORIES = {
   'opensuse': functools.partial(builders.MakeRPMBuilder, 'opensuse'),
   'fedora': functools.partial(builders.MakeRPMBuilder, 'fedora'),
-  'centos': functools.partial(builders.MakeRPMBuilder, 'centos'),
   'mageia': functools.partial(builders.MakeRPMBuilder, 'mageia'),
   'debian': functools.partial(builders.MakeDebBuilder, 'debian'),
   'ubuntu': functools.partial(builders.MakeDebBuilder, 'ubuntu'),
@@ -156,6 +155,7 @@ class StrawberryBuildbot(object):
         #  builderNames=[x['name'] for x in self.builders],
         #),
       ],
+      'collapseRequests': False,
     }
 
 BuildmasterConfig = StrawberryBuildbot().Config()

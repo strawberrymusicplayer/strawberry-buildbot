@@ -2,13 +2,13 @@
   "linux": {
     "opensuse": ["tumbleweed", "lp150", "lp151"],
     "fedora": ["29", "30", "31"],
-    "centos": ["7"],
     "mageia": ["6", "7"],
-    "ubuntu": ["bionic", "cosmic", "xenial", "disco"],
+    "ubuntu": ["bionic", "cosmic", "disco"],
     "debian": ["stretch", "buster", "bullseye"],
     "archlinux": ["base"]
   },
  "special_workers": [
+    "centos-7",
     "mingw"
   ]
 }
