@@ -18,7 +18,7 @@ run urpmi --force lib64alsa2-devel
 run urpmi --force lib64pulseaudio-devel
 run urpmi --force lib64notify-devel
 run urpmi --force lib64qt5core-devel lib64qt5gui-devel lib64qt5widgets-devel lib64qt5network-devel lib64qt5concurrent-devel \
-                  lib64qt5sql-devel lib64qt5dbus-devel lib64qt5x11extras-devel lib64qt5help-devel qt5ct
+                  lib64qt5sql-devel lib64qt5dbus-devel lib64qt5x11extras-devel lib64qt5help-devel libqt5test-devel qt5ct
 run urpmi --force lib64gstreamer1.0-devel lib64gstreamer-plugins-base1.0-devel
 run urpmi --force lib64cdio-devel lib64gpod-devel lib64plist-devel lib64usbmuxd-devel lib64mtp-devel
 run urpmi --force lib64raw1394-devel
