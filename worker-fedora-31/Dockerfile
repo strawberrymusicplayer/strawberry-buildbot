@@ -2,7 +2,7 @@ from fedora:31
 
 run yum update --assumeyes
 run dnf install --assumeyes \
-    redhat-lsb-core python3 python3-devel \
+    redhat-lsb-core python3 python3-devel python3-pip \
     git tar rpmdevtools make cmake glib glibc gcc-c++ man gettext \
     desktop-file-utils libappstream-glib hicolor-icon-theme \
     dbus-devel boost-devel protobuf-devel protobuf-compiler sqlite-devel alsa-lib-devel pulseaudio-libs-devel libnotify-devel gnutls-devel \
