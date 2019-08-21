@@ -465,9 +465,9 @@ def MakeAppImageBuilder(name):
 
   f.addStep(
     shell.ShellCommand(
-      name="curl linuxdeploy-x86_64.AppImage",
+      name="curl linuxdeploy-centos6-x86_64.AppImage",
       workdir="source/build",
-      command=["curl", "-O", "-L", "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"],
+      command=["curl", "-O", "-L", "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-centos6-x86_64.AppImage"],
       haltOnFailure=True
     )
   )
@@ -503,7 +503,7 @@ def MakeAppImageBuilder(name):
     shell.ShellCommand(
       name="run linuxdeploy --appimage-extract",
       workdir="source/build",
-      command=["./linuxdeploy-x86_64.AppImage", "--appimage-extract"],
+      command=["./linuxdeploy-centos6-x86_64.AppImage", "--appimage-extract"],
       haltOnFailure=True
     )
   )
