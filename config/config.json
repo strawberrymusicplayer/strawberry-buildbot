@@ -1,11 +1,10 @@
 {
   "linux": {
-    "opensuse": ["tumbleweed", "lp150", "lp151"],
+    "opensuse": ["lp150", "lp151"],
     "fedora": ["29", "30"],
     "mageia": ["6", "7"],
     "ubuntu": ["bionic", "cosmic", "disco"],
-    "debian": ["stretch", "buster", "bullseye"],
-    "archlinux": ["base"]
+    "debian": ["stretch", "buster", "bullseye"]
   },
  "special_workers": [
     "centos-7",

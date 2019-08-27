@@ -51,7 +51,7 @@ class StrawberryBuildbot(object):
       self._AddWorker(name)
 
     # Source.
-    self._AddBuilder(name='Source', worker='opensuse-tumbleweed', build_factory=builders.MakeSourceBuilder())
+    self._AddBuilder(name='Source', worker='opensuse-lp151', build_factory=builders.MakeSourceBuilder())
 
     # AppImage.
     self._AddBuilder(name='AppImage', worker='centos-7', build_factory=builders.MakeAppImageBuilder(name=""))
