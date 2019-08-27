@@ -400,7 +400,7 @@ def MakeAppImageBuilder(name):
     shell.ShellCommand(
       name="run cmake",
       workdir="source/build",
-      command=["cmake", "..", "-DCMAKE_INSTALL_PREFIX=/usr"],
+      command=["cmake", "..", "-DUSE_BUNDLE=ON", "-DCMAKE_INSTALL_PREFIX=/usr"],
       haltOnFailure=True
     )
   )
@@ -503,19 +503,27 @@ def MakeAppImageBuilder(name):
 
   #f.addStep(
   #  shell.ShellCommand(
-  #    name="mkdir gstreamer-1.0",
+  #    name="mkdir gstreamer",
   #    workdir="source/build",
-  #    command=[ "mkdir", "-p", "./AppDir/usr/lib/gstreamer-1.0" ],
+  #    command=[ "mkdir", "-p", "./AppDir/usr/plugins/gstreamer" ],
   #    haltOnFailure=True
   #  )
   #)
 
   f.addStep(
     shell.ShellCommand(
+      name="link gstreamer plugins",
+      workdir="source/build/AppDir/usr/plugins",
+      command=[ "ln", "-s", "../lib/", "gstreamer" ],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
       name="copy gstreamer plugins",
       workdir="source/build",
-      #command=[ "cp", "-f", gstreamer_plugins_files, "./AppDir/usr/lib/gstreamer-1.0" ],
-      command=[ "cp", "-f", gstreamer_plugins_files, "./AppDir/usr/lib" ],
+      command=[ "cp", "-f", gstreamer_plugins_files, "./AppDir/usr/lib/" ],
       haltOnFailure=True
     )
   )
@@ -524,27 +532,7 @@ def MakeAppImageBuilder(name):
     shell.ShellCommand(
       name="copy gstreamer plugin scanner",
       workdir="source/build",
-      command=["cp", "-r", "-f", "/usr/libexec/gstreamer-1.0/gst-plugin-scanner", "./AppDir/usr/lib/"],
-      env=env_output,
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="unlink AppRun",
-      workdir="source/build",
-      command=["unlink", "./AppDir/AppRun"],
-      env=env_output,
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="copy AppRun",
-      workdir="source/build",
-      command=["cp", "-f", "/config/dist/AppRun", "./AppDir/"],
+      command=["cp", "-r", "-f", "/usr/libexec/gstreamer-1.0/gst-plugin-scanner", "./AppDir/usr/bin/"],
       env=env_output,
       haltOnFailure=True
     )
