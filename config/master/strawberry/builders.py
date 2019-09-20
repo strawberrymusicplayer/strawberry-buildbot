@@ -797,11 +797,25 @@ def MakeWindowsBuilder(is_debug, is_64):
       command=[
         "mkdir",
         "-p",
+        "gio-modules"
         "platforms",
         "sqldrivers",
         "imageformats",
         "gstreamer-plugins",
         "xine-plugins",
+      ],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="copy libgiognutls.dll",
+      workdir="source/build/gio-modules",
+      command=[
+        "cp",
+        "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/gio/modules/libgiognutls.dll",
+        ".",
       ],
       haltOnFailure=True
     )
