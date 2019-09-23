@@ -1,7 +1,7 @@
 :strawberry: Strawberry Buildbot
 =======================
 
-This repository contains Strawberry's buildbot instance running on http://buildbot.strawbs.net/
+This repository contains Strawberry's buildbot instance running on http://buildbot.strawberrymusicplayer.org/
 
 It contains the configration and Dockerfiles to build the master, volumes and workers.
 

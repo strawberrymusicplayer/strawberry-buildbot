@@ -100,7 +100,7 @@ class StrawberryBuildbot(object):
     return {
       'projectName':  "Strawberry",
       'projectURL':   "http://www.strawbs.org/",
-      'buildbotURL':  "http://buildbot.strawbs.net/",
+      'buildbotURL':  "http://buildbot.strawberrymusicplayer.org/",
       'protocols': {
 	  "pb": {
 	    "port": "tcp:9989:interface=0.0.0.0"
