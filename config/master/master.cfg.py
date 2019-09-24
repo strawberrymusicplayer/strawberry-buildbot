@@ -99,8 +99,8 @@ class StrawberryBuildbot(object):
   def Config(self):
     return {
       'projectName':  "Strawberry",
-      'projectURL':   "http://www.strawbs.org/",
-      'buildbotURL':  "http://buildbot.strawberrymusicplayer.org/",
+      'projectURL':   "http://www.strawberrymusicplayer.org/",
+      'buildbotURL':  "http://buildbot.strawbs.net/",
       'protocols': {
 	  "pb": {
 	    "port": "tcp:9989:interface=0.0.0.0"
