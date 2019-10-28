@@ -9,7 +9,7 @@ run zypper --non-interactive --gpg-auto-import-keys up -l -y
 
 run zypper --non-interactive --gpg-auto-import-keys install \
     python-base python-devel python3-base python3-devel python3-pip python-xml \
-    which wget patch tar gperf gzip bzip2 xz p7zip p7zip-full unzip lzip gettext-tools gtk-doc \
+    which wget patch tar gperf gzip bzip2 xz p7zip p7zip-full zip unzip lzip gettext-tools gtk-doc \
     git make cmake libtool gcc-c++ pkg-config autoconf automake intltool ruby scons bison flex \
     linux-glibc-devel glibc glibc-devel glibc-extra glibc-locale glibc-i18ndata glibc-32bit gdk-pixbuf-devel \
     mingw32-cross-nsis meson ninja
