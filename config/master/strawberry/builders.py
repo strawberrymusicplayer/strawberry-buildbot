@@ -695,6 +695,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/gstreamer-1.0/libgsttypefindfunctions.dll",
     "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/gstreamer-1.0/libgstgio.dll",
     "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/gstreamer-1.0/libgstdirectsound.dll",
+    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/gstreamer-1.0/libgstwasapi.dll",
     "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/gstreamer-1.0/libgstpbtypes.dll",
 
     "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/gstreamer-1.0/libgstapetag.dll",
