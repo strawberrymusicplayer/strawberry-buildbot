@@ -655,6 +655,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     "-DENABLE_IMOBILEDEVICE=OFF",
     "-DENABLE_LIBMTP=OFF",
     "-DENABLE_XINE=" + ("ON" if is_debug else "OFF"),
+    "-DUSE_SYSTEM_SINGLEAPPLICATION=OFF",
   ]
 
   executable_files = [
