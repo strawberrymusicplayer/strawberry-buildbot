@@ -18,7 +18,7 @@ run zypper --non-interactive --gpg-auto-import-keys install \
     gstreamer-plugins-base gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-libav
 
 run pip3 install --upgrade pip
-run pip3 install buildbot_worker==2.4.1
+run pip3 install buildbot_worker==2.5.0
 
 run echo "opensuse-tumbleweed" > /worker-name
 run useradd -r -m -s /bin/false buildbot
