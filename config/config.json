@@ -3,7 +3,7 @@
     "opensuse": ["lp150", "lp151", "lp152", "tumbleweed"],
     "fedora": ["29", "30", "31"],
     "mageia": ["6", "7"],
-    "ubuntu": ["bionic", "cosmic", "disco"],
+    "ubuntu": ["bionic", "cosmic", "disco", "eoan"],
     "debian": ["stretch", "buster", "bullseye"]
   },
  "special_workers": [
