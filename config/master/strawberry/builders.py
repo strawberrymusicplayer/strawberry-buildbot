@@ -672,6 +672,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     "FileAssociation.nsh",
     "strawberry.ico",
   ]
+
   imageformats_files = [
     "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/qt5/plugins/imageformats/qgif.dll",
     "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/qt5/plugins/imageformats/qjpeg.dll",
@@ -794,7 +795,7 @@ def MakeWindowsBuilder(is_debug, is_64):
 
   f.addStep(
     shell.ShellCommand(
-      name="mkdir platforms/sqldrivers/imageformats/gstreamer-plugins/xine-plugins",
+      name="mkdir platforms/sqldrivers/imageformats/gstreamer-plugins/xine-plugins/nsisplugins",
       workdir="source/build",
       command=[
         "mkdir",
@@ -805,6 +806,7 @@ def MakeWindowsBuilder(is_debug, is_64):
         "imageformats",
         "gstreamer-plugins",
         "xine-plugins",
+        "nsisplugins",
       ],
       haltOnFailure=True
     )
@@ -923,6 +925,24 @@ def MakeWindowsBuilder(is_debug, is_64):
       name="copy nsi files",
       workdir="source/dist/windows",
       command=["cp", nsi_files, "../../build/" ],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="copy KillProc.dll",
+      workdir="source/build/nsisplugins",
+      command=["cp", "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/KillProc.dll", "." ],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="copy ShellExecAsUser.dll",
+      workdir="source/build/nsisplugins",
+      command=["cp", "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/ShellExecAsUser.dll", "." ],
       haltOnFailure=True
     )
   )
