@@ -931,18 +931,9 @@ def MakeWindowsBuilder(is_debug, is_64):
 
   f.addStep(
     shell.ShellCommand(
-      name="copy KillProc.dll",
-      workdir="source/build/nsisplugins",
-      command=["cp", "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/KillProc.dll", "." ],
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="copy ShellExecAsUser.dll",
-      workdir="source/build/nsisplugins",
-      command=["cp", "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/ShellExecAsUser.dll", "." ],
+      name="copy killproc.exe",
+      workdir="source/build",
+      command=["cp", "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/killproc.exe", "." ],
       haltOnFailure=True
     )
   )
