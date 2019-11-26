@@ -28,7 +28,7 @@ run yum install --assumeyes python36-pip python36-devel
 run yum clean all && yum update --assumeyes
 
 run pip3.6 install --upgrade pip
-run pip3.6 install buildbot_worker==2.5.0
+run pip3.6 install buildbot_worker==2.5.1
 
 run ln -s /usr/bin/cmake3 /usr/bin/cmake
 
