@@ -12,7 +12,7 @@ run zypper --non-interactive --gpg-auto-import-keys install \
     which wget patch tar gperf gzip bzip2 xz p7zip p7zip-full zip unzip lzip gettext-tools gtk-doc \
     git make cmake libtool gcc-c++ pkg-config autoconf automake intltool ruby scons bison flex \
     linux-glibc-devel glibc glibc-devel glibc-extra glibc-locale glibc-i18ndata glibc-32bit gdk-pixbuf-devel \
-    mingw32-cross-nsis meson ninja
+    mingw32-cross-nsis meson ninja file-devel libopenssl-devel
 
 run pip3 install --upgrade pip
 run pip3 install buildbot_worker==2.5.1
