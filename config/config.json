@@ -1,6 +1,6 @@
 {
   "linux": {
-    "opensuse": ["lp150", "lp151", "lp152", "tumbleweed"],
+    "opensuse": ["lp150", "lp151", "tumbleweed"],
     "fedora": ["29", "30", "31"],
     "centos": ["8"],
     "mageia": ["6", "7"],
