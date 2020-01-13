@@ -1,9 +1,9 @@
-from opensuse/leap:15.2
+FROM opensuse/leap:15.2
 
-run zypper --non-interactive --gpg-auto-import-keys ref
-run zypper --non-interactive --gpg-auto-import-keys up -l -y
+RUN zypper --non-interactive --gpg-auto-import-keys ref
+RUN zypper --non-interactive --gpg-auto-import-keys up -l -y
 
-run zypper --non-interactive --gpg-auto-import-keys install \
+RUN zypper --non-interactive --gpg-auto-import-keys install \
     lsb-release rpm-build rpmdevtools \
     git tar make cmake gcc gcc-c++ pkg-config gettext-tools \
     desktop-file-utils update-desktop-files appstream-glib hicolor-icon-theme \
@@ -15,12 +15,12 @@ run zypper --non-interactive --gpg-auto-import-keys install \
     libqt5-qtx11extras-devel libqt5-qtbase-common-devel libQt5Sql5-sqlite libqt5-linguist-devel \
     libcdio-devel libgpod-devel libplist-devel libmtp-devel libusbmuxd-devel libchromaprint-devel
 
-run pip3 install --upgrade pip
-run pip3 install buildbot_worker==2.5.1
+RUN pip3 install --upgrade pip
+RUN pip3 install buildbot_worker==2.5.1
 
-run echo "opensuse-lp152" > /worker-name
-run useradd -r -m -s /bin/false buildbot
+RUN echo "opensuse-lp152" > /worker-name
+RUN useradd -r -m -s /bin/false buildbot
 
-run mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
+RUN mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
     chown buildbot /home/buildbot/rpmbuild/{,BUILD,RPMS,SOURCES,SPECS,SRPMS}
-cmd ["/usr/bin/python3", "/config/worker/start.py"]
+CMD ["/usr/bin/python3", "/config/worker/start.py"]

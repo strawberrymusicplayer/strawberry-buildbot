@@ -1,9 +1,9 @@
-from ubuntu:eoan
+FROM ubuntu:eoan
 
-env DEBIAN_FRONTEND=noninteractive 
-run apt-get -y update
-run apt-get -y upgrade
-run apt-get install -y \
+ENV DEBIAN_FRONTEND=noninteractive 
+RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get install -y \
                     git make cmake gcc fakeroot wget curl gettext \
                     dpkg-dev libglib2.0-dev libdbus-1-dev \
                     python3-pip python3-dev \
@@ -18,10 +18,10 @@ run apt-get install -y \
                     libchromaprint-dev libfftw3-dev \
                     libcdio-dev libmtp-dev libgpod-dev libimobiledevice-dev libplist-dev libusbmuxd-dev
 
-run pip3 install --upgrade pip
-run pip3 install buildbot_worker==2.5.1
+RUN pip3 install --upgrade pip
+RUN pip3 install buildbot_worker==2.5.1
 
-run echo "ubuntu-eoan" > /worker-name
-run useradd -r -m -s /bin/false buildbot
+RUN echo "ubuntu-eoan" > /worker-name
+RUN useradd -r -m -s /bin/false buildbot
 
-cmd ["/usr/bin/python3", "/config/worker/start.py"]
+CMD ["/usr/bin/python3", "/config/worker/start.py"]

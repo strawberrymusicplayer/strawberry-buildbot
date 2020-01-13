@@ -1,7 +1,7 @@
-from fedora:31
+FROM fedora:31
 
-run yum update --assumeyes
-run dnf install --assumeyes \
+RUN yum update --assumeyes
+RUN dnf install --assumeyes \
     redhat-lsb-core python3 python3-devel python3-pip \
     git tar rpmdevtools make cmake glib glibc gcc-c++ man gettext \
     desktop-file-utils libappstream-glib hicolor-icon-theme \
@@ -12,13 +12,13 @@ run dnf install --assumeyes \
     taglib-devel libchromaprint-devel fftw-devel \
     dbus-x11 xorg-x11-server-Xvfb xorg-x11-xauth
 
-run pip3 install --upgrade pip
-run pip3 install buildbot_worker==2.5.1
+RUN pip3 install --upgrade pip
+RUN pip3 install buildbot_worker==2.5.1
 
-run echo "fedora-31" > /worker-name
-run useradd -r -m -s /bin/false buildbot
+RUN echo "fedora-31" > /worker-name
+RUN useradd -r -m -s /bin/false buildbot
 
-run mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
+RUN mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
     chown buildbot /home/buildbot/rpmbuild/{,BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
-cmd ["/usr/bin/python3", "/config/worker/start.py"]
+CMD ["/usr/bin/python3", "/config/worker/start.py"]

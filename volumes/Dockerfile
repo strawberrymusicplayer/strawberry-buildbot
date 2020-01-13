@@ -1,5 +1,5 @@
-from opensuse/tumbleweed
+FROM opensuse/tumbleweed
 
-volume ["/persistent-data"]
+VOLUME ["/persistent-data"]
 
-cmd ["/bin/echo", "Created data container"]
+CMD ["/bin/echo", "Created data container"]

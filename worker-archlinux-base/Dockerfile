@@ -1,7 +1,7 @@
-from archlinux/base
+FROM archlinux/base
 
-run pacman -Syu --noconfirm
-run pacman -S --noconfirm \
+RUN pacman -Syu --noconfirm
+RUN pacman -S --noconfirm \
                     git make cmake gcc fakeroot sudo pkgconf python-pip gettext \
                     desktop-file-utils hicolor-icon-theme \
                     udisks2 dbus sqlite3 alsa-lib pulseaudio boost protobuf gnutls \
@@ -10,13 +10,13 @@ run pacman -S --noconfirm \
                     taglib chromaprint \
                     libcdio libmtp libgpod libusbmuxd libplist libimobiledevice
 
-run pacman -S --noconfirm fftw
+RUN pacman -S --noconfirm fftw
 
-run pip3 install --upgrade pip
-run pip3 install buildbot_worker==2.5.1
+RUN pip3 install --upgrade pip
+RUN pip3 install buildbot_worker==2.5.1
 
-run echo "archlinux-base" > /worker-name
-run echo "PACKAGER=\"Jonas Kvinge <jonas@strawbs.net>\"" >>/etc/makepkg.conf
-run useradd -r -m -s /bin/false buildbot
+RUN echo "archlinux-base" > /worker-name
+RUN echo "PACKAGER=\"Jonas Kvinge <jonas@strawbs.net>\"" >>/etc/makepkg.conf
+RUN useradd -r -m -s /bin/false buildbot
 
-cmd ["/usr/bin/python3", "/config/worker/start.py"]
+CMD ["/usr/bin/python3", "/config/worker/start.py"]

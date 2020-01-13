@@ -1,8 +1,8 @@
-from debian:stretch
+FROM debian:stretch
 
-run apt-get -y update
-run apt-get -y upgrade
-run apt-get install -y \
+RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get install -y \
                     git make cmake gcc fakeroot gettext \
                     python3-pip python3-dev \
                     libglib2.0-dev dpkg-dev libdbus-1-dev libboost-dev libprotobuf-dev protobuf-compiler libsqlite3-dev sqlite3 libgnutls28-dev \
@@ -14,10 +14,10 @@ run apt-get install -y \
                     libchromaprint-dev libfftw3-dev \
                     libcdio-dev libmtp-dev libgpod-dev libimobiledevice-dev libplist-dev libusbmuxd-dev
 
-run pip3 install --upgrade pip
-run pip3 install buildbot_worker==2.5.1
+RUN pip3 install --upgrade pip
+RUN pip3 install buildbot_worker==2.5.1
 
-run echo "debian-stretch" > /worker-name
-run useradd -r -m -s /bin/false buildbot
+RUN echo "debian-stretch" > /worker-name
+RUN useradd -r -m -s /bin/false buildbot
 
-cmd ["/usr/bin/python3", "/config/worker/start.py"]
+CMD ["/usr/bin/python3", "/config/worker/start.py"]
