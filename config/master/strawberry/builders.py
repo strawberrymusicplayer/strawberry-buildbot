@@ -78,27 +78,9 @@ def MakeSourceBuilder():
 
   f.addStep(
     shell.ShellCommand(
-      name="clean build",
-      workdir="source",
-      command=["rm", "-rf", "build"],
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
       name="run cmake",
       workdir="source/build",
       command=["cmake", ".." ],
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="remove old tarballs",
-      workdir="source/dist/scripts",
-      command=["rm", "-f", "*.bz2"],
       haltOnFailure=True
     )
   )
@@ -126,6 +108,16 @@ def MakeSourceBuilder():
   )
   f.addStep(steps.SetProperties(properties=get_base_filename))
   f.addStep(UploadPackage("source"))
+
+  f.addStep(
+    shell.ShellCommand(
+      name="delete file",
+      workdir="source/dist/scripts",
+      command="rm -f *.bz2 *.xz",
+      haltOnFailure=True
+    )
+  )
+
   return f
 
 
@@ -136,44 +128,9 @@ def MakeRPMBuilder(distro, version):
 
   f.addStep(
     shell.ShellCommand(
-      name="clean rpmbuild",
-      workdir="source/build",
-      command="find ~/rpmbuild/ -type f -delete"
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="clean build",
-      workdir="source",
-      command=["rm", "-rf", "build"],
-      haltOnFailure=True
-    )
-  )
-
-  #f.addStep(
-  #  shell.ShellCommand(
-  #    name="copy new spec file",
-  #    workdir="source",
-  #    command=["cp", "/config/dist/strawberry.spec.in", "./dist/rpm/"],
-  #    haltOnFailure=True
-  #  )
-  #)
-
-  f.addStep(
-    shell.ShellCommand(
       name="run cmake",
       workdir="source/build",
       command=["cmake", ".."],
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="run make clean",
-      workdir="source/build",
-      command=["make", "clean"],
       haltOnFailure=True
     )
   )
@@ -211,7 +168,7 @@ def MakeRPMBuilder(distro, version):
       workdir="source",
       command=[
         "sh", "-c",
-        "ls -dt " + "~/rpmbuild/RPMS/*/strawberry-*.rpm" + " | grep -v debuginfo | grep -v debugsource | head -n 1"
+        "ls -dt ~/rpmbuild/RPMS/*/strawberry-*.rpm | grep -v debuginfo | grep -v debugsource | head -n 1"
       ],
       property="output-filepath",
       haltOnFailure=True
@@ -222,6 +179,23 @@ def MakeRPMBuilder(distro, version):
   if not version in ['tumbleweed']:
     f.addStep(UploadPackage(distro + "/" + version))
 
+  f.addStep(
+    shell.ShellCommand(
+      name="delete files",
+      workdir="source",
+      command="rm -f ~/rpmbuild/SOURCES/*.xz ~/rpmbuild/RPMS/*/*.rpm",
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="clean rpmbuild",
+      workdir="source/build",
+      command="find ~/rpmbuild/ -type f -delete"
+    )
+  )
+
   return f
 
 
@@ -229,50 +203,32 @@ def MakeDebBuilder(distro, version):
 
   env = {"DEB_BUILD_OPTIONS": "parallel=4",}
 
-  cmake_cmd = [
-    "cmake",
-    "..",
-    "-DWITH_DEBIAN=ON",
-    "-DDEB_ARCH=amd64",
-    "-DDEB_DIST=" + version,
-    #"-DFORCE_GIT_REVISION=",
-  ]
-
   f = factory.BuildFactory()
   f.addStep(git.Git(**GitArgs("strawberry", "master")))
 
   f.addStep(
     shell.ShellCommand(
-      name="clean build",
-      workdir="source",
-      command=["rm", "-rf", "build"],
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
       name="run cmake",
       workdir="source/build",
-      command=cmake_cmd,
+      command=["cmake", "..", "-DWITH_DEBIAN=ON", "-DDEB_ARCH=amd64", "-DDEB_DIST=" + version],
       haltOnFailure=True
     )
   )
 
   f.addStep(
     shell.ShellCommand(
-      name="run make clean",
+      name="delete debian link from build directory",
       workdir="source/build",
-      command=["make", "clean"],
+      command="rm -rf debian",
       haltOnFailure=True
     )
   )
 
   f.addStep(
     shell.ShellCommand(
-      name="copy debian files to build directory",
+      name="link debian to build directory",
       workdir="source/build",
-      command="cp -v -r ../debian .",
+      command="ln -s ../debian",
       haltOnFailure=True
     )
   )
@@ -292,7 +248,7 @@ def MakeDebBuilder(distro, version):
       workdir="source",
       command=[
         "sh", "-c",
-        "ls -dt " + "strawberry_*.deb" + " | grep -v debuginfo | head -n 1"
+        "ls -dt strawberry_*.deb | grep -v debuginfo | head -n 1"
       ],
       property="output-filepath",
       haltOnFailure=True
@@ -301,6 +257,16 @@ def MakeDebBuilder(distro, version):
   f.addStep(steps.SetProperties(properties=get_base_filename))
 
   f.addStep(UploadPackage("%s/%s" % (distro, version)))
+
+  f.addStep(
+    shell.ShellCommand(
+      name="delete file",
+      workdir="source",
+      command="rm -f *.deb *.buildinfo *.changes",
+      haltOnFailure=True
+    )
+  )
+
   return f
 
 
@@ -308,24 +274,6 @@ def MakePacmanBuilder(distro, version):
 
   f = factory.BuildFactory()
   f.addStep(git.Git(**GitArgs("strawberry", "master")))
-
-  f.addStep(
-    shell.ShellCommand(
-      name="clean build",
-      workdir="source",
-      command=["rm", "-rf", "build"],
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="mkdir build",
-      workdir="source",
-      command=["mkdir", "-p", "build"],
-      haltOnFailure=True
-    )
-  )
 
   f.addStep(
     shell.ShellCommand(
@@ -369,7 +317,7 @@ def MakePacmanBuilder(distro, version):
       workdir="source",
       command=[
         "sh", "-c",
-        "ls -dt " + "build/strawberry-*.pkg.tar.xz" + " | head -n 1"
+        "ls -dt build/strawberry-*.pkg.tar.xz | head -n 1"
       ],
       property="output-filepath",
       haltOnFailure=True
@@ -378,6 +326,15 @@ def MakePacmanBuilder(distro, version):
   f.addStep(steps.SetProperties(properties=get_base_filename))
 
   #f.addStep(UploadPackage(distro))
+
+  f.addStep(
+    shell.ShellCommand(
+      name="delete file",
+      workdir="source/build",
+      command="rm -f *.xz",
+      haltOnFailure=True
+    )
+  )
 
   return f
 
@@ -391,7 +348,7 @@ def MakeAppImageBuilder(name):
     shell.ShellCommand(
       name="clean build",
       workdir="source",
-      command=["rm", "-rf", "build"],
+      command="rm -rf build/AppDir",
       haltOnFailure=True
     )
   )
@@ -554,7 +511,7 @@ def MakeAppImageBuilder(name):
       workdir="source",
       command=[
         "sh", "-c",
-        "ls -dt " + "build/Strawberry*.AppImage" + " | head -n 1"
+        "ls -dt build/Strawberry*.AppImage | head -n 1"
       ],
       property="output-filepath",
       haltOnFailure=True
@@ -562,6 +519,16 @@ def MakeAppImageBuilder(name):
   )
   f.addStep(steps.SetProperties(properties=get_base_filename))
   f.addStep(UploadPackage("appimage"))
+
+  f.addStep(
+    shell.ShellCommand(
+      name="delete files",
+      workdir="source/build",
+      command="rm -rf AppDir *.AppImage",
+      haltOnFailure=True
+    )
+  )
+
   return f
 
 
@@ -569,14 +536,6 @@ def MakeMXEBuilder():
 
   f = factory.BuildFactory()
   f.addStep(git.Git(**GitArgs("strawberry-mxe", "master")))
-
-  #f.addStep(
-  #  shell.ShellCommand(
-  #    name="clean build",
-  #    workdir="source",
-  #    command=["make", "clean"]
-  #  )
-  #)
 
   f.addStep(
     shell.Compile(
@@ -759,14 +718,6 @@ def MakeWindowsBuilder(is_debug, is_64):
   f = factory.BuildFactory()
   f.addStep(git.Git(**GitArgs("strawberry", "master")))
 
-  #f.addStep(
-  #  shell.ShellCommand(
-  #    name="clean build",
-  #    workdir="source",
-  #    command=["rm", "-rf", "build"],
-  #    haltOnFailure=True
-  #  )
-  #)
   f.addStep(
     shell.ShellCommand(
       name="run cmake",
@@ -964,5 +915,14 @@ def MakeWindowsBuilder(is_debug, is_64):
   f.addStep(steps.SetProperties(properties=get_base_filename))
 
   f.addStep(UploadPackage("windows"))
+
+  f.addStep(
+    shell.ShellCommand(
+      name="delete files",
+      workdir="source/build",
+      command="rm -rf *.exe *.dll gio-modules platforms sqldrivers imageformats gstreamer-plugins xine-plugins nsisplugins",
+      haltOnFailure=True
+    )
+  )
 
   return f
