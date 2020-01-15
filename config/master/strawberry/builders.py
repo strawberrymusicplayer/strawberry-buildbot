@@ -746,7 +746,7 @@ def MakeWindowsBuilder(is_debug, is_64):
 
   f.addStep(
     shell.ShellCommand(
-      name="mkdir platforms/sqldrivers/imageformats/gstreamer-plugins/xine-plugins/nsisplugins",
+      name="mkdir platforms/sqldrivers/imageformats/styles/gstreamer-plugins/xine-plugins/nsisplugins",
       workdir="source/build",
       command=[
         "mkdir",
@@ -755,6 +755,7 @@ def MakeWindowsBuilder(is_debug, is_64):
         "platforms",
         "sqldrivers",
         "imageformats",
+        "styles",
         "gstreamer-plugins",
         "xine-plugins",
         "nsisplugins",
@@ -817,6 +818,19 @@ def MakeWindowsBuilder(is_debug, is_64):
 
   f.addStep(
     shell.ShellCommand(
+      name="copy styles",
+      workdir="source/build/styles",
+      command=[
+        "cp",
+        "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/qt5/plugins/styles/qwindowsvistastyle.dll",
+        ".",
+      ],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
       name="copy gstreamer-plugins",
       workdir="source/build/gstreamer-plugins",
       command=[
@@ -858,6 +872,8 @@ def MakeWindowsBuilder(is_debug, is_64):
         "./sqldrivers",
         "-F",
         "./imageformats",
+        "-F",
+        "./styles",
         "-F",
         "s./gstreamer-plugins",
         "-F",
@@ -920,7 +936,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     shell.ShellCommand(
       name="delete files",
       workdir="source/build",
-      command="rm -rf *.exe *.dll gio-modules platforms sqldrivers imageformats gstreamer-plugins xine-plugins nsisplugins",
+      command="rm -rf *.exe *.dll gio-modules platforms sqldrivers imageformats styles gstreamer-plugins xine-plugins nsisplugins",
       haltOnFailure=True
     )
   )
