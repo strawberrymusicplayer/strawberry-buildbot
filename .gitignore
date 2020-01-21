@@ -1,3 +1,4 @@
-config/github-auth.json
+*.kdev4
+*.code-workspace
 docker-compose.yml
-config/passwords.json
+config/secret/*
