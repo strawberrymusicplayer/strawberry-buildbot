@@ -3,7 +3,7 @@ FROM debian:stretch
 RUN apt-get -y update
 RUN apt-get -y upgrade
 RUN apt-get install -y \
-                    git make cmake gcc fakeroot gettext \
+                    git make cmake gcc fakeroot gettext lsb-release \
                     python3-pip python3-dev \
                     libglib2.0-dev dpkg-dev libdbus-1-dev libboost-dev libprotobuf-dev protobuf-compiler libsqlite3-dev sqlite3 libgnutls28-dev \
                     libasound2-dev libpulse-dev \
