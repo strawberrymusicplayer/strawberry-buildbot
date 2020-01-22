@@ -72,9 +72,9 @@ def WritePasswords():
 
   passwords = {name: CreatePassword() for name in workers}
 
-  with open('config/passwords.json', 'w') as fh:
+  with open('config/secret/passwords.json', 'w') as fh:
     json.dump(passwords, fh, indent=2, sort_keys=True)
-  print 'Wrote config/passwords.json'
+  print 'Wrote config/secret/passwords.json'
 
 
 def main():
