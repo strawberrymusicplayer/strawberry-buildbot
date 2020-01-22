@@ -201,8 +201,6 @@ def MakeRPMBuilder(distro, version):
 
 def MakeDebBuilder(distro, version):
 
-  env = {"DEB_BUILD_OPTIONS": "parallel=4",}
-
   f = factory.BuildFactory()
   f.addStep(git.Git(**GitArgs("strawberry", "master")))
 
@@ -210,25 +208,7 @@ def MakeDebBuilder(distro, version):
     shell.ShellCommand(
       name="run cmake",
       workdir="source/build",
-      command=["cmake", "..", "-DWITH_DEBIAN=ON", "-DDEB_ARCH=amd64", "-DDEB_DIST=" + version],
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="delete debian link from build directory",
-      workdir="source/build",
-      command="rm -rf debian",
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="link debian to build directory",
-      workdir="source/build",
-      command="ln -s ../debian",
+      command=["cmake", ".."],
       haltOnFailure=True
     )
   )
@@ -236,8 +216,8 @@ def MakeDebBuilder(distro, version):
   f.addStep(
     shell.Compile(
       name="run dpkg-buildpackage",
-      workdir="source/build",
-      command=["dpkg-buildpackage", "-b", "-d", "-uc", "-us"],
+      workdir="source",
+      command=["dpkg-buildpackage", "-b", "-d", "-uc", "-us", "-nc"],
       haltOnFailure=True
     )
   )
@@ -248,7 +228,7 @@ def MakeDebBuilder(distro, version):
       workdir="source",
       command=[
         "sh", "-c",
-        "ls -dt strawberry_*.deb | grep -v debuginfo | head -n 1"
+        "ls -dt ../strawberry_*.deb | grep -v debuginfo | head -n 1"
       ],
       property="output-filepath",
       haltOnFailure=True
@@ -270,10 +250,85 @@ def MakeDebBuilder(distro, version):
   return f
 
 
+def MakePPABuilder(distro, ppa):
+
+  f = factory.BuildFactory()
+
+  git_args = GitArgs("strawberry", "master")
+  git_args["mode"] = "full"
+  f.addStep(git.Git(**git_args))
+
+  f.addStep(
+    shell.ShellCommand(
+      name="gpg import key",
+      workdir="source",
+      command="gpg --import --no-tty --batch --yes /config/secret/jonas-gpg-private-key",
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="run cmake",
+      workdir="source/build",
+      command=["cmake", ".."],
+      haltOnFailure=True,
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="cleanup",
+      workdir="source",
+      command="rm -rf .git build",
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="run dpkg-buildpackage",
+      workdir="source",
+      command=["dpkg-buildpackage", "-S", "-d", "-k680C29B17F2310FA"],
+      #command=["dpkg-buildpackage", "-S", "-d", "-k7844D25CCA33FE88"],
+      haltOnFailure=False,
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="dput",
+      workdir=".",
+      command="dput %s *_source.changes" % ppa,
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="cleanup",
+      workdir=".",
+      command="rm -rf *.diff.*z *.tar.*z *.dsc *_source.changes *_source.buildinfo *_source.ppa.upload source/build/*",
+      haltOnFailure=True
+    )
+  )
+
+  return f
+
+
 def MakePacmanBuilder(distro, version):
 
   f = factory.BuildFactory()
   f.addStep(git.Git(**GitArgs("strawberry", "master")))
+
+  f.addStep(
+    shell.ShellCommand(
+      name="clean build",
+      workdir="source",
+      command="rm -rf build",
+      haltOnFailure=True
+    )
+  )
 
   f.addStep(
     shell.ShellCommand(
@@ -615,6 +670,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     "-DENABLE_LIBMTP=OFF",
     "-DENABLE_XINE=" + ("ON" if is_debug else "OFF"),
     "-DUSE_SYSTEM_SINGLEAPPLICATION=OFF",
+    "-DUSE_SYSTEM_TAGLIB=OFF",
   ]
 
   executable_files = [
@@ -942,3 +998,4 @@ def MakeWindowsBuilder(is_debug, is_64):
   )
 
   return f
+

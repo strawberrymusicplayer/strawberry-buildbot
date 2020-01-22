@@ -30,8 +30,10 @@ LINUX_FACTORIES = {
 }
 
 CONFIG = json.load(open('/config/config.json'))
-PASSWORDS = json.load(open('/config/passwords.json'))
-GITHUB_AUTH = json.load(open('/config/github-auth.json'))
+PASSWORDS = json.load(open('/config/secret/passwords.json'))
+GITHUB_AUTH = json.load(open('/config/secret/github-auth.json'))
+PPA_STABLE = 'ppa:jonaski/strawberry'
+PPA_UNSTABLE = 'ppa:jonaski/strawberry-unstable'
 
 class StrawberryBuildbot(object):
   def __init__(self):
@@ -46,6 +48,16 @@ class StrawberryBuildbot(object):
       factory = LINUX_FACTORIES[linux_distro]
       for version in versions:
         self._AddBuilderAndWorker(linux_distro, version, factory)
+
+    # Add Ubuntu PPA.
+    for linux_distro in CONFIG['linux']['ubuntu']:
+      self._AddBuilder(name='Ubuntu Stable PPA %s' % linux_distro.title(),
+                       worker='ubuntu-%s' % linux_distro,
+                       build_factory=builders.MakePPABuilder(linux_distro, PPA_STABLE))
+      self._AddBuilder(name='Ubuntu Unstable PPA %s' % linux_distro.title(),
+                       worker='ubuntu-%s' % linux_distro,
+                       build_factory=builders.MakePPABuilder(linux_distro, PPA_UNSTABLE),
+                       auto=False)
 
     # Add special workers.
     for name in CONFIG['special_workers']:

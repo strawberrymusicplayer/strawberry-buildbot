@@ -8,7 +8,7 @@ from twisted.application import service
 application = service.Application('buildbot-worker')
 workername = open('/worker-name').read().strip()
 basedir = os.path.join('/persistent-data', workername)
-PASSWORDS = json.load(open('/config/passwords.json'))
+PASSWORDS = json.load(open('/config/secret/passwords.json'))
 
 rotateLength = 10000000
 maxRotatedFiles = 10
