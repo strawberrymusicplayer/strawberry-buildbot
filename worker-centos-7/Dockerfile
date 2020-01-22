@@ -28,7 +28,7 @@ RUN yum install --assumeyes python36-pip python36-devel
 RUN yum clean all && yum update --assumeyes
 
 RUN pip3.6 install --upgrade pip
-RUN pip3.6 install buildbot_worker==2.5.1
+RUN pip3.6 install buildbot_worker==2.6.0
 
 RUN ln -s /usr/bin/cmake3 /usr/bin/cmake
 
@@ -41,11 +41,11 @@ RUN mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
 # SQLite3 with FTS5 support
 # Compile newest version of sqlite3 because centos provides too old version without FTS5
 
-RUN cd /tmp && wget https://www.sqlite.org/2019/sqlite-autoconf-3290000.tar.gz
-RUN cd /tmp && tar -xvf sqlite-autoconf-3290000.tar.gz
-RUN cd /tmp/sqlite-autoconf-3290000 && ./configure --prefix=/usr --libdir=/usr/lib64 --disable-static --disable-static-shell --enable-fts4 --enable-fts3 --enable-fts5
-RUN cd /tmp/sqlite-autoconf-3290000 && make
-RUN cd /tmp/sqlite-autoconf-3290000 && make install
+RUN cd /tmp && wget https://www.sqlite.org/2020/sqlite-autoconf-3310000.tar.gz
+RUN cd /tmp && tar -xvf sqlite-autoconf-3310000.tar.gz
+RUN cd /tmp/sqlite-autoconf-3310000 && ./configure --prefix=/usr --libdir=/usr/lib64 --disable-static --disable-static-shell --enable-fts4 --enable-fts3 --enable-fts5
+RUN cd /tmp/sqlite-autoconf-3310000 && make
+RUN cd /tmp/sqlite-autoconf-3310000 && make install
 RUN ldconfig
 
 # TagLib

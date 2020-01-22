@@ -28,7 +28,7 @@ RUN urpmi --force python3 libpython3-devel
 RUN urpmi --force gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-pulse
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==2.5.1
+RUN pip3 install buildbot_worker==2.6.0
 
 RUN echo "mageia-6" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot

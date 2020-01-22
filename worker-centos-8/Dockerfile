@@ -30,7 +30,7 @@ RUN dnf install -y gstreamer1-devel gstreamer1-plugins-base-devel \
 RUN dnf clean all && dnf update -y
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==2.5.1
+RUN pip3 install buildbot_worker==2.6.0
 
 RUN echo "centos-8" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot
@@ -41,11 +41,11 @@ RUN mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
 # SQLite3 with FTS5 support
 # Compile newest version of sqlite3 because centos provides too old version without FTS5
 
-RUN cd /tmp && wget https://www.sqlite.org/2019/sqlite-autoconf-3300100.tar.gz
-RUN cd /tmp && tar -xvf sqlite-autoconf-3300100.tar.gz
-RUN cd /tmp/sqlite-autoconf-3300100 && ./configure --prefix=/usr --libdir=/usr/lib64 --disable-static --disable-static-shell --enable-fts4 --enable-fts3 --enable-fts5
-RUN cd /tmp/sqlite-autoconf-3300100 && make
-RUN cd /tmp/sqlite-autoconf-3300100 && make install
+RUN cd /tmp && wget https://www.sqlite.org/2020/sqlite-autoconf-3310000.tar.gz
+RUN cd /tmp && tar -xvf sqlite-autoconf-3310000.tar.gz
+RUN cd /tmp/sqlite-autoconf-3310000 && ./configure --prefix=/usr --libdir=/usr/lib64 --disable-static --disable-static-shell --enable-fts4 --enable-fts3 --enable-fts5
+RUN cd /tmp/sqlite-autoconf-3310000 && make
+RUN cd /tmp/sqlite-autoconf-3310000 && make install
 RUN ldconfig
 
 # TagLib

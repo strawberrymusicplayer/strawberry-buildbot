@@ -16,7 +16,7 @@ RUN zypper --non-interactive --gpg-auto-import-keys install \
     libcdio-devel libgpod-devel libplist-devel libmtp-devel libusbmuxd-devel libchromaprint-devel
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==2.5.1
+RUN pip3 install buildbot_worker==2.6.0
 
 RUN echo "opensuse-lp150" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot
