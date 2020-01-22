@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -y update
 RUN apt-get -y upgrade
 RUN apt-get install -y \
-                    git make cmake gcc fakeroot wget curl gettext \
+                    git make cmake gcc fakeroot wget curl gettext lsb-release dput \
                     dpkg-dev libglib2.0-dev libdbus-1-dev \
                     python3-pip python3-dev \
                     libboost-dev libprotobuf-dev protobuf-compiler libsqlite3-dev sqlite3 libgnutls28-dev \
