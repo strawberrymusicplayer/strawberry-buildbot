@@ -289,8 +289,7 @@ def MakePPABuilder(distro, ppa):
     shell.ShellCommand(
       name="run dpkg-buildpackage",
       workdir="source",
-      command=["dpkg-buildpackage", "-S", "-d", "-k680C29B17F2310FA"],
-      #command=["dpkg-buildpackage", "-S", "-d", "-k7844D25CCA33FE88"],
+      command=["dpkg-buildpackage", "-S", "-d", "-k573D197B5EA20EDF"],
       haltOnFailure=False,
     )
   )
