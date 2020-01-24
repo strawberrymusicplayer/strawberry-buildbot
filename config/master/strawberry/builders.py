@@ -14,7 +14,7 @@ UPLOADURL = "http://builds.strawberrymusicplayer.org"
 MAKE_JOBS = '4'
 
 def GitBaseUrl(repository):
-  return "https://github.com/jonaski/%s.git" % repository
+  return "https://github.com/strawberrymusicplayer/%s.git" % repository
 
 
 def GitArgs(repository, branch):

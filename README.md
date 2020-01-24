@@ -59,8 +59,3 @@ Remove volume:
 
 
 The cmake toolchain files for cross-compiling for Windows are in config/dist.
-
-
-The development builds for macOS is using Travis-CI and the configration is here:
-https://github.com/jonaski/strawberry/blob/master/.travis.yml
-
