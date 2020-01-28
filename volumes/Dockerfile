@@ -1,4 +1,4 @@
-FROM opensuse/tumbleweed
+FROM opensuse/leap:15.1
 
 VOLUME ["/persistent-data"]
 
