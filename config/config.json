@@ -2,9 +2,8 @@
   "linux": {
     "opensuse": ["lp150", "lp151", "tumbleweed"],
     "fedora": ["29", "30", "31"],
-    "centos": ["8"],
     "mageia": ["6", "7"],
-    "ubuntu": ["bionic", "cosmic", "disco", "eoan"],
+    "ubuntu": ["bionic", "disco", "eoan"],
     "debian": ["stretch", "buster", "bullseye"],
     "archlinux": ["base"]
   },
