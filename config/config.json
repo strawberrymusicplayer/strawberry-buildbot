@@ -1,7 +1,7 @@
 {
   "linux": {
     "opensuse": ["lp151", "tumbleweed"],
-    "fedora": ["29", "30", "31"],
+    "fedora": ["30", "31"],
     "mageia": ["6", "7"],
     "ubuntu": ["bionic", "disco", "eoan"],
     "debian": ["stretch", "buster", "bullseye"],
