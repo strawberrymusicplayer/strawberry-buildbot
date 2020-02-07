@@ -50,7 +50,7 @@ def WriteComposeYaml():
     }
   }
 
-  for distro, versions in CONFIG['linux'].iteritems():
+  for distro, versions in CONFIG['linux'].items():
     for version in versions:
       Add(compose, str('worker-%s-%s' % (distro, version)))
 
@@ -60,13 +60,13 @@ def WriteComposeYaml():
   with open('docker-compose.yml', 'w') as fh:
     fh.write(HEADER)
     yaml.dump(compose, fh, indent=2)
-  print 'Wrote docker-compose.yml'
+  print('Wrote docker-compose.yml')
 
 
 def WritePasswords():
   workers = []
   workers.extend(CONFIG['special_workers'])
-  for distro, versions in CONFIG['linux'].iteritems():
+  for distro, versions in CONFIG['linux'].items():
     for version in versions:
       workers.append('%s-%s' % (distro, version))
 
@@ -74,7 +74,7 @@ def WritePasswords():
 
   with open('config/secret/passwords.json', 'w') as fh:
     json.dump(passwords, fh, indent=2, sort_keys=True)
-  print 'Wrote config/secret/passwords.json'
+  print('Wrote config/secret/passwords.json')
 
 
 def main():
