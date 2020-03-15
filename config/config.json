@@ -9,7 +9,6 @@
     "archlinux": ["base"]
   },
  "special_workers": [
-    "centos-7",
     "mingw"
   ]
 }
