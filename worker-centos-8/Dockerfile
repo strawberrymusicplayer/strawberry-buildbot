@@ -40,11 +40,11 @@ RUN mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
 # SQLite3 with FTS5 support
 # Compile newest version of sqlite3 because centos provides too old version without FTS5
 
-RUN cd /tmp && wget https://www.sqlite.org/2020/sqlite-autoconf-3310000.tar.gz
-RUN cd /tmp && tar -xvf sqlite-autoconf-3310000.tar.gz
-RUN cd /tmp/sqlite-autoconf-3310000 && ./configure --prefix=/usr --libdir=/usr/lib64 --disable-static --disable-static-shell --enable-fts4 --enable-fts3 --enable-fts5
-RUN cd /tmp/sqlite-autoconf-3310000 && make
-RUN cd /tmp/sqlite-autoconf-3310000 && make install
+RUN cd /tmp && wget https://www.sqlite.org/2020/sqlite-autoconf-3310100.tar.gz
+RUN cd /tmp && tar -xvf sqlite-autoconf-3310100.tar.gz
+RUN cd /tmp/sqlite-autoconf-3310100 && ./configure --prefix=/usr --libdir=/usr/lib64 --disable-static --disable-static-shell --enable-fts4 --enable-fts3 --enable-fts5
+RUN cd /tmp/sqlite-autoconf-3310100 && make
+RUN cd /tmp/sqlite-autoconf-3310100 && make install
 RUN ldconfig
 
 # TagLib
