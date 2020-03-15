@@ -22,9 +22,8 @@ RUN dnf install -y \
                    python3-pip python3-devel
 
 RUN dnf install -y gstreamer1-devel gstreamer1-plugins-base-devel \
-                   gstreamer1 gstreamer1-plugins-base gstreamer1-plugins-good
-                   #gstreamer1-plugins-bad gstreamer1-plugins-ugly gstreamer1-libav gstreamer1-plugins-bad-devel
-                   #gstreamer1-plugins-good-jack
+                   gstreamer1 gstreamer1-plugins-base gstreamer1-plugins-good \
+                   gstreamer1-plugins-bad-free gstreamer1-plugins-ugly-free
 
 
 RUN dnf clean all && dnf update -y
