@@ -13,7 +13,7 @@ RUN dnf install --assumeyes \
     dbus-x11 xorg-x11-server-Xvfb xorg-x11-xauth
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==2.6.0
+RUN pip3 install buildbot_worker==2.7.0
 
 RUN echo "fedora-30" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot

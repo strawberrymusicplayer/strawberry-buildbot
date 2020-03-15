@@ -15,7 +15,7 @@ RUN zypper --non-interactive --gpg-auto-import-keys install \
     mingw32-cross-nsis meson ninja file-devel libopenssl-devel
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==2.6.0
+RUN pip3 install buildbot_worker==2.7.0
 
 RUN echo "mingw" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot
