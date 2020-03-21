@@ -8,11 +8,13 @@ RUN zypper --non-interactive --gpg-auto-import-keys dup -l -y
 RUN zypper --non-interactive --gpg-auto-import-keys up -l -y
 
 RUN zypper --non-interactive --gpg-auto-import-keys install \
-    python-base python-devel python3-base python3-devel python3-pip python-xml \
-    which wget patch tar gperf gzip bzip2 xz p7zip p7zip-full zip unzip lzip gettext-tools gtk-doc \
-    git make cmake libtool gcc-c++ pkg-config autoconf automake intltool ruby scons bison flex makeinfo \
-    linux-glibc-devel glibc glibc-devel glibc-extra glibc-locale glibc-i18ndata glibc-32bit gdk-pixbuf-devel \
-    mingw32-cross-nsis meson ninja file-devel libopenssl-devel
+    glibc glibc-extra glibc-locale glibc-i18ndata glibc-32bit gcc-c++ \
+    git make cmake libtool pkg-config autoconf automake makeinfo meson ninja intltool \
+    which patch wget curl gperf tar gzip bzip2 xz p7zip p7zip-full lzip zip unzip \
+    gettext-tools gtk-doc ruby scons bison flex \
+    linux-glibc-devel glibc-devel file-devel libopenssl-devel gdk-pixbuf-devel \
+    mingw32-cross-nsis \
+    python-base python-devel python3-base python3-devel python3-pip python-xml
 
 RUN pip3 install --upgrade pip
 RUN pip3 install buildbot_worker==2.7.0

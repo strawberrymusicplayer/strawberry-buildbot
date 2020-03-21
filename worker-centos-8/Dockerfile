@@ -8,17 +8,17 @@ RUN dnf config-manager --set-enabled PowerTools
 RUN dnf clean all
 RUN dnf update -y
 RUN dnf install -y \
-                   redhat-lsb-core git tar wget man gettext fuse fuse-libs fuse-devel \
-                   rpmdevtools make automake libtool cmake3 glibc gcc-c++ patchelf ccache \
-                   desktop-file-utils libappstream-glib appstream-data \
-                   dbus-devel boost-devel libnotify-devel gnutls-devel \
+                   glibc gcc-c++ make automake libtool cmake3 patchelf ccache rpmdevtools \
+                   redhat-lsb-core git fuse fuse-libs wget curl man tar gettext \
+                   boost-devel fuse-devel dbus-devel libnotify-devel gnutls-devel \
                    protobuf-devel protobuf-compiler \
                    alsa-lib-devel pulseaudio-libs-devel \
                    qt5-devel qt5-qtbase-devel qt5-qtx11extras-devel qt5-qttools-devel \
-                   libcdio-devel libgpod-devel libplist-devel libusbmuxd-devel libmtp-devel \
                    fftw-devel libchromaprint-devel \
-                   dbus-x11 xorg-x11-server-Xvfb xorg-x11-xauth hicolor-icon-theme \
-                   libjpeg-devel vim-common cairo-devel \
+                   libcdio-devel libgpod-devel libplist-devel libusbmuxd-devel libmtp-devel \
+                   libjpeg-devel cairo-devel \
+                   dbus-x11 xorg-x11-server-Xvfb xorg-x11-xauth vim-common \
+                   desktop-file-utils libappstream-glib appstream-data hicolor-icon-theme \
                    python3-pip python3-devel
 
 RUN dnf install -y gstreamer1-devel gstreamer1-plugins-base-devel \
