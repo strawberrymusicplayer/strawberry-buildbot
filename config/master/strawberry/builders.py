@@ -10,7 +10,7 @@ from buildbot.steps import transfer
 from buildbot.steps.source import git
 
 UPLOADBASE = "/srv/www/htdocs/builds"
-UPLOADURL = "http://builds.strawberrymusicplayer.org"
+UPLOADURL = "https://builds.strawberrymusicplayer.org"
 MAKE_JOBS = '4'
 
 def GitBaseUrl(repository):
