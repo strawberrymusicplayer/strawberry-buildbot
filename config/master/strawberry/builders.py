@@ -47,6 +47,9 @@ def get_base_filename(props):
     "base-filename": base_filename,
   }
 
+def get_git_revision(props):
+    include_git_revision = props.getProperty('include_git_revision')
+    return include_git_revision['include_git_revision']
 
 def UploadPackage(directory):
 
@@ -250,13 +253,28 @@ def MakeDebBuilder(distro, version):
   return f
 
 
-def MakePPABuilder(distro, ppa):
+def MakePPABuilder(distro, ppa_type, ppa_path):
 
   f = factory.BuildFactory()
 
   git_args = GitArgs("strawberry", "master")
   git_args["mode"] = "full"
   f.addStep(git.Git(**git_args))
+
+  f.addStep(
+    steps.SetPropertyFromCommand(
+      name="get INCLUDE_GIT_REVISION",
+      workdir="source",
+      command=["sh", "-c", "grep 'set.*(.*INCLUDE_GIT_REVISION \(.*\).*)' cmake/Version.cmake"],
+      property="include_git_revision",
+      haltOnFailure=True
+    )
+  )
+  include_git_revision=util.Interpolate("%(prop:include_git_revision)s")
+
+  # Dont upload stable unless git revision is OFF.
+  if ppa_type in ['stable'] and not include_git_revision in ['set(INCLUDE_GIT_REVISION OFF)']:
+    return f
 
   f.addStep(
     shell.ShellCommand(
@@ -298,7 +316,7 @@ def MakePPABuilder(distro, ppa):
     shell.ShellCommand(
       name="dput",
       workdir=".",
-      command="dput %s *_source.changes" % ppa,
+      command="dput %s *_source.changes" % ppa_path,
       haltOnFailure=True
     )
   )
