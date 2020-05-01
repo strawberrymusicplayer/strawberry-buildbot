@@ -160,7 +160,7 @@ def MakeRPMBuilder(distro, version):
     shell.Compile(
       name="run rpmbuild",
       workdir="source/build",
-      command=["rpmbuild", "-ba", "../dist/rpm/strawberry.spec"],
+      command=["rpmbuild", "-ba", "../dist/unix/strawberry.spec"],
       haltOnFailure=True
     )
   )
@@ -369,7 +369,7 @@ def MakePacmanBuilder(distro, version):
     shell.ShellCommand(
       name="copy PKGBUILD",
       workdir="source/build",
-      command=["cp", "../dist/pacman/PKGBUILD", "."],
+      command=["cp", "../dist/unix/PKGBUILD", "."],
       haltOnFailure=True
     )
   )
