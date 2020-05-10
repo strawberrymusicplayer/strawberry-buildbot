@@ -1,5 +1,8 @@
 import os.path
 import pprint
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 from buildbot.changes import gitpoller
 from buildbot.plugins import steps, util
