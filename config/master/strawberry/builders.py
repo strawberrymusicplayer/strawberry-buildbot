@@ -469,9 +469,81 @@ def MakeAppImageBuilder(name):
 
   f.addStep(
     shell.ShellCommand(
+      name="remove appdata",
+      workdir="source/build",
+      haltOnFailure=True,
+      command=["rm", "./AppDir/usr/share/metainfo/org.strawberrymusicplayer.strawberry.appdata.xml"]
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="curl linuxdeploy-x86_64.AppImage",
+      workdir="source/build",
+      command=["curl", "-O", "-L", "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="curl linuxdeploy-plugin-appimage-x86_64.AppImage",
+      workdir="source/build",
+      command=["curl", "-O", "-L", "https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppImage"],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="curl linuxdeploy-plugin-qt-x86_64.AppImage",
+      workdir="source/build",
+      command=["curl", "-O", "-L", "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="run chmod",
+      workdir="source/build",
+      command="chmod +x linuxdeploy*.AppImage",
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="run linuxdeploy --appimage-extract",
+      workdir="source/build",
+      command=["./linuxdeploy-x86_64.AppImage", "--appimage-extract"],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="run linuxdeploy-plugin-appimage --appimage-extract",
+      workdir="source/build",
+      command=["./linuxdeploy-plugin-appimage-x86_64.AppImage", "--appimage-extract"],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="run linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract",
+      workdir="source/build",
+      command=["./linuxdeploy-plugin-qt-x86_64.AppImage", "--appimage-extract"],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
       name="run linuxdeploy",
       workdir="source/build",
-      command=["/usr/local/bin/linuxdeploy", "--appdir", "AppDir", "-e", "strawberry", "--plugin", "qt"],
+      command=["./squashfs-root/usr/bin/linuxdeploy", "--appdir", "AppDir", "-e", "strawberry", "--plugin", "qt"],
       env=env_output,
       haltOnFailure=True
     )
@@ -542,6 +614,8 @@ def MakeAppImageBuilder(name):
   #  )
   #)
 
+  # Bundling plugins in ./AppDir/usr/plugins/gstreamer doesn't work so just link the directory to the lib dir.
+
   f.addStep(
     shell.ShellCommand(
       name="link gstreamer plugins",
@@ -555,7 +629,7 @@ def MakeAppImageBuilder(name):
     shell.ShellCommand(
       name="copy gstreamer plugins",
       workdir="source/build",
-      command=[ "cp", "-f", gstreamer_plugins_files, "./AppDir/usr/lib/" ],
+      command=[ "cp", "-f", gstreamer_plugins_files, "./AppDir/usr/plugins/gstreamer/" ],
       haltOnFailure=True
     )
   )
@@ -564,7 +638,7 @@ def MakeAppImageBuilder(name):
     shell.ShellCommand(
       name="copy gstreamer plugin scanner",
       workdir="source/build",
-      command=["cp", "-r", "-f", "/usr/libexec/gstreamer-1.0/gst-plugin-scanner", "./AppDir/usr/bin/"],
+      command=["cp", "-r", "-f", "/usr/libexec/gstreamer-1.0/gst-plugin-scanner", "./AppDir/usr/plugins/"],
       env=env_output,
       haltOnFailure=True
     )
@@ -574,7 +648,7 @@ def MakeAppImageBuilder(name):
     shell.ShellCommand(
       name="run linuxdeploy output appimage",
       workdir="source/build",
-      command=["/usr/local/bin/linuxdeploy", "--appdir", "AppDir", "-e", "strawberry", "--plugin", "qt", "--output", "appimage"],
+      command=["./squashfs-root/usr/bin/linuxdeploy", "--appdir", "AppDir", "-e", "strawberry", "--plugin", "qt", "--output", "appimage"],
       env=env_output,
       haltOnFailure=True
     )

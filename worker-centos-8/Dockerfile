@@ -10,7 +10,7 @@ RUN dnf update -y
 RUN dnf install -y \
                    glibc gcc-c++ make automake libtool cmake3 patchelf ccache rpmdevtools \
                    redhat-lsb-core git fuse fuse-libs wget curl man tar gettext \
-                   boost-devel fuse-devel dbus-devel libnotify-devel gnutls-devel \
+                   boost-devel fuse-devel dbus-devel libnotify-devel gnutls-devel sqlite-devel \
                    protobuf-devel protobuf-compiler \
                    alsa-lib-devel pulseaudio-libs-devel \
                    qt5-devel qt5-qtbase-devel qt5-qtx11extras-devel qt5-qttools-devel \
@@ -36,60 +36,5 @@ RUN useradd -r -m -s /bin/false buildbot
 
 RUN mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
     chown buildbot /home/buildbot/rpmbuild/{,BUILD,RPMS,SOURCES,SPECS,SRPMS}
-
-# SQLite3 with FTS5 support
-# Compile newest version of sqlite3 because centos provides too old version without FTS5
-
-RUN cd /tmp && wget https://www.sqlite.org/2020/sqlite-autoconf-3310100.tar.gz
-RUN cd /tmp && tar -xvf sqlite-autoconf-3310100.tar.gz
-RUN cd /tmp/sqlite-autoconf-3310100 && ./configure --prefix=/usr --libdir=/usr/lib64 --disable-static --disable-static-shell --enable-fts4 --enable-fts3 --enable-fts5
-RUN cd /tmp/sqlite-autoconf-3310100 && make
-RUN cd /tmp/sqlite-autoconf-3310100 && make install
-RUN ldconfig
-
-# TagLib
-#RUN cd /tmp && git clone https://github.com/taglib/taglib
-#RUN cd /tmp/taglib && git pull
-#RUN cd /tmp/taglib/taglib/toolkit && sed -i 's/#define TAGLIB_PATCH_VERSION 1/#define TAGLIB_PATCH_VERSION 2/g' taglib.h
-#RUN cd /tmp/taglib && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SUFFIX=64 . && make install
-
-# Chromaprint
-#RUN cd /tmp && wget https://github.com/acoustid/chromaprint/releases/download/v1.4.3/chromaprint-1.4.3.tar.gz && tar -xf chromaprint-1.4.3.tar.gz
-#RUN cd /tmp/chromaprint-v1.4.3 && cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=ON -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SUFFIX=64 . && make install
-
-# AppImageKit
-RUN cd /tmp && git clone https://github.com/AppImage/AppImageKit
-RUN cd /tmp/AppImageKit && git submodule update --init --recursive
-RUN mkdir -p /tmp/AppImageKit/build
-RUN cd /tmp/AppImageKit/build && cmake ..
-RUN cd /tmp/AppImageKit/build && make -j4
-RUN cp /tmp/AppImageKit/build/src/appimagetool /usr/local/bin/
-RUN mkdir -p /usr/local/lib/appimagekit/
-RUN cp /tmp/AppImageKit/build/mksquashfs-prefix/mksquashfs /usr/local/lib/appimagekit/
-
-# linuxdeploy
-RUN cd /tmp && git clone https://github.com/linuxdeploy/linuxdeploy
-RUN cd /tmp/linuxdeploy && git submodule update --init --recursive
-RUN mkdir -p /tmp/linuxdeploy/build
-RUN cd /tmp/linuxdeploy/build && cmake .. -DUSE_SYSTEM_CIMG=OFF
-RUN cd /tmp/linuxdeploy/build && make -j4
-RUN cp /tmp/linuxdeploy/build/bin/* /usr/local/bin/
-
-# linuxdeploy-plugin-qt
-RUN cd /tmp && git clone https://github.com/linuxdeploy/linuxdeploy-plugin-qt
-RUN cd /tmp/linuxdeploy-plugin-qt && git submodule update --init --recursive
-RUN mkdir -p /tmp/linuxdeploy-plugin-qt/build
-RUN cd /tmp/linuxdeploy-plugin-qt/build && cmake .. -DUSE_SYSTEM_CIMG=OFF
-RUN cd /tmp/linuxdeploy-plugin-qt/build && make -j4
-RUN cp /tmp/linuxdeploy-plugin-qt/build/bin/* /usr/local/bin/
-
-# linuxdeploy-plugin-appimage
-RUN cd /tmp && git clone https://github.com/linuxdeploy/linuxdeploy-plugin-appimage
-RUN cd /tmp/linuxdeploy-plugin-appimage && git submodule update --init --recursive
-RUN mkdir -p /tmp/linuxdeploy-plugin-appimage/build
-RUN cd /tmp/linuxdeploy-plugin-appimage/build && cmake ..
-RUN cd /tmp/linuxdeploy-plugin-appimage/build && make -j4
-RUN cp /tmp/linuxdeploy-plugin-appimage/build/src/linuxdeploy-plugin-appimage /usr/local/bin/
-
 
 CMD ["/usr/bin/python3", "/config/worker/start.py"]
