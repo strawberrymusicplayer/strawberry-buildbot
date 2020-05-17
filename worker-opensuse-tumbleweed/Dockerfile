@@ -2,6 +2,7 @@ FROM opensuse/tumbleweed
 
 RUN zypper --non-interactive --gpg-auto-import-keys ref
 RUN zypper --non-interactive --gpg-auto-import-keys dup -l -y
+RUN zypper --non-interactive --gpg-auto-import-keys rm busybox-xz
 
 RUN zypper --non-interactive --gpg-auto-import-keys install \
     lsb-release rpm-build \
