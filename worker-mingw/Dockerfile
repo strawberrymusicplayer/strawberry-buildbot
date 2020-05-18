@@ -7,6 +7,8 @@ RUN zypper --non-interactive --gpg-auto-import-keys ref
 RUN zypper --non-interactive --gpg-auto-import-keys dup -l -y
 RUN zypper --non-interactive --gpg-auto-import-keys up -l -y
 
+RUN zypper --non-interactive --gpg-auto-import-keys rm busybox-xz
+
 RUN zypper --non-interactive --gpg-auto-import-keys install \
     glibc glibc-extra glibc-locale glibc-i18ndata glibc-32bit gcc-c++ \
     git make cmake libtool pkg-config autoconf automake makeinfo meson ninja intltool \
