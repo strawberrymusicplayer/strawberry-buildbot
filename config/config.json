@@ -8,6 +8,6 @@
     "debian": ["stretch", "buster", "bullseye"]
   },
  "special_workers": [
-    "mingw"
+    "appimage", "mingw"
   ]
 }

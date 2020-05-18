@@ -578,7 +578,6 @@ def MakeAppImageBuilder(name):
     '/usr/lib64/gstreamer-1.0/libgsticydemux.so',
     '/usr/lib64/gstreamer-1.0/libgstid3demux.so',
     '/usr/lib64/gstreamer-1.0/libgstxingmux.so',
-    '/usr/lib64/gstreamer-1.0/libgsttaglib.so',
     '/usr/lib64/gstreamer-1.0/libgsttcp.so',
     '/usr/lib64/gstreamer-1.0/libgstudp.so',
     '/usr/lib64/gstreamer-1.0/libgstsoup.so',
@@ -593,16 +592,14 @@ def MakeAppImageBuilder(name):
     '/usr/lib64/gstreamer-1.0/libgstopusparse.so',
     '/usr/lib64/gstreamer-1.0/libgstspeex.so',
     '/usr/lib64/gstreamer-1.0/libgstlame.so',
-    '/usr/lib64/gstreamer-1.0/libgsttwolame.so',
     '/usr/lib64/gstreamer-1.0/libgstmusepack.so',
     '/usr/lib64/gstreamer-1.0/libgstaiff.so',
-    #'/usr/lib64/gstreamer-1.0/libgstasf.so',
     '/usr/lib64/gstreamer-1.0/libgstasfmux.so',
     '/usr/lib64/gstreamer-1.0/libgstisomp4.so',
-    #'/usr/lib64/gstreamer-1.0/libgstlibav.so',
-    #'/usr/lib64/gstreamer-1.0/libgstrealmedia.so',
-    #'/usr/lib64/gstreamer-1.0/libgstfaac.so',
-    #'/usr/lib64/gstreamer-1.0/libgstfaad.so',
+    '/usr/lib64/gstreamer-1.0/libgstlibav.so',
+    '/usr/lib64/gstreamer-1.0/libgstfaad.so',
+    '/usr/lib64/gstreamer-1.0/libgstasf.so',
+    '/usr/lib64/gstreamer-1.0/libgstrealmedia.so',
   ]
 
   #f.addStep(
