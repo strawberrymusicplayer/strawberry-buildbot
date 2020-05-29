@@ -15,7 +15,7 @@ RUN dnf install --assumeyes \
     python3 python3-devel python3-pip
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==2.7.0
+RUN pip3 install buildbot_worker==2.8.0
 
 RUN echo "fedora-30" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot

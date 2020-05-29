@@ -27,7 +27,7 @@ RUN dnf install -y \
 RUN dnf clean all && dnf update -y
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==2.7.0
+RUN pip3 install buildbot_worker==2.8.0
 
 RUN echo "appimage" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot

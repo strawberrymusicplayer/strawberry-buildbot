@@ -7,8 +7,6 @@ RUN zypper --non-interactive --gpg-auto-import-keys ref
 RUN zypper --non-interactive --gpg-auto-import-keys dup -l -y
 RUN zypper --non-interactive --gpg-auto-import-keys up -l -y
 
-RUN zypper --non-interactive --gpg-auto-import-keys rm busybox-xz
-
 RUN zypper --non-interactive --gpg-auto-import-keys install \
     glibc glibc-extra glibc-locale glibc-i18ndata glibc-32bit gcc-c++ \
     git make cmake libtool pkg-config autoconf automake makeinfo meson ninja intltool \
@@ -19,7 +17,7 @@ RUN zypper --non-interactive --gpg-auto-import-keys install \
     python-base python-devel python3-base python3-devel python3-pip python-xml
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==2.7.0
+RUN pip3 install buildbot_worker==2.8.0
 
 RUN echo "mingw" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot
