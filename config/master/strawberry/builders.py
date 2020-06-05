@@ -703,24 +703,6 @@ def MakeMXEBuilder():
     )
   )
 
-  f.addStep(
-    shell.ShellCommand(
-      name="remove strawberry*.exe (686-w64-mingw32.shared)",
-      workdir="source/usr/i686-w64-mingw32.shared/apps/strawberry/bin",
-      command="rm -f strawberry*.exe StrawberrySetup*.exe",
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="remove strawberry*.exe (x86_64-w64-mingw32.shared)",
-      workdir="source/usr/x86_64-w64-mingw32.shared/apps/strawberry/bin",
-      command="rm -f strawberry*.exe StrawberrySetup*.exe",
-      haltOnFailure=True
-    )
-  )
-
   return f
 
 
@@ -996,6 +978,19 @@ def MakeWindowsBuilder(is_debug, is_64):
       command=[
         "cp",
         xine_plugins_files,
+        ".",
+      ],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="copy liborc",
+      workdir="source/build",
+      command=[
+        "cp",
+        "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/liborc-0.4-0.dll",
         ".",
       ],
       haltOnFailure=True
