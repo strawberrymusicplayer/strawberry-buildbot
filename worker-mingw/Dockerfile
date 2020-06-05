@@ -5,14 +5,13 @@ RUN zypper -n ar -c -f -n 'repo-mingw' https://download.opensuse.org/repositorie
 
 RUN zypper --non-interactive --gpg-auto-import-keys ref
 RUN zypper --non-interactive --gpg-auto-import-keys dup -l -y
-RUN zypper --non-interactive --gpg-auto-import-keys up -l -y
 
 RUN zypper --non-interactive --gpg-auto-import-keys install \
     glibc glibc-extra glibc-locale glibc-i18ndata glibc-32bit gcc-c++ \
-    git make cmake libtool pkg-config autoconf automake makeinfo meson ninja intltool \
-    which patch wget curl gperf tar gzip bzip2 xz p7zip p7zip-full lzip zip unzip \
-    gettext-tools gtk-doc ruby scons bison flex \
-    linux-glibc-devel glibc-devel file-devel libopenssl-devel gdk-pixbuf-devel \
+    which patch gperf wget curl git ruby diffutils \
+    make cmake libtool pkg-config autoconf automake meson ninja intltool makeinfo scons bison flex gettext-tools \
+    tar gzip bzip2 xz p7zip p7zip-full lzip zip unzip \
+    linux-glibc-devel glibc-devel file-devel libopenssl-devel gdk-pixbuf-devel gtk-doc \
     mingw32-cross-nsis \
     python-base python-devel python3-base python3-devel python3-pip python-xml
 
