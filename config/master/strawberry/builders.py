@@ -592,7 +592,6 @@ def MakeAppImageBuilder(name):
     '/usr/lib64/gstreamer-1.0/libgstopusparse.so',
     '/usr/lib64/gstreamer-1.0/libgstspeex.so',
     '/usr/lib64/gstreamer-1.0/libgstlame.so',
-    '/usr/lib64/gstreamer-1.0/libgstmusepack.so',
     '/usr/lib64/gstreamer-1.0/libgstaiff.so',
     '/usr/lib64/gstreamer-1.0/libgstasfmux.so',
     '/usr/lib64/gstreamer-1.0/libgstisomp4.so',
@@ -600,6 +599,8 @@ def MakeAppImageBuilder(name):
     '/usr/lib64/gstreamer-1.0/libgstfaad.so',
     '/usr/lib64/gstreamer-1.0/libgstasf.so',
     '/usr/lib64/gstreamer-1.0/libgstrealmedia.so',
+
+    #'/usr/lib64/gstreamer-1.0/libgstmusepack.so',
   ]
 
   #f.addStep(
