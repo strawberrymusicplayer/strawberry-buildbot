@@ -624,6 +624,15 @@ def MakeAppImageBuilder(name):
 
   f.addStep(
     shell.ShellCommand(
+      name="list gstreamer plugins",
+      workdir="source/build",
+      command=[ "ls", "-la", "/usr/lib64/gstreamer-1.0/" ],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
       name="copy gstreamer plugins",
       workdir="source/build",
       command=[ "cp", "-f", gstreamer_plugins_files, "./AppDir/usr/plugins/gstreamer/" ],
@@ -741,7 +750,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     "-DENABLE_LIBGPOD=OFF",
     "-DENABLE_IMOBILEDEVICE=OFF",
     "-DENABLE_LIBMTP=OFF",
-    "-DENABLE_XINE=" + ("ON" if is_debug else "OFF"),
+    "-DENABLE_XINE=OFF",
     "-DUSE_SYSTEM_SINGLEAPPLICATION=OFF",
     "-DUSE_SYSTEM_TAGLIB=OFF",
   ]
@@ -817,34 +826,6 @@ def MakeWindowsBuilder(is_debug, is_64):
     "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/gstreamer-1.0/libgstlibav.dll",
   ]
 
-  xine_plugins_files=[
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_ao_out_directx2.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_ao_out_directx.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_decode_dts.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_decode_dvaudio.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_decode_faad.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_decode_gsm610.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_decode_lpcm.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_decode_mad.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_decode_mpc.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_decode_mpeg2.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_dmx_asf.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_dmx_audio.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_dmx_playlist.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_dmx_slave.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_flac.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_wavpack.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_xiph.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/xineplug_inp_cdda.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/post/xineplug_post_audio_filters.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/post/xineplug_post_goom.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/post/xineplug_post_mosaico.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/post/xineplug_post_planar.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/post/xineplug_post_switch.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/post/xineplug_post_tvtime.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/xine/plugins/2.7/post/xineplug_post_visualizations.dll",
-  ]
-
   f = factory.BuildFactory()
   f.addStep(git.Git(**GitArgs("strawberry", "master")))
 
@@ -876,7 +857,7 @@ def MakeWindowsBuilder(is_debug, is_64):
 
   f.addStep(
     shell.ShellCommand(
-      name="mkdir platforms/sqldrivers/imageformats/styles/gstreamer-plugins/xine-plugins/nsisplugins",
+      name="mkdir platforms/sqldrivers/imageformats/styles/gstreamer-plugins/nsisplugins",
       workdir="source/build",
       command=[
         "mkdir",
@@ -887,7 +868,6 @@ def MakeWindowsBuilder(is_debug, is_64):
         "imageformats",
         "styles",
         "gstreamer-plugins",
-        "xine-plugins",
         "nsisplugins",
       ],
       haltOnFailure=True
@@ -974,19 +954,6 @@ def MakeWindowsBuilder(is_debug, is_64):
 
   f.addStep(
     shell.ShellCommand(
-      name="copy xine-plugins",
-      workdir="source/build/xine-plugins",
-      command=[
-        "cp",
-        xine_plugins_files,
-        ".",
-      ],
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
       name="copy liborc",
       workdir="source/build",
       command=[
@@ -1018,9 +985,7 @@ def MakeWindowsBuilder(is_debug, is_64):
         "-F",
         "./styles",
         "-F",
-        "s./gstreamer-plugins",
-        "-F",
-        "./xine-plugins",
+        "./gstreamer-plugins",
         "-X",
         "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/apps",
         "-R",
@@ -1079,7 +1044,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     shell.ShellCommand(
       name="delete files",
       workdir="source/build",
-      command="rm -rf *.exe *.dll gio-modules platforms sqldrivers imageformats styles gstreamer-plugins xine-plugins nsisplugins",
+      command="rm -rf *.exe *.dll gio-modules platforms sqldrivers imageformats styles gstreamer-plugins nsisplugins",
       haltOnFailure=True
     )
   )
