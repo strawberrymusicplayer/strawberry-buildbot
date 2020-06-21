@@ -52,10 +52,10 @@ RUN cd /tmp && tar -xvf gst-plugins-good-1.16.2.tar.xz
 RUN cd /tmp/gst-plugins-good-1.16.2 && ./configure --prefix=/usr --libdir=/usr/lib64 --disable-examples --disable-alpha --disable-avi --disable-cutter --disable-debugutils --disable-deinterlace --disable-dtmf --disable-effectv --disable-flv --disable-flx --disable-goom --disable-goom2k1 --disable-imagefreeze --disable-interleave --disable-law --disable-matroska --disable-multifile --disable-multipart --disable-shapewipe --disable-smpte --disable-videobox --disable-videocrop --disable-videofilter --disable-videomixer --disable-y4m
 RUN cd /tmp/gst-plugins-good-1.16.2 && make install
 
-RUN cd /tmp && wget http://downloads.sourceforge.net/faac/faad2-2.7.tar.bz2
-RUN cd /tmp && tar -xvf faad2-2.7.tar.bz2
-RUN cd /tmp && cd faad2-2.7 && ./configure --prefix=/usr
-RUN cd /tmp && cd faad2-2.7 && make install
+RUN cd /tmp && wget https://files.jkvinge.net/packages/strawberry-dependencies/faad2-2.8.8.tar.gz
+RUN cd /tmp && tar -xvf faad2-2.8.8.tar.gz
+RUN cd /tmp && cd faad2-2.8.8 && ./configure --prefix=/usr
+RUN cd /tmp && cd faad2-2.8.8 && make install
 
 #RUN cd /tmp && wget http://downloads.sourceforge.net/faac/faac-1.28.tar.bz2
 #RUN cd /tmp && tar -xvf faac-1.28.tar.bz2
@@ -64,7 +64,7 @@ RUN cd /tmp && cd faad2-2.7 && make install
 
 RUN cd /tmp && wget https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.16.2.tar.xz
 RUN cd /tmp && tar -xvf gst-plugins-bad-1.16.2.tar.xz
-RUN cd /tmp/gst-plugins-bad-1.16.2 && ./configure --prefix=/usr --libdir=/usr/lib64 --disable-examples --disable-accurip --disable-adpcmdec --disable-adpcmenc --disable-aiff --disable-asfmux --disable-audiobuffersplit --disable-audiofxbad --disable-audiolatency --disable-audiomixmatrix --disable-audiovisualizers --disable-autoconvert --disable-bayer --disable-camerabin2 --disable-coloreffects --disable-debugutils --disable-dvbsuboverlay --disable-dvdspu --disable-faceoverlay --disable-festival --disable-fieldanalysis --disable-freeverb --disable-frei0r --disable-gaudieffects --disable-gdp --disable-geometrictransform --disable-id3tag --disable-inter --disable-interlace --disable-ivfparse --disable-ivtc --disable-jp2kdecimator --disable-jpegformat --disable-librfb --disable-midi --disable-mpegdemux --disable-mpegpsmux --disable-mpegtsdemux --disable-mpegtsmux --disable-mxf --disable-netsim --disable-onvif --disable-pcapparse --disable-pnm --disable-proxy --disable-rawparse --disable-removesilence --disable-sdp --disable-segmentclip --disable-siren --disable-smooth --disable-speed --disable-subenc --disable-timecode --disable-videofilters --disable-videoframe_audiolevel --disable-videoparsers --disable-videosignal --disable-vmnc --disable-y4m --disable-yadif --disable-decklink --disable-dtls --disable-dvb --disable-fbdevsink --disable-hls --disable-ipcpipeline --disable-shm --disable-smoothstreaming
+RUN cd /tmp/gst-plugins-bad-1.16.2 && ./configure --prefix=/usr --libdir=/usr/lib64 --disable-examples --disable-accurip --disable-adpcmdec --disable-adpcmenc --disable-aiff --disable-asfmux --disable-audiobuffersplit --disable-audiofxbad --disable-audiolatency --disable-audiomixmatrix --disable-audiovisualizers --disable-autoconvert --disable-bayer --disable-camerabin2 --disable-coloreffects --disable-debugutils --disable-dvbsuboverlay --disable-dvdspu --disable-faceoverlay --disable-festival --disable-fieldanalysis --disable-freeverb --disable-frei0r --disable-gaudieffects --disable-gdp --disable-geometrictransform --disable-id3tag --disable-inter --disable-interlace --disable-ivfparse --disable-ivtc --disable-jp2kdecimator --disable-jpegformat --disable-librfb --disable-midi --disable-mpegdemux --disable-mpegpsmux --disable-mpegtsdemux --disable-mpegtsmux --disable-mxf --disable-netsim --disable-onvif --disable-pcapparse --disable-pnm --disable-proxy --disable-rawparse --disable-removesilence --disable-sdp --disable-segmentclip --disable-siren --disable-smooth --disable-speed --disable-subenc --disable-timecode --disable-videofilters --disable-videoframe_audiolevel --disable-videoparsers --disable-videosignal --disable-vmnc --disable-y4m --disable-yadif --disable-decklink --disable-dtls --disable-dvb --disable-hls --disable-ipcpipeline --disable-shm --disable-smoothstreaming
 RUN cd /tmp/gst-plugins-bad-1.16.2 && make install
 
 
