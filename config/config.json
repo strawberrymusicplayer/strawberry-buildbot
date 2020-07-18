@@ -5,7 +5,7 @@
     "centos": ["8"],
     "mageia": ["7"],
     "ubuntu": ["bionic", "focal", "groovy"],
-    "debian": ["stretch", "buster", "bullseye"]
+    "debian": ["buster", "bullseye"]
   },
  "special_workers": [
     "appimage", "mingw"
