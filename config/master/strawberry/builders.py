@@ -223,7 +223,7 @@ def MakeDebBuilder(distro, version):
     shell.Compile(
       name="run dpkg-buildpackage",
       workdir="source",
-      command=["dpkg-buildpackage", "-b", "-d", "-uc", "-us", "-nc"],
+      command=["dpkg-buildpackage", "-b", "-d", "-uc", "-us", "-nc", "-tc"],
       haltOnFailure=True
     )
   )
@@ -247,8 +247,8 @@ def MakeDebBuilder(distro, version):
   f.addStep(
     shell.ShellCommand(
       name="delete file",
-      workdir="source",
-      command="rm -f *.deb *.buildinfo *.changes",
+      workdir=".",
+      command="rm -f *.deb *.ddeb *.buildinfo *.changes",
       haltOnFailure=True
     )
   )
