@@ -265,21 +265,6 @@ def MakePPABuilder(distro, ppa_type, ppa_path):
   f.addStep(git.Git(**git_args))
 
   f.addStep(
-    steps.SetPropertyFromCommand(
-      name="get INCLUDE_GIT_REVISION",
-      workdir="source",
-      command=["sh", "-c", "grep 'set.*(.*INCLUDE_GIT_REVISION \(.*\).*)' cmake/Version.cmake"],
-      property="include_git_revision",
-      haltOnFailure=True
-    )
-  )
-  include_git_revision=util.Interpolate("%(prop:include_git_revision)s")
-
-  # Dont upload stable unless git revision is OFF.
-  if ppa_type in ['stable'] and not include_git_revision in ['set(INCLUDE_GIT_REVISION OFF)']:
-    return f
-
-  f.addStep(
     shell.ShellCommand(
       name="gpg import key",
       workdir="source",
