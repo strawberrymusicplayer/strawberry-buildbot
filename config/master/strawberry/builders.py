@@ -701,7 +701,7 @@ def MakeMXEBuilder():
   return f
 
 
-def MakeWindowsBuilder(is_debug, is_64):
+def MakeWindowsBuilder(is_debug, is_64, with_qt6):
 
   env_lang = {
     "RC_LANG": "en_US.UTF-8",
@@ -714,6 +714,7 @@ def MakeWindowsBuilder(is_debug, is_64):
   }
 
   mingw32_name = ("x86_64-w64-mingw32.shared" if is_64 else "i686-w64-mingw32.shared")
+  qt_dir = ("qt6" if with_qt6 else "qt5")
 
   env = {
     "PKG_CONFIG_LIBDIR": "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/lib/pkgconfig",
@@ -737,6 +738,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     "-DENABLE_IMOBILEDEVICE=OFF",
     "-DENABLE_LIBMTP=OFF",
     "-DUSE_SYSTEM_TAGLIB=OFF",
+    "-DWITH_QT6=" + ("ON" if with_qt6 else "OFF"),
   ]
 
   executable_files = [
@@ -755,9 +757,9 @@ def MakeWindowsBuilder(is_debug, is_64):
   ]
 
   imageformats_files = [
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/qt5/plugins/imageformats/qgif.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/qt5/plugins/imageformats/qjpeg.dll",
-    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/qt5/plugins/imageformats/qico.dll",
+    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/" + qt_dir + "/plugins/imageformats/qgif.dll",
+    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/" + qt_dir + "/plugins/imageformats/qjpeg.dll",
+    "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/" + qt_dir+ "/plugins/imageformats/qico.dll",
   ]
   gstreamer_plugins_files = [
     "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/bin/gstreamer-1.0/libgstapp.dll",
@@ -877,7 +879,7 @@ def MakeWindowsBuilder(is_debug, is_64):
       workdir="source/build/platforms",
       command=[
         "cp",
-        "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/qt5/plugins/platforms/qwindows.dll",
+        "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/" + qt_dir + "/plugins/platforms/qwindows.dll",
         ".",
       ],
       haltOnFailure=True
@@ -890,7 +892,7 @@ def MakeWindowsBuilder(is_debug, is_64):
       workdir="source/build/sqldrivers",
       command=[
         "cp",
-        "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/qt5/plugins/sqldrivers/qsqlite.dll",
+        "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/" + qt_dir + "/plugins/sqldrivers/qsqlite.dll",
         ".",
       ],
       haltOnFailure=True
@@ -916,7 +918,7 @@ def MakeWindowsBuilder(is_debug, is_64):
       workdir="source/build/styles",
       command=[
         "cp",
-        "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/qt5/plugins/styles/qwindowsvistastyle.dll",
+        "/persistent-data/mingw/mxe/source/usr/" + mingw32_name + "/" + qt_dir + "/plugins/styles/qwindowsvistastyle.dll",
         ".",
       ],
       haltOnFailure=True
@@ -1022,7 +1024,10 @@ def MakeWindowsBuilder(is_debug, is_64):
   )
   f.addStep(steps.SetProperties(properties=get_base_filename))
 
-  f.addStep(UploadPackage("windows"))
+  if with_qt6:
+    f.addStep(UploadPackage("windows-qt6-exprimental"))
+  else:
+    f.addStep(UploadPackage("windows"))
 
   f.addStep(
     shell.ShellCommand(
