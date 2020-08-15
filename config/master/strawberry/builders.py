@@ -465,7 +465,7 @@ def MakeAppImageBuilder(name):
     shell.ShellCommand(
       name="curl linuxdeploy-x86_64.AppImage",
       workdir="source/build",
-      command=["curl", "-O", "-L", "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"],
+      command=["curl", "-O", "-L", "https://artifacts.assassinate-you.net/artifactory/list/linuxdeploy/travis-456/linuxdeploy-x86_64.AppImage"],
       haltOnFailure=True
     )
   )
