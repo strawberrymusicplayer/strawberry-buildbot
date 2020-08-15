@@ -73,10 +73,10 @@ class StrawberryBuildbot(object):
     self._AddBuilder(name='Windows Debug x86', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=False, with_qt6=False), deps_lock='counting')
     self._AddBuilder(name='Windows Debug x64', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=True, with_qt6=False), deps_lock='counting')
 
-    self._AddBuilder(name='Windows Release x86 Qt 6', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=False, is_64=False, with_qt6=True), deps_lock='counting')
-    self._AddBuilder(name='Windows Release x64 Qt 6', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=False, is_64=True, with_qt6=True), deps_lock='counting')
-    self._AddBuilder(name='Windows Debug x86 Qt 6', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=False, with_qt6=True), deps_lock='counting')
-    self._AddBuilder(name='Windows Debug x64 Qt 6', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=True, with_qt6=True), deps_lock='counting')
+    #self._AddBuilder(name='Windows Release x86 Qt 6', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=False, is_64=False, with_qt6=True), deps_lock='counting')
+    #self._AddBuilder(name='Windows Release x64 Qt 6', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=False, is_64=True, with_qt6=True), deps_lock='counting')
+    #self._AddBuilder(name='Windows Debug x86 Qt 6', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=False, with_qt6=True), deps_lock='counting')
+    #self._AddBuilder(name='Windows Debug x64 Qt 6', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=True, with_qt6=True), deps_lock='counting')
 
 
   def _AddBuilderAndWorker(self, distro, version, factory):
