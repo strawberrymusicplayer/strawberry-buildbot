@@ -51,7 +51,7 @@ class StrawberryBuildbot(object):
 
     # Add Ubuntu PPA.
     for linux_distro in CONFIG['linux']['ubuntu']:
-      #self._AddBuilder(name='Ubuntu Stable PPA %s' % linux_distro.title(), worker='ubuntu-%s' % linux_distro, build_factory=builders.MakePPABuilder(linux_distro, "stable", PPA_STABLE))
+      self._AddBuilder(name='Ubuntu Stable PPA %s' % linux_distro.title(), worker='ubuntu-%s' % linux_distro, build_factory=builders.MakePPABuilder(linux_distro, "stable", PPA_STABLE))
       self._AddBuilder(name='Ubuntu Unstable PPA %s' % linux_distro.title(), worker='ubuntu-%s' % linux_distro, build_factory=builders.MakePPABuilder(linux_distro, "unstable", PPA_UNSTABLE))
 
     # Add special workers.
