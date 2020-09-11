@@ -7,7 +7,7 @@ if [ "$strip_cmd" = "" ]; then
   exit 1
 fi
 
-for i in $(find $dir -type f \( -iname \*.dll -o -iname \*.exe \))
+for i in $(find . -type f \( -iname \*.dll -o -iname \*.exe \))
 do
     echo "Stripping $i"
     echo "$strip_cmd $i"
