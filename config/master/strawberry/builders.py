@@ -749,10 +749,9 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
   for i in extra_binary_fileslist:
     extra_binary_files.append(target_path + "/bin/" + i)
 
-  nsi_filename = "strawberry.nsi"
-
   nsi_files = [
     "strawberry.nsi",
+    "strawberry-wasapi.nsi",
     "Capabilities.nsh",
     "FileAssociation.nsh",
     "strawberry.ico",
@@ -976,7 +975,17 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
   f.addStep(
     shell.ShellCommand(
       name="run makensis",
-      command=[ "makensis", nsi_filename ],
+      command=[ "makensis", "strawberry.nsi" ],
+      workdir="source/build",
+      haltOnFailure=True
+    )
+  )
+
+  # WASAPI plugin setup
+  f.addStep(
+    shell.ShellCommand(
+      name="run makensis wasapi",
+      command=[ "makensis", "strawberry-wasapi.nsi" ],
       workdir="source/build",
       haltOnFailure=True
     )
@@ -984,9 +993,25 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
 
   f.addStep(
     steps.SetPropertyFromCommand(
-      name="get output filename",
+      name="get output filename 1",
       workdir="source",
       command=[ "sh", "-c", "ls -dt " + "build/StrawberrySetup-*.exe" + " | head -n 1" ],
+      property="output-filepath",
+      haltOnFailure=True
+    )
+  )
+  f.addStep(steps.SetProperties(properties=get_base_filename))
+
+  if with_qt6:
+    f.addStep(UploadPackage("windows-qt6-exprimental"))
+  else:
+    f.addStep(UploadPackage("windows"))
+
+  f.addStep(
+    steps.SetPropertyFromCommand(
+      name="get output filename 2",
+      workdir="source",
+      command=[ "sh", "-c", "ls -dt " + "build/StrawberryWASAPISetup-*.exe" + " | head -n 1" ],
       property="output-filepath",
       haltOnFailure=True
     )
