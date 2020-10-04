@@ -13,7 +13,7 @@ RUN zypper --non-interactive --gpg-auto-import-keys install \
     tar gzip bzip2 xz p7zip p7zip-full lzip zip unzip \
     linux-glibc-devel glibc-devel file-devel libopenssl-devel gdk-pixbuf-devel gtk-doc \
     mingw32-cross-nsis \
-    python-base python-devel python3-base python3-devel python3-pip python-xml
+    python-base python-devel python3-base python3-devel python3-pip python-xml python3-Mako
 
 RUN pip3 install --upgrade pip
 RUN pip3 install buildbot_worker==2.8.4
