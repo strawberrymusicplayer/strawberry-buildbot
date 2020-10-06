@@ -1019,9 +1019,9 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
   f.addStep(steps.SetProperties(properties=get_base_filename))
 
   if with_qt6:
-    f.addStep(UploadPackage("windows-qt6-exprimental"))
+    f.addStep(UploadPackage("windows-wasapi-plugin-qt6-exprimental"))
   else:
-    f.addStep(UploadPackage("windows"))
+    f.addStep(UploadPackage("windows-wasapi-plugin"))
 
   f.addStep(
     shell.ShellCommand(
