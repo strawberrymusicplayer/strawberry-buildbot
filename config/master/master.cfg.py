@@ -62,7 +62,7 @@ class StrawberryBuildbot(object):
     self._AddBuilder(name='Source', worker='opensuse-lp152', build_factory=builders.MakeSourceBuilder())
 
     # AppImage.
-    self._AddBuilder(name='AppImage', worker='appimage', build_factory=builders.MakeAppImageBuilder(name=""))
+    #self._AddBuilder(name='AppImage', worker='appimage', build_factory=builders.MakeAppImageBuilder(name=""))
 
     # MXE.
     self._AddBuilder(name='MXE', worker='mingw', build_factory=builders.MakeMXEBuilder(), auto=False, deps_lock='exclusive')
