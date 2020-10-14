@@ -743,7 +743,8 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
   extra_binary_fileslist = [
     "liborc-0.4-0.dll",
     "sqlite3.exe",
-    "killproc.exe"
+    "killproc.exe",
+    "gdb.exe"
   ]
   extra_binary_files = []
   for i in extra_binary_fileslist:
