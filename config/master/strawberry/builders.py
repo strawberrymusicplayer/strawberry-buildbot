@@ -417,7 +417,7 @@ def MakeAppImageBuilder(name):
     shell.ShellCommand(
       name="run cmake",
       workdir="source/build",
-      command=["cmake", "..", "-DUSE_BUNDLE=ON", "-DCMAKE_INSTALL_PREFIX=/usr"],
+      command=["cmake", "..", "-DCMAKE_INSTALL_PREFIX=/usr"],
       haltOnFailure=True
     )
   )
@@ -433,6 +433,7 @@ def MakeAppImageBuilder(name):
   )
   env_output = {
     "OUTPUT": util.Interpolate("Strawberry%(kw:name)s-%(prop:output-version)s.AppImage", name=name)
+    "VERSION": util.Interpolate("%(prop:output-version)s")
   }
 
   f.addStep(
@@ -454,188 +455,27 @@ def MakeAppImageBuilder(name):
 
   f.addStep(
     shell.ShellCommand(
-      name="remove appdata",
+      name="cp appdata",
       workdir="source/build",
       haltOnFailure=True,
-      command=["rm", "./AppDir/usr/share/metainfo/org.strawberrymusicplayer.strawberry.appdata.xml"]
+      command=["cp", "./AppDir/usr/share/metainfo/org.strawberrymusicplayer.strawberry.appdata.xml", "./AppDir/"]
     )
   )
 
   f.addStep(
     shell.ShellCommand(
-      name="curl linuxdeploy-x86_64.AppImage",
+      name="cp icon",
       workdir="source/build",
-      command=["curl", "-O", "-L", "https://artifacts.assassinate-you.net/artifactory/list/linuxdeploy/travis-456/linuxdeploy-x86_64.AppImage"],
-      haltOnFailure=True
+      haltOnFailure=True,
+      command=["cp", "./AppDir/usr/share/icons/hicolor/128x128/apps/strawberry.png", "./AppDir/"]
     )
   )
 
   f.addStep(
     shell.ShellCommand(
-      name="curl linuxdeploy-plugin-appimage-x86_64.AppImage",
+      name="run appimagetool deploy",
       workdir="source/build",
-      command=["curl", "-O", "-L", "https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppImage"],
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="curl linuxdeploy-plugin-qt-x86_64.AppImage",
-      workdir="source/build",
-      command=["curl", "-O", "-L", "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"],
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="run chmod",
-      workdir="source/build",
-      command="chmod +x linuxdeploy*.AppImage",
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="run linuxdeploy --appimage-extract",
-      workdir="source/build",
-      command=["./linuxdeploy-x86_64.AppImage", "--appimage-extract"],
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="run linuxdeploy-plugin-appimage --appimage-extract",
-      workdir="source/build",
-      command=["./linuxdeploy-plugin-appimage-x86_64.AppImage", "--appimage-extract"],
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="run linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract",
-      workdir="source/build",
-      command=["./linuxdeploy-plugin-qt-x86_64.AppImage", "--appimage-extract"],
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="run linuxdeploy",
-      workdir="source/build",
-      command=["./squashfs-root/usr/bin/linuxdeploy", "--appdir", "AppDir", "-e", "strawberry", "--plugin", "qt"],
-      env=env_output,
-      haltOnFailure=True
-    )
-  )
-
-  gstreamer_plugins_path = "/usr/lib64/gstreamer-1.0/"
-  gstreamer_plugins_filelist = [
-    'libgstapp.so',
-    'libgstcoreelements.so',
-    'libgstaudioconvert.so',
-    'libgstaudiofx.so',
-    'libgstaudiomixer.so',
-    'libgstaudioparsers.so',
-    'libgstaudiorate.so',
-    'libgstaudioresample.so',
-    'libgstaudiotestsrc.so',
-    'libgstaudiovisualizers.so',
-    'libgstautodetect.so',
-    'libgstautoconvert.so',
-    'libgstplayback.so',
-    'libgstvolume.so',
-    'libgstspectrum.so',
-    'libgstequalizer.so',
-    'libgstlevel.so',
-    'libgstreplaygain.so',
-    'libgsttypefindfunctions.so',
-    'libgstgio.so',
-    'libgstalsa.so',
-    'libgstoss4.so',
-    'libgstossaudio.so',
-    'libgstpulseaudio.so',
-    'libgstapetag.so',
-    'libgsticydemux.so',
-    'libgstid3demux.so',
-    'libgstxingmux.so',
-    'libgsttcp.so',
-    'libgstudp.so',
-    'libgstsoup.so',
-    'libgstcdio.so',
-
-    'libgstflac.so',
-    'libgstwavparse.so',
-    'libgstwavpack.so',
-    'libgstogg.so',
-    'libgstvorbis.so',
-    'libgstopus.so',
-    'libgstopusparse.so',
-    'libgstspeex.so',
-    'libgstlame.so',
-    'libgstaiff.so',
-    'libgstasfmux.so',
-    'libgstisomp4.so',
-    'libgstlibav.so',
-    'libgstfaad.so',
-    'libgstasf.so',
-    'libgstrealmedia.so',
-
-    #'libgstmusepack.so',
-  ]
-
-  gstreamer_plugins_files = []
-  for i in gstreamer_plugins_filelist:
-    gstreamer_plugins_files.append(gstreamer_plugins_path + "/" + i)
-
-  #f.addStep(
-  #  shell.ShellCommand(
-  #    name="mkdir gstreamer",
-  #    workdir="source/build",
-  #    command=[ "mkdir", "-p", "./AppDir/usr/plugins/gstreamer" ],
-  #    haltOnFailure=True
-  #  )
-  #)
-
-  # Bundling plugins in ./AppDir/usr/plugins/gstreamer doesn't work so just link the directory to the lib dir.
-
-  f.addStep(
-    shell.ShellCommand(
-      name="link gstreamer plugins",
-      workdir="source/build/AppDir/usr/plugins",
-      command=[ "ln", "-s", "../lib/", "gstreamer" ],
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="list gstreamer plugins",
-      workdir="source/build",
-      command=[ "ls", "-la", "/usr/lib64/gstreamer-1.0/" ],
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="copy gstreamer plugins",
-      workdir="source/build",
-      command=[ "cp", "-f", gstreamer_plugins_files, "./AppDir/usr/plugins/gstreamer/" ],
-      haltOnFailure=True
-    )
-  )
-
-  f.addStep(
-    shell.ShellCommand(
-      name="copy gstreamer plugin scanner",
-      workdir="source/build",
-      command=["cp", "-r", "-f", "/usr/libexec/gstreamer-1.0/gst-plugin-scanner", "./AppDir/usr/plugins/"],
+      command=["appimagetool", "-s", "deploy", "AppDir/usr/share/applications/org.strawberrymusicplayer.strawberry.desktop"],
       env=env_output,
       haltOnFailure=True
     )
@@ -643,9 +483,9 @@ def MakeAppImageBuilder(name):
 
   f.addStep(
     shell.ShellCommand(
-      name="run linuxdeploy output appimage",
+      name="run appimagetool",
       workdir="source/build",
-      command=["./squashfs-root/usr/bin/linuxdeploy", "--appdir", "AppDir", "-e", "strawberry", "--plugin", "qt", "--output", "appimage"],
+      command=["appimagetool", "AppDir"],
       env=env_output,
       haltOnFailure=True
     )
