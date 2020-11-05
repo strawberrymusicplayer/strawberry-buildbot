@@ -413,11 +413,13 @@ def MakeAppImageBuilder(name):
     )
   )
 
+  cmake_qt_flag = "-DBUILD_WITH_QT6=ON" if name == "Qt6" else "-DBUILD_WITH_QT5=ON"
+
   f.addStep(
     shell.ShellCommand(
       name="run cmake",
       workdir="source/build",
-      command=["cmake", "..", "-DCMAKE_INSTALL_PREFIX=/usr"],
+      command=["cmake", "..", "-DCMAKE_INSTALL_PREFIX=/usr", cmake_qt_flag],
       haltOnFailure=True
     )
   )
