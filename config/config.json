@@ -8,6 +8,6 @@
     "debian": ["buster", "bullseye"]
   },
  "special_workers": [
-    "appimage", "mingw"
+    "appimage", "appimage-qt6", "mingw"
   ]
 }
