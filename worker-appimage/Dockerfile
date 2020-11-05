@@ -18,7 +18,8 @@ RUN zypper --non-interactive --gpg-auto-import-keys install \
     python3-base python3-devel python3-pip go \
     gstreamer gstreamer-plugins-base gstreamer-plugins-good \
     gstreamer-plugins-bad gstreamer-plugins-bad-orig-addon gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon \
-    gstreamer-plugins-libav
+    gstreamer-plugins-libav \
+    alsa alsa-plugins-oss alsa-plugins-upmix alsa-plugins-pulse alsa-plugins-jack
 
 RUN pip3 install --upgrade pip
 RUN pip3 install buildbot_worker==2.8.4
@@ -33,5 +34,6 @@ RUN cd /tmp && git clone https://github.com/jonaski/go-appimage
 RUN cd /tmp/go-appimage && git checkout strawberry
 RUN cd /tmp/go-appimage/src/appimagetool && go build -trimpath -ldflags="-s -w"
 RUN cp /tmp/go-appimage/src/appimagetool/appimagetool /usr/local/bin/
+RUN rm -f /usr/local/bin/runtime-x86_64 && wget -P /usr/local/bin https://github.com/AppImage/AppImageKit/releases/download/continuous/runtime-x86_64
 
 CMD ["/usr/bin/python3", "/config/worker/start.py"]
