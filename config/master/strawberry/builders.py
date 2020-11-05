@@ -432,7 +432,7 @@ def MakeAppImageBuilder(name):
     )
   )
   env_version = {
-    "VERSION": util.Interpolate("%(prop:output-version)s-%(kw:name)s")
+    "VERSION": util.Interpolate("%(prop:output-version)s-%(kw:name)s", name=name)
   }
 
   f.addStep(
