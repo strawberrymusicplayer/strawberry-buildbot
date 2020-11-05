@@ -25,7 +25,7 @@ RUN zypper --non-interactive --gpg-auto-import-keys install \
 RUN pip3 install --upgrade pip
 RUN pip3 install buildbot_worker==2.8.4
 
-RUN echo "appimage" > /worker-name
+RUN echo "appimage-qt6" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot
 
 RUN mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
