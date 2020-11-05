@@ -431,8 +431,7 @@ def MakeAppImageBuilder(name):
       haltOnFailure=True
     )
   )
-  env_output = {
-    "OUTPUT": util.Interpolate("Strawberry%(kw:name)s-%(prop:output-version)s.AppImage", name=name)
+  env_version = {
     "VERSION": util.Interpolate("%(prop:output-version)s")
   }
 
@@ -476,7 +475,7 @@ def MakeAppImageBuilder(name):
       name="run appimagetool deploy",
       workdir="source/build",
       command=["appimagetool", "-s", "deploy", "AppDir/usr/share/applications/org.strawberrymusicplayer.strawberry.desktop"],
-      env=env_output,
+      env=env_version,
       haltOnFailure=True
     )
   )
@@ -486,7 +485,7 @@ def MakeAppImageBuilder(name):
       name="run appimagetool",
       workdir="source/build",
       command=["appimagetool", "AppDir"],
-      env=env_output,
+      env=env_version,
       haltOnFailure=True
     )
   )
