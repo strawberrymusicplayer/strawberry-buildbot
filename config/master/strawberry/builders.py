@@ -456,6 +456,24 @@ def MakeAppImageBuilder(name):
 
   f.addStep(
     shell.ShellCommand(
+      name="rename strawberry-tagreader",
+      workdir="source/build",
+      command=["mv", "AppDir/usr/bin/strawberry-tagreader", "./AppDir/usr/bin/strawberry-tagreader-bin"],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="copy strawberry-tagreader.sh",
+      workdir="source/build",
+      command=["cp", "/config/dist/strawberry-tagreader.sh", "./AppDir/usr/bin/strawberry-tagreader"],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
       name="cp appdata",
       workdir="source/build",
       haltOnFailure=True,
@@ -478,6 +496,15 @@ def MakeAppImageBuilder(name):
       workdir="source/build",
       command=["appimagetool", "-s", "deploy", "AppDir/usr/share/applications/org.strawberrymusicplayer.strawberry.desktop"],
       env=env_version,
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="copy gst-plugin-scanner.sh",
+      workdir="source/build",
+      command=["cp", "/config/dist/gst-plugin-scanner.sh", "./AppDir/usr/libexec/gstreamer-1.0/"],
       haltOnFailure=True
     )
   )
