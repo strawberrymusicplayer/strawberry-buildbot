@@ -598,12 +598,11 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
     "-DCMAKE_BUILD_TYPE=" + ("Debug" if is_debug else "Release"),
     "-DARCH=" + ("x86_64" if is_64 else "x86"),
     "-DENABLE_WIN32_CONSOLE=" + ("ON" if is_debug else "OFF"),
+    "-DBUILD_WITH_QT6=" + ("ON" if with_qt6 else "OFF"),
+    "-DUSE_SYSTEM_TAGLIB=OFF",
     "-DENABLE_DBUS=OFF",
     "-DENABLE_LIBGPOD=OFF",
-    "-DENABLE_IMOBILEDEVICE=OFF",
     "-DENABLE_LIBMTP=OFF",
-    "-DUSE_SYSTEM_TAGLIB=OFF",
-    "-DWITH_QT6=" + ("ON" if with_qt6 else "OFF"),
   ]
 
   strip_cmd = mxe_path + "/usr/bin/" + mingw32_name + "-strip"
@@ -612,7 +611,8 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
     "liborc-0.4-0.dll",
     "sqlite3.exe",
     "killproc.exe",
-    "gdb.exe"
+    "gdb.exe",
+    "gst-launch-1.0.exe",
   ]
   extra_binary_files = []
   for i in extra_binary_fileslist:
