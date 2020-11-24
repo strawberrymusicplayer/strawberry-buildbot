@@ -30,6 +30,7 @@ RUN useradd -r -m -s /bin/false buildbot
 RUN mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
     chown buildbot /home/buildbot/rpmbuild/{,BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
+RUN rm -rf /tmp/go-appimage
 RUN cd /tmp && git clone https://github.com/jonaski/go-appimage
 RUN cd /tmp/go-appimage && git checkout strawberry
 RUN cd /tmp/go-appimage/src/appimagetool && go build -trimpath -ldflags="-s -w"
