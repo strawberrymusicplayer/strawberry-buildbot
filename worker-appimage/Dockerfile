@@ -30,11 +30,10 @@ RUN useradd -r -m -s /bin/false buildbot
 RUN mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
     chown buildbot /home/buildbot/rpmbuild/{,BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
-RUN rm -rf /tmp/go-appimage
-RUN cd /tmp && git clone https://github.com/jonaski/go-appimage
-RUN cd /tmp/go-appimage && git checkout strawberry
-RUN cd /tmp/go-appimage/src/appimagetool && go build -trimpath -ldflags="-s -w"
-RUN cp /tmp/go-appimage/src/appimagetool/appimagetool /usr/local/bin/
+RUN rm -rf /tmp/strawberry-appimagetool
+RUN cd /tmp && git clone https://github.com/strawberrymusicplayer/strawberry-appimagetool
+RUN cd /tmp/strawberry-appimagetool/appimagetool && go build -trimpath -ldflags="-s -w"
+RUN cp /tmp/strawberry-appimagetool/appimagetool/appimagetool /usr/local/bin/
 RUN rm -f /usr/local/bin/runtime-x86_64 && wget -P /usr/local/bin https://github.com/AppImage/AppImageKit/releases/download/continuous/runtime-x86_64
 
 CMD ["/usr/bin/python3", "/config/worker/start.py"]
