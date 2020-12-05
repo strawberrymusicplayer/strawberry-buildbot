@@ -22,7 +22,7 @@ RUN zypper --non-interactive --gpg-auto-import-keys install \
     alsa alsa-plugins-oss alsa-plugins-upmix alsa-plugins-pulse alsa-plugins-jack
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==2.8.4
+RUN pip3 install buildbot_worker==2.9.0
 
 RUN echo "appimage" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot
