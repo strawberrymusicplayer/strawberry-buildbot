@@ -3,7 +3,7 @@ FROM centos:8
 RUN dnf install -y epel-release
 RUN dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 RUN dnf install -y 'dnf-command(config-manager)'
-RUN dnf config-manager --set-enabled PowerTools
+RUN dnf config-manager --set-enabled powertools
 
 RUN dnf clean all
 RUN dnf update -y
