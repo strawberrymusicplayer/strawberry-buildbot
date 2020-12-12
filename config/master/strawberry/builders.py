@@ -596,6 +596,7 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
     "..",
     "-DCMAKE_TOOLCHAIN_FILE=/config/dist/" + ("Toolchain-x86_64-w64-mingw32.cmake" if is_64 else "Toolchain-i686-w64-mingw32.cmake"),
     "-DCMAKE_BUILD_TYPE=" + ("Debug" if is_debug else "Release"),
+    "-DCMAKE_PREFIX_PATH=" + target_path + "/" + qt_dir + "/lib/cmake"
     "-DARCH=" + ("x86_64" if is_64 else "x86"),
     "-DENABLE_WIN32_CONSOLE=" + ("ON" if is_debug else "OFF"),
     "-DBUILD_WITH_QT6=" + ("ON" if with_qt6 else "OFF"),
@@ -608,11 +609,11 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
   strip_cmd = mxe_path + "/usr/bin/" + mingw32_name + "-strip"
 
   extra_binary_fileslist = [
-    "liborc-0.4-0.dll",
     "sqlite3.exe",
     "killproc.exe",
     "gdb.exe",
     "gst-launch-1.0.exe",
+    "libfreetype-6.dll",
   ]
   extra_binary_files = []
   for i in extra_binary_fileslist:
@@ -860,10 +861,7 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
   )
   f.addStep(steps.SetProperties(properties=get_base_filename))
 
-  if with_qt6:
-    f.addStep(UploadPackage("windows-qt6-exprimental"))
-  else:
-    f.addStep(UploadPackage("windows"))
+  f.addStep(UploadPackage("windows"))
 
   f.addStep(
     shell.ShellCommand(
