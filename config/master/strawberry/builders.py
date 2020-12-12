@@ -596,10 +596,10 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
     "..",
     "-DCMAKE_TOOLCHAIN_FILE=/config/dist/" + ("Toolchain-x86_64-w64-mingw32.cmake" if is_64 else "Toolchain-i686-w64-mingw32.cmake"),
     "-DCMAKE_BUILD_TYPE=" + ("Debug" if is_debug else "Release"),
-    "-DCMAKE_PREFIX_PATH=" + target_path + "/" + qt_dir + "/lib/cmake"
+    "-DCMAKE_PREFIX_PATH=" + target_path + "/" + qt_dir + "/lib/cmake",
     "-DARCH=" + ("x86_64" if is_64 else "x86"),
     "-DENABLE_WIN32_CONSOLE=" + ("ON" if is_debug else "OFF"),
-    "-DBUILD_WITH_QT6=" + ("ON" if with_qt6 else "OFF"),
+    "-DQT_MAJOR_VERSION=" + ("6" if with_qt6 else "5"),
     "-DUSE_SYSTEM_TAGLIB=OFF",
     "-DENABLE_DBUS=OFF",
     "-DENABLE_LIBGPOD=OFF",
