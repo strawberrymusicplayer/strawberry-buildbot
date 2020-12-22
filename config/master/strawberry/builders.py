@@ -586,16 +586,6 @@ def MakeMXEBuilder():
     shell.Compile(
       name="compile",
       workdir="source",
-      command=["make", "-j", MAKE_JOBS, "icu4c" ],
-      timeout=108000,
-      haltOnFailure=True,
-    )
-  )
-
-  f.addStep(
-    shell.Compile(
-      name="compile",
-      workdir="source",
       command=["make", "-j", MAKE_JOBS],
       timeout=108000,
       haltOnFailure=True,
