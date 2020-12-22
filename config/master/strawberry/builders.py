@@ -168,21 +168,48 @@ def MakeRPMBuilder(distro, version):
     )
   )
 
-  f.addStep(
-    steps.SetPropertyFromCommand(
-      name="get output filename",
-      workdir="source",
-      command=[
-        "sh", "-c",
-        "ls -dt ~/rpmbuild/RPMS/*/strawberry-*.rpm | grep -v debuginfo | grep -v debugsource | head -n 1"
-      ],
-      property="output-filepath",
-      haltOnFailure=True
-    )
-  )
-  f.addStep(steps.SetProperties(properties=get_base_filename))
-
   if not version in ['tumbleweed']:
+
+    # Upload RPM package.
+    f.addStep(
+      steps.SetPropertyFromCommand(
+        name="get output rpm filename",
+        workdir="source",
+        command=[
+          "sh", "-c",
+          "ls -dt ~/rpmbuild/RPMS/*/strawberry-*.rpm | grep -v debuginfo | grep -v debugsource | head -n 1"
+        ],
+        property="output-filepath",
+        haltOnFailure=True
+      )
+    )
+    f.addStep(steps.SetProperties(properties=get_base_filename))
+    f.addStep(UploadPackage(distro + "/" + version))
+
+    # Upload debugsource package.
+    f.addStep(
+      steps.SetPropertyFromCommand(
+        name="get output debugsource rpm filename",
+        workdir="source",
+        command=["sh", "-c", "ls -dt ~/rpmbuild/RPMS/*/strawberry-debugsource-*.rpm | head -n 1"],
+        property="output-filepath",
+        haltOnFailure=True
+      )
+    )
+    f.addStep(steps.SetProperties(properties=get_base_filename))
+    f.addStep(UploadPackage(distro + "/" + version))
+
+    # Upload debuginfo package.
+    f.addStep(
+      steps.SetPropertyFromCommand(
+        name="get output debuginfo rpm filename",
+        workdir="source",
+        command=["sh", "-c", "ls -dt ~/rpmbuild/RPMS/*/strawberry-debuginfo-*.rpm | head -n 1"],
+        property="output-filepath",
+        haltOnFailure=True
+      )
+    )
+    f.addStep(steps.SetProperties(properties=get_base_filename))
     f.addStep(UploadPackage(distro + "/" + version))
 
   f.addStep(
@@ -401,8 +428,12 @@ def MakePacmanBuilder(distro, version):
 
 def MakeAppImageBuilder(name):
 
+  git_args = GitArgs("strawberry", "master")
+  git_args["mode"] = "full"
+  git_args["method"] = "fresh"
+
   f = factory.BuildFactory()
-  f.addStep(git.Git(**GitArgs("strawberry", "master")))
+  f.addStep(git.Git(**git_args))
 
   f.addStep(
     shell.ShellCommand(
