@@ -16,7 +16,7 @@ RUN zypper --non-interactive --gpg-auto-import-keys install \
     python-base python-devel python3-base python3-devel python3-pip python-xml python3-Mako
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==2.9.3
+RUN pip3 install buildbot_worker==2.10.0
 
 RUN echo "mingw" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot

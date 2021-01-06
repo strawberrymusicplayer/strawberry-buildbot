@@ -5,7 +5,7 @@ RUN zypper --non-interactive --gpg-auto-import-keys up -l -y
 RUN zypper --non-interactive --gpg-auto-import-keys install git gcc python3-pip python3-devel libcairo2 cairo-tools python3-cairo
 
 RUN pip3 install --upgrade pip
-RUN pip3 install pycairo requests buildbot==2.9.3 buildbot-www==2.9.3 buildbot-waterfall-view==2.9.3 buildbot-console-view==2.9.3 buildbot-grid-view==2.9.3 buildbot-badges sqlalchemy
+RUN pip3 install pycairo requests buildbot==2.10.0 buildbot-www==2.10.0 buildbot-waterfall-view==2.10.0 buildbot-console-view==2.10.0 buildbot-grid-view==2.10.0 buildbot-badges sqlalchemy
 
 RUN useradd -r -s /bin/false buildbot
 
