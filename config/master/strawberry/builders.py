@@ -257,18 +257,26 @@ def MakeDebBuilder(distro, version):
 
   f.addStep(
     steps.SetPropertyFromCommand(
-      name="get output filename",
+      name="get output filename for deb",
       workdir="source",
-      command=[
-        "sh", "-c",
-        "ls -dt ../strawberry_*.deb | grep -v debuginfo | head -n 1"
-      ],
+      command=["sh", "-c", "ls -dt ../strawberry_*.deb | head -n 1"],
       property="output-filepath",
       haltOnFailure=True
     )
   )
   f.addStep(steps.SetProperties(properties=get_base_filename))
+  f.addStep(UploadPackage("%s/%s" % (distro, version)))
 
+  f.addStep(
+    steps.SetPropertyFromCommand(
+      name="get output filename for deb dbgsym",
+      workdir="source",
+      command=["sh", "-c", "ls -dt ../strawberry-dbgsym_*.deb | head -n 1"],
+      property="output-filepath",
+      haltOnFailure=True
+    )
+  )
+  f.addStep(steps.SetProperties(properties=get_base_filename))
   f.addStep(UploadPackage("%s/%s" % (distro, version)))
 
   f.addStep(
