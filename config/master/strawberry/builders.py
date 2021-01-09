@@ -271,7 +271,7 @@ def MakeDebBuilder(distro, version):
     steps.SetPropertyFromCommand(
       name="get output filename for deb dbgsym",
       workdir="source",
-      command=["sh", "-c", "ls -dt ../strawberry-dbgsym_*.deb | head -n 1"],
+      command=["sh", "-c", "ls -dt ../strawberry-dbgsym_*.*deb | head -n 1"],
       property="output-filepath",
       haltOnFailure=True
     )
