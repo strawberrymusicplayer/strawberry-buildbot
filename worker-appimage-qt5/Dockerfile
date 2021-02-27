@@ -1,12 +1,12 @@
 FROM opensuse/tumbleweed
 
 RUN zypper -n ar -c -f -n 'repo-packman' https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ repo-packman
-RUN zypper -n ar -c -f -n 'repo-taglib' https://download.opensuse.org/repositories/home:/jonaski:/libraries/openSUSE_Tumbleweed/ repo-taglib
+RUN zypper -n ar -c -f -n 'repo-libraries' https://download.opensuse.org/repositories/home:/jonaski:/libraries/openSUSE_Tumbleweed/ repo-libraries
 
-RUN zypper --non-interactive --gpg-auto-import-keys ref
-RUN zypper --non-interactive --gpg-auto-import-keys dup -l -y
+RUN zypper -n --gpg-auto-import-keys ref
+RUN zypper -n --gpg-auto-import-keys dup -l -y
 
-RUN zypper --non-interactive --gpg-auto-import-keys install \
+RUN zypper -n --gpg-auto-import-keys install \
     git make cmake gcc gcc-c++ tar gettext-tools wget \
     lsb-release rpm-build squashfs patchelf desktop-file-utils \
     glibc-devel glib2-devel glib2-tools dbus-1-devel libgnutls-devel alsa-devel libpulse-devel libnotify-devel \

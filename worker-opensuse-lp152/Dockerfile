@@ -1,9 +1,9 @@
 FROM opensuse/leap:15.2
 
-RUN zypper --non-interactive --gpg-auto-import-keys ref
-RUN zypper --non-interactive --gpg-auto-import-keys up -l -y
+RUN zypper -n --gpg-auto-import-keys ref
+RUN zypper -n --gpg-auto-import-keys up -l -y
 
-RUN zypper --non-interactive --gpg-auto-import-keys install \
+RUN zypper -n --gpg-auto-import-keys install \
     lsb-release rpm-build rpmdevtools \
     git make cmake gcc gcc-c++ tar gettext-tools \
     glibc-devel glib2-devel glib2-tools dbus-1-devel alsa-devel libpulse-devel libnotify-devel libgnutls-devel \
