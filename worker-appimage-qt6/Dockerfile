@@ -1,15 +1,19 @@
 FROM opensuse/tumbleweed
 
 RUN zypper -n ar -c -f -n 'repo-packman' https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ repo-packman
+RUN zypper -n ar -c -f -n 'repo-qt6' https://download.opensuse.org/repositories/home:/jonaski:/qt6/openSUSE_Tumbleweed/ repo-qt6
+RUN zypper -n ar -c -f -n 'repo-taglib' https://download.opensuse.org/repositories/home:/jonaski:/libraries/openSUSE_Tumbleweed/ repo-taglib
 
 RUN zypper --non-interactive --gpg-auto-import-keys ref
 RUN zypper --non-interactive --gpg-auto-import-keys dup -l -y
+
+RUN zypper --non-interactive --gpg-auto-import-keys dup --from repo-qt6
 
 RUN zypper --non-interactive --gpg-auto-import-keys install \
     git make cmake gcc gcc-c++ tar gettext-tools wget \
     lsb-release rpm-build squashfs patchelf desktop-file-utils \
     glibc-devel glib2-devel glib2-tools dbus-1-devel libgnutls-devel alsa-devel libpulse-devel libnotify-devel \
-    boost-devel libboost_headers-devel protobuf-devel sqlite3-devel fftw3-devel \
+    boost-devel libboost_headers-devel protobuf-devel sqlite3-devel fftw3-devel taglib-devel \
     qt6-core-devel qt6-gui-devel qt6-widgets-devel qt6-concurrent-devel qt6-network-devel \
     qt6-sql-devel qt6-dbus-devel qt6-test-devel qt6-base-common-devel qt6-sql-sqlite qt6-linguist-devel \
     gstreamer-devel gstreamer-plugins-base-devel \
@@ -20,6 +24,8 @@ RUN zypper --non-interactive --gpg-auto-import-keys install \
     gstreamer-plugins-bad gstreamer-plugins-bad-orig-addon gstreamer-plugins-ugly gstreamer-plugins-ugly-orig-addon \
     gstreamer-plugins-libav \
     alsa alsa-plugins-oss alsa-plugins-upmix alsa-plugins-pulse alsa-plugins-jack
+
+RUN zypper --non-interactive --gpg-auto-import-keys dup --from repo-qt6
 
 RUN pip3 install --upgrade pip
 RUN pip3 install buildbot_worker==2.10.1

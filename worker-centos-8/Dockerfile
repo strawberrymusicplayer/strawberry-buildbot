@@ -14,7 +14,7 @@ RUN dnf install -y \
                    protobuf-devel protobuf-compiler \
                    alsa-lib-devel pulseaudio-libs-devel \
                    qt5-devel qt5-qtbase-devel qt5-qtx11extras-devel qt5-qttools-devel \
-                   fftw-devel libchromaprint-devel \
+                   fftw-devel libchromaprint-devel taglib-devel \
                    libcdio-devel libgpod-devel libplist-devel libusbmuxd-devel libmtp-devel \
                    libjpeg-devel cairo-devel \
                    dbus-x11 xorg-x11-server-Xvfb xorg-x11-xauth vim-common \

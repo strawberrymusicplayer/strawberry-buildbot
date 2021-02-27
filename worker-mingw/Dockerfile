@@ -1,10 +1,10 @@
-FROM opensuse/tumbleweed
+FROM opensuse/leap:15.2
 
-RUN zypper -n ar -c -f -n 'repo-tools' https://download.opensuse.org/repositories/devel:/tools/openSUSE_Tumbleweed/ repo-tools
-RUN zypper -n ar -c -f -n 'repo-mingw' https://download.opensuse.org/repositories/windows:/mingw:/win32/openSUSE_Tumbleweed/ repo-mingw
+RUN zypper -n ar -c -f -n 'repo-tools' https://download.opensuse.org/repositories/devel:/tools/openSUSE_Leap_15.2/ repo-tools
+RUN zypper -n ar -c -f -n 'repo-mingw' https://download.opensuse.org/repositories/windows:/mingw:/win32/openSUSE_Leap_15.2/ repo-mingw
 
 RUN zypper --non-interactive --gpg-auto-import-keys ref
-RUN zypper --non-interactive --gpg-auto-import-keys dup -l -y
+RUN zypper --non-interactive --gpg-auto-import-keys up -l -y
 
 RUN zypper --non-interactive --gpg-auto-import-keys install \
     glibc glibc-extra glibc-locale glibc-i18ndata glibc-32bit gcc-c++ \
