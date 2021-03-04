@@ -1,6 +1,7 @@
 FROM opensuse/leap:15.2
 
-RUN zypper -n ar -c -f -n 'repo-tools' https://download.opensuse.org/repositories/devel:/tools/openSUSE_Leap_15.2/ repo-tools
+RUN zypper -n ar -c -f -n 'repo-devel-tools' https://download.opensuse.org/repositories/devel:/tools/openSUSE_Leap_15.2/ repo-devel-tools
+RUN zypper -n ar -c -f -n 'repo-devel-tools-building' https://download.opensuse.org/repositories/devel:tools:building/openSUSE_Leap_15.2/ repo-devel-tools-building
 RUN zypper -n ar -c -f -n 'repo-mingw' https://download.opensuse.org/repositories/windows:/mingw:/win32/openSUSE_Leap_15.2/ repo-mingw
 
 RUN zypper --non-interactive --gpg-auto-import-keys ref
