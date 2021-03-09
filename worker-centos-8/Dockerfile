@@ -29,7 +29,7 @@ RUN dnf install -y gstreamer1-devel gstreamer1-plugins-base-devel \
 RUN dnf clean all && dnf update -y
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==2.10.2
+RUN pip3 install buildbot_worker==3.0.0
 
 RUN echo "centos-8" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot

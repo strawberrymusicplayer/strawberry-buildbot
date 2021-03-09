@@ -15,7 +15,7 @@ RUN apt-get install -y \
                     python3-pip python3-dev
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==2.10.2
+RUN pip3 install buildbot_worker==3.0.0
 
 RUN echo "ubuntu-groovy" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot

@@ -56,7 +56,7 @@ RUN urpmi --auto --force urpmi-debuginfo-install \
                   qt5ct
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==2.10.2
+RUN pip3 install buildbot_worker==3.0.0
 
 RUN echo "mageia-7" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot
