@@ -1,4 +1,4 @@
-FROM opensuse/leap:15.1
+FROM opensuse/leap:15.3
 
 RUN zypper -n --gpg-auto-import-keys ref
 RUN zypper -n --gpg-auto-import-keys up -l -y
@@ -18,7 +18,7 @@ RUN zypper -n --gpg-auto-import-keys install \
 RUN pip3 install --upgrade pip
 RUN pip3 install buildbot_worker==3.0.0
 
-RUN echo "opensuse-lp151" > /worker-name
+RUN echo "opensuse-lp153" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot
 
 RUN mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
