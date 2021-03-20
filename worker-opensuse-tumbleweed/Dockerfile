@@ -16,7 +16,7 @@ RUN zypper --non-interactive --gpg-auto-import-keys install \
     python3-base python3-devel python3-pip
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==3.0.0
+RUN pip3 install buildbot_worker==3.0.2
 
 RUN echo "opensuse-tumbleweed" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot
