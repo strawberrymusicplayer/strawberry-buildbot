@@ -1,5 +1,7 @@
 FROM opensuse/tumbleweed
 
+RUN sed -i 's/baseurl=.*/baseurl=http:\/\/ftp.uninett.no\/pub\/linux\/opensuse\/tumbleweed\/repo\/oss\//g' /etc/zypp/repos.d/repo-oss.repo
+
 RUN zypper --non-interactive --gpg-auto-import-keys ref
 RUN zypper --non-interactive --gpg-auto-import-keys dup -l -y
 

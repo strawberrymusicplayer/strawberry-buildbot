@@ -1,5 +1,7 @@
 FROM opensuse/tumbleweed
 
+RUN sed -i 's/baseurl=.*/baseurl=http:\/\/ftp.uninett.no\/pub\/linux\/opensuse\/tumbleweed\/repo\/oss\//g' /etc/zypp/repos.d/repo-oss.repo
+
 RUN zypper -n ar -c -f -n 'repo-packman' https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ repo-packman
 RUN zypper -n ar -c -f -n 'repo-libraries' https://download.opensuse.org/repositories/home:/jonaski:/libraries/openSUSE_Tumbleweed/ repo-libraries
 
