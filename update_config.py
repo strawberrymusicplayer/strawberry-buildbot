@@ -18,7 +18,7 @@ def Add(compose, name):
     'build': name,
     'links': ['master'],
     'volumes': ['./config:/config'],
-    'volumes_from': ['volumes'],
+    'volumes_from': ['bb-volumes'],
     'privileged': 'false',
   }
 
@@ -41,9 +41,9 @@ def WriteComposeYaml():
         './config:/config',
         '/srv/www/htdocs/builds:/srv/www/htdocs/builds',
       ],
-      'volumes_from': ['volumes'],
+      'volumes_from': ['bb-volumes'],
     },
-    'volumes': {
+    'bb-volumes': {
       'command': '/bin/true',
       'image': 'opensuse/tumbleweed',
       'volumes': ['/persistent-data'],
