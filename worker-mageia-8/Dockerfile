@@ -1,6 +1,6 @@
 FROM mageia:8
 
-#RUN urpmi.addmedia --distrib http://www.mirrorservice.org/sites/mageia.org/pub/mageia/distrib/7/x86_64
+RUN urpmi.addmedia --distrib https://ftp.fau.de/mageia/distrib/8/x86_64/
 RUN urpmi.update --auto -a
 RUN urpmi --auto --auto-update
 RUN urpmi --auto --force urpmi-debuginfo-install \
