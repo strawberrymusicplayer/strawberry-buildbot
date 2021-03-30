@@ -19,6 +19,11 @@ RUN zypper --non-interactive --gpg-auto-import-keys install \
 RUN pip3 install --upgrade pip
 RUN pip3 install buildbot_worker==3.0.2
 
+RUN mkdir -p /tmp/lockedlist && wget https://nsis.sourceforge.io/mediawiki/images/d/d3/LockedList.zip --directory-prefix=/tmp/lockedlist
+RUN cd /tmp/lockedlist && unzip /tmp/lockedlist/LockedList.zip
+RUN cp /tmp/lockedlist/Plugins/x86-unicode/LockedList.dll /usr/share/nsis/Plugins/x86-unicode/
+RUN cp /tmp/lockedlist/Plugins/LockedList64.dll /usr/share/nsis/Plugins/
+
 RUN echo "mingw" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot
 
