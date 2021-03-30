@@ -873,6 +873,15 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
 
   f.addStep(
     shell.ShellCommand(
+      name="copy COPYING file",
+      workdir="source",
+      command=["cp", "COPYING", "../../build/" ],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
       name="run makensis",
       command=[ "makensis", "strawberry.nsi" ],
       workdir="source/build",
