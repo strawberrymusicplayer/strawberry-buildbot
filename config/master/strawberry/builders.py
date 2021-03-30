@@ -875,7 +875,7 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
     shell.ShellCommand(
       name="copy COPYING file",
       workdir="source",
-      command=["cp", "COPYING", "../../build/" ],
+      command=["cp", "COPYING", "build/" ],
       haltOnFailure=True
     )
   )
