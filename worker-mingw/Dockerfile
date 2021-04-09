@@ -17,7 +17,7 @@ RUN zypper --non-interactive --gpg-auto-import-keys install \
     python-base python-devel python3-base python3-devel python3-pip python-xml python3-Mako
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==3.0.2
+RUN pip3 install buildbot_worker==3.1.0
 
 RUN mkdir -p /tmp/lockedlist && wget https://nsis.sourceforge.io/mediawiki/images/d/d3/LockedList.zip --directory-prefix=/tmp/lockedlist
 RUN cd /tmp/lockedlist && unzip /tmp/lockedlist/LockedList.zip

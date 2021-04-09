@@ -25,7 +25,7 @@ RUN zypper -n --gpg-auto-import-keys install \
     alsa alsa-plugins-oss alsa-plugins-upmix alsa-plugins-pulse alsa-plugins-jack
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==3.0.2
+RUN pip3 install buildbot_worker==3.1.0
 
 RUN echo "appimage-qt5" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot
