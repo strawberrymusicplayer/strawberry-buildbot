@@ -4,7 +4,7 @@
     "fedora": ["32", "33", "34"],
     "centos": ["8"],
     "mageia": ["7", "8"],
-    "ubuntu": ["bionic", "focal", "groovy"],
+    "ubuntu": ["bionic", "focal", "groovy", "hirsute"],
     "debian": ["buster", "bullseye"]
   },
  "special_workers": [
