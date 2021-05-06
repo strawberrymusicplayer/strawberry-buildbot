@@ -1,15 +1,14 @@
-FROM opensuse/leap:15.2
+FROM opensuse/tumbleweed
 
-RUN zypper -n ar -c -f -n 'repo-devel-tools' https://download.opensuse.org/repositories/devel:/tools/openSUSE_Leap_15.2/ repo-devel-tools
-RUN zypper -n ar -c -f -n 'repo-devel-tools-building' https://download.opensuse.org/repositories/devel:tools:building/openSUSE_Leap_15.2/ repo-devel-tools-building
-RUN zypper -n ar -c -f -n 'repo-mingw' https://download.opensuse.org/repositories/windows:/mingw:/win32/openSUSE_Leap_15.2/ repo-mingw
+RUN zypper -n ar -c -f -n 'repo-devel-tools' https://download.opensuse.org/repositories/devel:/tools/openSUSE_Tumbleweed/ repo-devel-tools
+RUN zypper -n ar -c -f -n 'repo-mingw' https://download.opensuse.org/repositories/windows:/mingw:/win32/openSUSE_Tumbleweed/ repo-mingw
 
-RUN zypper --non-interactive --gpg-auto-import-keys ref
-RUN zypper --non-interactive --gpg-auto-import-keys up -l -y
+RUN zypper -n --gpg-auto-import-keys ref
+RUN zypper -n --gpg-auto-import-keys dup -l -y
 
-RUN zypper --non-interactive --gpg-auto-import-keys install \
+RUN zypper -n --gpg-auto-import-keys install \
     glibc glibc-extra glibc-locale glibc-i18ndata glibc-32bit gcc-c++ \
-    which patch gperf wget curl git ruby diffutils \
+    shadow which patch gperf wget curl git ruby diffutils \
     make cmake libtool pkg-config autoconf automake meson ninja intltool makeinfo scons bison flex gettext-tools \
     tar gzip bzip2 xz p7zip p7zip-full lzip zip unzip orc \
     linux-glibc-devel glibc-devel file-devel libopenssl-devel gdk-pixbuf-devel gtk-doc \
@@ -25,6 +24,7 @@ RUN cp /tmp/lockedlist/Plugins/x86-unicode/LockedList.dll /usr/share/nsis/Plugin
 RUN cp /tmp/lockedlist/Plugins/LockedList64.dll /usr/share/nsis/Plugins/
 
 RUN echo "mingw" > /worker-name
+
 RUN useradd -r -m -s /bin/false buildbot
 
 CMD ["/usr/bin/python3", "/config/worker/start.py"]
