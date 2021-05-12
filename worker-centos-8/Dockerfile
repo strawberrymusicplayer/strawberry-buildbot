@@ -13,7 +13,7 @@ RUN dnf install -y \
                    boost-devel fuse-devel dbus-devel libnotify-devel gnutls-devel sqlite-devel \
                    protobuf-devel protobuf-compiler \
                    alsa-lib-devel pulseaudio-libs-devel \
-                   qt5-devel qt5-qtbase-devel qt5-qtx11extras-devel qt5-qttools-devel \
+                   qt5-devel qt5-qtbase-devel qt5-qtbase-private-devel qt5-qttools-devel \
                    fftw-devel libchromaprint-devel taglib-devel \
                    libcdio-devel libgpod-devel libplist-devel libusbmuxd-devel libmtp-devel \
                    libjpeg-devel cairo-devel \

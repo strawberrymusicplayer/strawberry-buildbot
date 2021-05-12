@@ -6,7 +6,7 @@ RUN dnf install --assumeyes \
     redhat-lsb-core \
     glibc gcc-c++ git tar rpmdevtools make cmake glib man gettext \
     boost-devel dbus-devel protobuf-devel protobuf-compiler sqlite-devel alsa-lib-devel pulseaudio-libs-devel libnotify-devel gnutls-devel \
-    qt5-devel qt5-qtbase-devel qt5-qtx11extras-devel qt5-qttools-devel \
+    qt5-devel qt5-qtbase-devel qt5-qtbase-private-devel qt5-qttools-devel \
     gstreamer1-devel gstreamer1-plugins-base-devel \
     libcdio-devel libgpod-devel libplist-devel libusbmuxd-devel libmtp-devel \
     taglib-devel libchromaprint-devel fftw-devel \
