@@ -9,7 +9,7 @@ RUN zypper -n ar -c -f -n 'repo-taglib' https://download.opensuse.org/repositori
 RUN zypper -n --gpg-auto-import-keys ref
 RUN zypper -n --gpg-auto-import-keys dup -l -y
 
-RUN zypper -n --gpg-auto-import-keys dup --from repo-qt6
+RUN zypper -n --gpg-auto-import-keys dup -l -y --from repo-qt6 --allow-vendor-change
 
 RUN zypper -n --gpg-auto-import-keys install \
     git make cmake gcc gcc-c++ tar gettext-tools wget \
@@ -27,7 +27,7 @@ RUN zypper -n --gpg-auto-import-keys install \
     gstreamer-plugins-libav \
     alsa alsa-plugins-oss alsa-plugins-upmix alsa-plugins-pulse alsa-plugins-jack
 
-RUN zypper -n --gpg-auto-import-keys dup --from repo-qt6
+RUN zypper -n --gpg-auto-import-keys dup -l -y --from repo-qt6 --allow-vendor-change
 
 RUN pip3 install --upgrade pip
 RUN pip3 install buildbot_worker==3.1.1
