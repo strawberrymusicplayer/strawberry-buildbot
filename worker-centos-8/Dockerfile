@@ -8,7 +8,7 @@ RUN dnf config-manager --set-enabled powertools
 RUN dnf clean all
 RUN dnf update -y
 RUN dnf install -y \
-                   glibc gcc-c++ make automake libtool cmake3 patchelf ccache rpmdevtools \
+                   glibc gcc-c++ make automake libtool cmake patchelf ccache rpmdevtools \
                    redhat-lsb-core git fuse fuse-libs wget curl man tar gettext \
                    boost-devel fuse-devel dbus-devel libnotify-devel gnutls-devel sqlite-devel \
                    protobuf-devel protobuf-compiler \
