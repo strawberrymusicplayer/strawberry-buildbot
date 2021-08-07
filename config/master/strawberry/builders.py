@@ -638,7 +638,6 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
 
   extra_binary_fileslist = [
     "sqlite3.exe",
-    "killproc.exe",
     "gdb.exe",
     "gst-launch-1.0.exe",
     "gst-discoverer-1.0.exe",
