@@ -28,8 +28,8 @@ RUN urpmi --auto --force urpmi-debuginfo-install \
                   lib64qt5sql-devel \
                   lib64qt5dbus-devel \
                   lib64qt5help-devel \
-                  libqt5test-devel \
-                  libqt5-qtx11extras-devel \
+                  lib64qt5test-devel \
+                  lib64qt5x11extras-devel \
                   lib64gstreamer1.0-devel \
                   lib64gstreamer-plugins-base1.0-devel \
                   lib64cdio-devel \
