@@ -747,9 +747,10 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
         "-p",
         "gio-modules"
         "platforms",
-        "sqldrivers",
-        "imageformats",
         "styles",
+        "imageformats",
+        "tls",
+        "sqldrivers",
         "gstreamer-plugins",
         "nsisplugins",
       ],
@@ -777,9 +778,9 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
 
   f.addStep(
     shell.ShellCommand(
-      name="copy qsqlite.dll",
-      workdir="source/build/sqldrivers",
-      command=[ "cp", target_path + "/" + qt_dir + "/plugins/sqldrivers/qsqlite.dll", ".", ],
+      name="copy qt styles",
+      workdir="source/build/styles",
+      command=[ "cp", target_path + "/" + qt_dir + "/plugins/styles/qwindowsvistastyle.dll", "." ],
       haltOnFailure=True
     )
   )
@@ -795,9 +796,18 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
 
   f.addStep(
     shell.ShellCommand(
-      name="copy qt styles",
-      workdir="source/build/styles",
-      command=[ "cp", target_path + "/" + qt_dir + "/plugins/styles/qwindowsvistastyle.dll", "." ],
+      name="copy qopensslbackend.dll",
+      workdir="source/build/tls",
+      command=[ "cp", target_path + "/" + qt_dir + "/plugins/tls/qopensslbackend.dll", ".", ],
+      haltOnFailure=True
+    )
+  )
+
+  f.addStep(
+    shell.ShellCommand(
+      name="copy qsqlite.dll",
+      workdir="source/build/sqldrivers",
+      command=[ "cp", target_path + "/" + qt_dir + "/plugins/sqldrivers/qsqlite.dll", ".", ],
       haltOnFailure=True
     )
   )
