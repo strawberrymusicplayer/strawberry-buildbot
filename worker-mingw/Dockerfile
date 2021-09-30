@@ -7,13 +7,16 @@ RUN zypper -n --gpg-auto-import-keys ref
 RUN zypper -n --gpg-auto-import-keys up -l -y
 
 RUN zypper -n --gpg-auto-import-keys install \
-    glibc glibc-extra glibc-locale glibc-i18ndata glibc-32bit gcc-c++ \
+    glibc glibc-extra glibc-locale glibc-i18ndata glibc-32bit gcc10 gcc10-c++ \
     shadow which patch gperf wget curl git ruby diffutils \
     make cmake libtool pkg-config autoconf automake meson ninja intltool makeinfo scons bison flex gettext-tools \
     tar gzip bzip2 xz p7zip p7zip-full lzip zip unzip orc \
     linux-glibc-devel glibc-devel file-devel libopenssl-devel gdk-pixbuf-devel gtk-doc \
     mingw32-cross-nsis \
     python-base python-devel python3-base python3-devel python3-pip python-xml python3-Mako
+
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 50
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 50
 
 RUN pip3 install --upgrade pip
 RUN pip3 install buildbot_worker==3.3.0
