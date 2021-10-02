@@ -62,8 +62,8 @@ class StrawberryBuildbot(object):
     self._AddBuilder(name='Source', worker='opensuse-lp153', build_factory=builders.MakeSourceBuilder())
 
     # AppImage.
-    self._AddBuilder(name='AppImage Qt 5', worker='appimage-qt5', build_factory=builders.MakeAppImageBuilder(name="Qt5"))
-    self._AddBuilder(name='AppImage Qt 6', worker='appimage-qt6', build_factory=builders.MakeAppImageBuilder(name="Qt6"))
+    #self._AddBuilder(name='AppImage Qt 5', worker='appimage-qt5', build_factory=builders.MakeAppImageBuilder(name="Qt5"))
+    #self._AddBuilder(name='AppImage Qt 6', worker='appimage-qt6', build_factory=builders.MakeAppImageBuilder(name="Qt6"))
 
     # MXE.
     self._AddBuilder(name='MXE', worker='mingw', build_factory=builders.MakeMXEBuilder(), auto=False, deps_lock='exclusive')

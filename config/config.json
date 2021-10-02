@@ -1,6 +1,6 @@
 {
   "linux": {
-    "opensuse": ["lp153", "tumbleweed"],
+    "opensuse": ["lp153"],
     "fedora": ["33", "34"],
     "centos": ["8"],
     "mageia": ["8"],
@@ -8,6 +8,6 @@
     "debian": ["buster", "bullseye"]
   },
  "special_workers": [
-    "appimage-qt5", "appimage-qt6", "mingw"
+    "mingw"
   ]
 }
