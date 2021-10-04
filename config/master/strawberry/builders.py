@@ -794,14 +794,15 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
     )
   )
 
-  f.addStep(
-    shell.ShellCommand(
-      name="copy qopensslbackend.dll",
-      workdir="source/build/tls",
-      command=[ "cp", target_path + "/" + qt_dir + "/plugins/tls/qopensslbackend.dll", ".", ],
-      haltOnFailure=True
+  if with_qt6:
+    f.addStep(
+      shell.ShellCommand(
+        name="copy qopensslbackend.dll",
+        workdir="source/build/tls",
+        command=[ "cp", target_path + "/" + qt_dir + "/plugins/tls/qopensslbackend.dll", ".", ],
+        haltOnFailure=True
+      )
     )
-  )
 
   f.addStep(
     shell.ShellCommand(
