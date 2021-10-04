@@ -7,17 +7,21 @@ RUN zypper -n --gpg-auto-import-keys ref
 RUN zypper -n --gpg-auto-import-keys up -l -y
 
 RUN zypper -n --gpg-auto-import-keys install \
-    glibc glibc-extra glibc-locale glibc-i18ndata glibc-32bit gcc gcc-c++ gcc10 gcc10-c++ \
+    glibc glibc-extra glibc-locale glibc-i18ndata glibc-32bit gcc10 gcc10-c++ cpp10 \
     shadow which patch gperf wget curl git diffutils \
     make cmake libtool pkg-config autoconf automake makeinfo meson ninja intltool \
     tar gzip bzip2 xz p7zip p7zip-full lzip zip unzip \
     gtk-doc gettext-tools scons bison flex ruby orc \
     linux-glibc-devel glibc-devel file-devel libopenssl-devel libffi-devel gdk-pixbuf-devel \
-    python3-base python3-devel python3-pip \
+    python3-base python3-devel python3-pip python3-Mako \
     mingw32-cross-nsis
 
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 1
-RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 1
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 50
+RUN update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-10 50
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 50
+RUN update-alternatives --set gcc /usr/bin/gcc-10
+RUN update-alternatives --set cc /usr/bin/gcc-10
+RUN update-alternatives --set g++ /usr/bin/g++-10
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
