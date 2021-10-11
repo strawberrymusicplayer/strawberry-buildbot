@@ -3,7 +3,7 @@
 
 This repository contains Strawberry's buildbot instance running on http://buildbot.strawberrymusicplayer.org/
 
-It contains the configration and Dockerfiles to build the master, volumes and workers.
+It contains the configuration and Dockerfiles to build the master, volumes and workers.
 
 
 Containers are built, started and stopped with docker-compose.
