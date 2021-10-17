@@ -26,7 +26,7 @@ RUN update-alternatives --set g++ /usr/bin/g++-10
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==3.3.0
+RUN pip3 install buildbot_worker==3.4.0
 
 RUN mkdir -p /tmp/lockedlist && wget https://nsis.sourceforge.io/mediawiki/images/d/d3/LockedList.zip --directory-prefix=/tmp/lockedlist
 RUN cd /tmp/lockedlist && unzip /tmp/lockedlist/LockedList.zip
