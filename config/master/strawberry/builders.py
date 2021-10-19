@@ -711,6 +711,7 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
     "libgstasfmux.dll",
     "libgstlibav.dll",
     "libgstopenmpt.dll",
+    "libgstdash.dll",
   ]
 
   gstreamer_plugins_files = []
