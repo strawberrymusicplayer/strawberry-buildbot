@@ -641,7 +641,6 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
     "gdb.exe",
     "gst-launch-1.0.exe",
     "gst-discoverer-1.0.exe",
-    "libfreetype-6.dll",
   ]
   extra_binary_files = []
   for i in extra_binary_fileslist:
