@@ -1,7 +1,7 @@
 {
   "linux": {
     "opensuse": ["lp153"],
-    "fedora": ["33", "34"],
+    "fedora": ["34", "35"],
     "centos": ["8"],
     "mageia": ["8"],
     "ubuntu": ["bionic", "focal", "hirsute", "impish"],
