@@ -62,22 +62,16 @@ class StrawberryBuildbot(object):
     self._AddBuilder(name='Source', worker='opensuse-lp153', build_factory=builders.MakeSourceBuilder())
 
     # AppImage.
-    #self._AddBuilder(name='AppImage Qt 5', worker='appimage-qt5', build_factory=builders.MakeAppImageBuilder(name="Qt5"))
-    #self._AddBuilder(name='AppImage Qt 6', worker='appimage-qt6', build_factory=builders.MakeAppImageBuilder(name="Qt6"))
+    #self._AddBuilder(name='AppImage', worker='appimage', build_factory=builders.MakeAppImageBuilder())
 
     # MXE.
     self._AddBuilder(name='MXE', worker='mingw', build_factory=builders.MakeMXEBuilder(), auto=False, deps_lock='exclusive')
 
     # Windows.
-    self._AddBuilder(name='Windows Release x86 Qt 5', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=False, is_64=False, with_qt6=False), deps_lock='counting')
-    self._AddBuilder(name='Windows Release x64 Qt 5', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=False, is_64=True, with_qt6=False), deps_lock='counting')
-    self._AddBuilder(name='Windows Debug x86 Qt 5', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=False, with_qt6=False), deps_lock='counting')
-    self._AddBuilder(name='Windows Debug x64 Qt 5', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=True, with_qt6=False), deps_lock='counting')
-
-    self._AddBuilder(name='Windows Release x86 Qt 6', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=False, is_64=False, with_qt6=True), deps_lock='counting')
-    self._AddBuilder(name='Windows Release x64 Qt 6', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=False, is_64=True, with_qt6=True), deps_lock='counting')
-    self._AddBuilder(name='Windows Debug x86 Qt 6', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=False, with_qt6=True), deps_lock='counting')
-    self._AddBuilder(name='Windows Debug x64 Qt 6', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=True, with_qt6=True), deps_lock='counting')
+    self._AddBuilder(name='Windows Release x86', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=False, is_64=False), deps_lock='counting')
+    self._AddBuilder(name='Windows Release x64', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=False, is_64=True), deps_lock='counting')
+    self._AddBuilder(name='Windows Debug x86', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=False), deps_lock='counting')
+    self._AddBuilder(name='Windows Debug x64', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=True), deps_lock='counting')
 
 
   def _AddBuilderAndWorker(self, distro, version, factory):

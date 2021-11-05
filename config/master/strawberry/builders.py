@@ -434,7 +434,7 @@ def MakePacmanBuilder(distro, version):
   return f
 
 
-def MakeAppImageBuilder(name):
+def MakeAppImageBuilder():
 
   git_args = GitArgs("strawberry", "master")
   git_args["mode"] = "full"
@@ -452,13 +452,11 @@ def MakeAppImageBuilder(name):
     )
   )
 
-  cmake_qt_flag = "-DBUILD_WITH_QT6=ON" if name == "Qt6" else "-DBUILD_WITH_QT5=ON"
-
   f.addStep(
     shell.ShellCommand(
       name="run cmake",
       workdir="source/build",
-      command=["cmake", "..", "-DCMAKE_INSTALL_PREFIX=/usr", cmake_qt_flag],
+      command=["cmake", "..", "-DCMAKE_INSTALL_PREFIX=/usr", "-DBUILD_WITH_QT6=ON"],
       haltOnFailure=True
     )
   )
@@ -603,10 +601,9 @@ def MakeMXEBuilder():
   return f
 
 
-def MakeWindowsBuilder(is_debug, is_64, with_qt6):
+def MakeWindowsBuilder(is_debug, is_64):
 
   mingw32_name = ("x86_64-w64-mingw32.shared" if is_64 else "i686-w64-mingw32.shared")
-  qt_dir = ("qt6" if with_qt6 else "qt5")
   mxe_path = "/persistent-data/mingw/mxe/source"
   target_path = mxe_path + "/usr/" + mingw32_name
 
@@ -625,10 +622,10 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
     "..",
     "-DCMAKE_TOOLCHAIN_FILE=/config/dist/" + ("Toolchain-x86_64-w64-mingw32.cmake" if is_64 else "Toolchain-i686-w64-mingw32.cmake"),
     "-DCMAKE_BUILD_TYPE=" + ("Debug" if is_debug else "Release"),
-    "-DCMAKE_PREFIX_PATH=" + target_path + "/" + qt_dir + "/lib/cmake",
+    "-DCMAKE_PREFIX_PATH=" + target_path + "/qt6/lib/cmake",
     "-DARCH=" + ("x86_64" if is_64 else "x86"),
     "-DENABLE_WIN32_CONSOLE=" + ("ON" if is_debug else "OFF"),
-    "-DQT_MAJOR_VERSION=" + ("6" if with_qt6 else "5"),
+    "-DQT_MAJOR_VERSION=6",
     "-DENABLE_DBUS=OFF",
     "-DENABLE_LIBGPOD=OFF",
     "-DENABLE_LIBMTP=OFF",
@@ -660,7 +657,7 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
   ]
   imageformats_files = []
   for i in imageformats_filelist:
-    imageformats_files.append(target_path + "/" + qt_dir + "/plugins/imageformats/" + i)
+    imageformats_files.append(target_path + "/qt6/plugins/imageformats/" + i)
 
   gstreamer_plugins_path = target_path + "/bin/gstreamer-1.0/"
   gstreamer_plugins_filelist = [
@@ -772,7 +769,7 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
     shell.ShellCommand(
       name="copy qwindows.dll",
       workdir="source/build/platforms",
-      command=[ "cp", target_path + "/" + qt_dir + "/plugins/platforms/qwindows.dll", "." ],
+      command=[ "cp", target_path + "/qt6/plugins/platforms/qwindows.dll", "." ],
       haltOnFailure=True
     )
   )
@@ -781,7 +778,7 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
     shell.ShellCommand(
       name="copy qt styles",
       workdir="source/build/styles",
-      command=[ "cp", target_path + "/" + qt_dir + "/plugins/styles/qwindowsvistastyle.dll", "." ],
+      command=[ "cp", target_path + "/qt6/plugins/styles/qwindowsvistastyle.dll", "." ],
       haltOnFailure=True
     )
   )
@@ -795,21 +792,20 @@ def MakeWindowsBuilder(is_debug, is_64, with_qt6):
     )
   )
 
-  if with_qt6:
-    f.addStep(
-      shell.ShellCommand(
-        name="copy qopensslbackend.dll",
-        workdir="source/build/tls",
-        command=[ "cp", target_path + "/" + qt_dir + "/plugins/tls/qopensslbackend.dll", ".", ],
-        haltOnFailure=True
-      )
+  f.addStep(
+    shell.ShellCommand(
+      name="copy qopensslbackend.dll",
+      workdir="source/build/tls",
+      command=[ "cp", target_path + "/qt6/plugins/tls/qopensslbackend.dll", ".", ],
+      haltOnFailure=True
     )
+  )
 
   f.addStep(
     shell.ShellCommand(
       name="copy qsqlite.dll",
       workdir="source/build/sqldrivers",
-      command=[ "cp", target_path + "/" + qt_dir + "/plugins/sqldrivers/qsqlite.dll", ".", ],
+      command=[ "cp", target_path + "/qt6/plugins/sqldrivers/qsqlite.dll", ".", ],
       haltOnFailure=True
     )
   )
