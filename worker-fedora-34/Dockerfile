@@ -1,7 +1,7 @@
 FROM fedora:34
 
-RUN yum update --assumeyes
-RUN yum upgrade --assumeyes
+RUN dnf update --assumeyes
+RUN dnf upgrade --assumeyes
 RUN dnf install --assumeyes \
     redhat-lsb-core \
     glibc gcc-c++ git tar rpmdevtools make cmake glib man gettext \
