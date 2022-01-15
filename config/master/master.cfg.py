@@ -24,6 +24,7 @@ LINUX_FACTORIES = {
   'fedora': functools.partial(builders.MakeRPMBuilder, 'fedora'),
   'mageia': functools.partial(builders.MakeRPMBuilder, 'mageia'),
   'centos': functools.partial(builders.MakeRPMBuilder, 'centos'),
+  'openmandriva': functools.partial(builders.MakeRPMBuilder, 'openmandriva'),
   'debian': functools.partial(builders.MakeDebBuilder, 'debian'),
   'ubuntu': functools.partial(builders.MakeDebBuilder, 'ubuntu'),
   'archlinux': functools.partial(builders.MakePacmanBuilder, 'archlinux'),

@@ -168,7 +168,7 @@ def MakeRPMBuilder(distro, version):
     )
   )
 
-  if not version in ['tumbleweed']:
+  if not version in ['tumbleweed'] and not version in ['cooker']:
 
     # Upload RPM package.
     f.addStep(
