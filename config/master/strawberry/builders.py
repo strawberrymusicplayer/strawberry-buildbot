@@ -638,6 +638,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     "gdb.exe",
     "gst-launch-1.0.exe",
     "gst-discoverer-1.0.exe",
+    "libsoup-3.0-0.dll",
   ]
   extra_binary_files = []
   for i in extra_binary_fileslist:
