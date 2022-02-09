@@ -583,16 +583,24 @@ def MakeAppImageBuilder():
   return f
 
 
-def MakeMXEBuilder():
+def MakeMXEBuilder(is_debug):
 
   f = factory.BuildFactory()
   f.addStep(git.Git(**GitArgs("strawberry-mxe", "master")))
+
+  env={}
+  if not is_debug:
+    env={
+      "CFLAGS": "-O3",
+      "CXXFLAGS": "-O3",
+    }
 
   f.addStep(
     shell.Compile(
       name="compile",
       workdir="source",
-      command=["make", "-j", MAKE_JOBS],
+      command=["make", "-j", MAKE_JOBS, "VERBOSE=1"],
+      env=env,
       timeout=108000,
       haltOnFailure=True,
     )
@@ -604,10 +612,16 @@ def MakeMXEBuilder():
 def MakeWindowsBuilder(is_debug, is_64):
 
   mingw32_name = ("x86_64-w64-mingw32.shared" if is_64 else "i686-w64-mingw32.shared")
-  mxe_path = "/persistent-data/mingw/mxe/source"
+  toolchain_file = "/config/dist/Toolchain-" + ("x86_64" if is_64 else "i686") + "-w64-mingw32-" + ("debug" if is_debug else "release") + ".cmake"
+
+  if is_debug:
+    mxe_path = "/persistent-data/mingw/mxe-debug/source"
+  else:
+    mxe_path = "/persistent-data/mingw/mxe-release/source"
+
   target_path = mxe_path + "/usr/" + mingw32_name
 
-  env = {
+  cmake_env = {
     "PKG_CONFIG_LIBDIR": target_path + "/lib/pkgconfig",
     "PATH": ":".join([
       mxe_path + "/usr/x86_64-pc-linux-gnu/bin",
@@ -617,10 +631,14 @@ def MakeWindowsBuilder(is_debug, is_64):
     ]),
   }
 
+  if not is_debug:
+    cmake_env["CFLAGS"] = "-O3"
+    cmake_env["CXXFLAGS"] = "-O3"
+
   cmake_cmd = [
     "cmake",
     "..",
-    "-DCMAKE_TOOLCHAIN_FILE=/config/dist/" + ("Toolchain-x86_64-w64-mingw32.cmake" if is_64 else "Toolchain-i686-w64-mingw32.cmake"),
+    "-DCMAKE_TOOLCHAIN_FILE=" + toolchain_file,
     "-DCMAKE_BUILD_TYPE=" + ("Debug" if is_debug else "Release"),
     "-DCMAKE_PREFIX_PATH=" + target_path + "/qt6/lib/cmake",
     "-DARCH=" + ("x86_64" if is_64 else "x86"),
@@ -634,12 +652,16 @@ def MakeWindowsBuilder(is_debug, is_64):
   strip_cmd = mxe_path + "/usr/bin/" + mingw32_name + "-strip"
 
   extra_binary_fileslist = [
+    "libsoup-3.0-0.dll",
     "sqlite3.exe",
-    "gdb.exe",
     "gst-launch-1.0.exe",
     "gst-discoverer-1.0.exe",
-    "libsoup-3.0-0.dll",
   ]
+
+  if is_debug:
+    extra_binary_fileslist.append("gdb.exe")
+    extra_binary_fileslist.append("libmpfr-6.dll")
+
   extra_binary_files = []
   for i in extra_binary_fileslist:
     extra_binary_files.append(target_path + "/bin/" + i)
@@ -725,14 +747,14 @@ def MakeWindowsBuilder(is_debug, is_64):
       name="run cmake",
       workdir="source/build",
       command=cmake_cmd,
-      env=env,
+      env=cmake_env,
       haltOnFailure=True
     )
   )
   f.addStep(
     shell.Compile(
       name="compile",
-      command=[ "make", "-j", MAKE_JOBS ],
+      command=[ "make", "-j", MAKE_JOBS, "VERBOSE=1" ],
       workdir="source/build",
       haltOnFailure=True
     )

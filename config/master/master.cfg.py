@@ -66,7 +66,8 @@ class StrawberryBuildbot(object):
     #self._AddBuilder(name='AppImage', worker='appimage', build_factory=builders.MakeAppImageBuilder())
 
     # MXE.
-    self._AddBuilder(name='MXE', worker='mingw', build_factory=builders.MakeMXEBuilder(), auto=False, deps_lock='exclusive')
+    self._AddBuilder(name='MXE Release', worker='mingw', build_factory=builders.MakeMXEBuilder(is_debug=False), auto=False, deps_lock='exclusive')
+    self._AddBuilder(name='MXE Debug', worker='mingw', build_factory=builders.MakeMXEBuilder(is_debug=True), auto=False, deps_lock='exclusive')
 
     # Windows.
     self._AddBuilder(name='Windows Release x86', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=False, is_64=False), deps_lock='counting')
@@ -149,7 +150,8 @@ class StrawberryBuildbot(object):
           change_filter=filter.ChangeFilter(project="strawberry-mxe", branch="master"),
           treeStableTimer=2*60,
           builderNames=[
-            'MXE',
+            'MXE Release',
+            'MXE Debug',
           ],
         ),
         forcesched.ForceScheduler(
