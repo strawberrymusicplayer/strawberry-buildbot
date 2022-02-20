@@ -656,6 +656,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     "sqlite3.exe",
     "gst-launch-1.0.exe",
     "gst-discoverer-1.0.exe",
+    "libreadline8.dll",
   ]
 
   if is_debug:
