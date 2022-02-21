@@ -734,6 +734,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     "libgstopenmpt.dll",
     "libgstdash.dll",
     "libgstxingmux.dll",
+    "libgstmpg123.dll",
   ]
 
   gstreamer_plugins_files = []
