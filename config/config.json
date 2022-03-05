@@ -6,7 +6,7 @@
     "mageia": ["8"],
     "openmandriva": ["cooker", "lx42"],
     "debian": ["buster", "bullseye", "bookworm"],
-    "ubuntu": ["bionic", "focal", "hirsute", "impish", "jammy"]
+    "ubuntu": ["bionic", "focal", "impish", "jammy"]
   },
  "special_workers": [
     "mingw"
