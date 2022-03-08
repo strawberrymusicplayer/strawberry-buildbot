@@ -652,11 +652,12 @@ def MakeWindowsBuilder(is_debug, is_64):
   strip_cmd = mxe_path + "/usr/bin/" + mingw32_name + "-strip"
 
   extra_binary_fileslist = [
-    "libsoup-3.0-0.dll",
+    "libsoup-2.4-1.dll",
     "sqlite3.exe",
     "gst-launch-1.0.exe",
     "gst-discoverer-1.0.exe",
     "libreadline8.dll",
+    "libnghttp2.dll",
   ]
 
   if is_debug:
