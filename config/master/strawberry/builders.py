@@ -789,9 +789,9 @@ def MakeWindowsBuilder(is_debug, is_64):
 
   f.addStep(
     shell.ShellCommand(
-      name="copy libgiognutls.dll",
+      name="copy libgiognutls.dll and libgioopenssl.dll",
       workdir="source/build/gio-modules",
-      command=[ "cp", target_path + "/lib/gio/modules/libgiognutls.dll", "." ],
+      command=[ "cp", target_path + "/lib/gio/modules/libgiognutls.dll", target_path + "/lib/gio/modules/libgioopenssl.dll", "." ],
       haltOnFailure=True
     )
   )
