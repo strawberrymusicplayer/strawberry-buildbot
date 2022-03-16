@@ -672,6 +672,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     "strawberry.nsi",
     "Capabilities.nsh",
     "FileAssociation.nsh",
+    "Registry.nsh",
     "strawberry.ico",
   ]
 
