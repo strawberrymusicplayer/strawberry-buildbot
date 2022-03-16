@@ -13,7 +13,7 @@ RUN apt-get install -y \
                     python3-pip python3-dev
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==3.4.0
+RUN pip3 install buildbot_worker==3.5.0
 
 RUN echo "debian-bookworm" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot

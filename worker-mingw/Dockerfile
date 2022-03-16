@@ -28,7 +28,11 @@ RUN update-alternatives --set g++ /usr/bin/g++-10
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==3.4.0
+RUN pip3 install buildbot_worker==3.5.0
+
+# Patch meson
+RUN cd /tmp && wget https://patch-diff.githubusercontent.com/raw/mesonbuild/meson/pull/9841.patch
+RUN cd /usr/lib/python3.6/site-packages && patch -p1 < /tmp/9841.patch
 
 RUN mkdir -p /tmp/lockedlist && wget https://nsis.sourceforge.io/mediawiki/images/d/d3/LockedList.zip --directory-prefix=/tmp/lockedlist
 RUN cd /tmp/lockedlist && unzip /tmp/lockedlist/LockedList.zip

@@ -13,7 +13,7 @@ RUN dnf install --assumeyes \
 RUN cp /usr/bin/gtar /bin/tar
 
 RUN pip install --upgrade pip
-RUN pip install buildbot_worker==3.4.0
+RUN pip install buildbot_worker==3.5.0
 
 RUN echo "openmandriva-lx42" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot
