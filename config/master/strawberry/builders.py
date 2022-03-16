@@ -771,7 +771,7 @@ def MakeWindowsBuilder(is_debug, is_64):
 
   f.addStep(
     shell.ShellCommand(
-      name="mkdir platforms/sqldrivers/imageformats/styles/gstreamer-plugins/nsisplugins",
+      name="Create sub-directories",
       workdir="source/build",
       command=[
         "mkdir",
