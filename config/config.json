@@ -3,7 +3,7 @@
     "fedora": ["34", "35", "36"],
     "opensuse": ["lp153", "lp154", "tumbleweed"],
     "mageia": ["8"],
-    "openmandriva": ["cooker", "lx42"],
+    "openmandriva": ["lx42"],
     "debian": ["buster", "bullseye", "bookworm"],
     "ubuntu": ["bionic", "focal", "impish", "jammy"]
   },
