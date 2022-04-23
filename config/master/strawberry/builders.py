@@ -828,9 +828,9 @@ def MakeWindowsBuilder(is_debug, is_64):
 
   f.addStep(
     shell.ShellCommand(
-      name="copy qopensslbackend.dll",
+      name="copy qt tls",
       workdir="source/build/tls",
-      command=[ "cp", target_path + "/qt6/plugins/tls/qopensslbackend.dll", ".", ],
+      command=[ "cp", target_path + "/qt6/plugins/tls/qschannelbackend.dll", target_path + "/qt6/plugins/tls/qopensslbackend.dll", ".", ],
       haltOnFailure=True
     )
   )
