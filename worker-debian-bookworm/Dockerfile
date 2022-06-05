@@ -3,7 +3,7 @@ FROM debian:bookworm
 RUN apt-get -y update
 RUN apt-get -y upgrade
 RUN apt-get install -y \
-                    git make cmake gcc fakeroot gettext lsb-release dput build-essential dh-make \
+                    git make cmake gcc g++ fakeroot gettext lsb-release dput build-essential dh-make \
                     libboost-dev libglib2.0-dev dpkg-dev libdbus-1-dev libprotobuf-dev protobuf-compiler libsqlite3-dev libgnutls28-dev \
                     libasound2-dev libpulse-dev \
                     qt6-base-dev qt6-base-dev-tools qt6-tools-dev qt6-tools-dev-tools qt6-l10n-tools \
