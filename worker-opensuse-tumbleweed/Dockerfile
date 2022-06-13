@@ -6,7 +6,7 @@ RUN zypper -n --gpg-auto-import-keys ref
 RUN zypper -n --gpg-auto-import-keys dup -l -y
 
 RUN zypper -n --gpg-auto-import-keys install \
-    lsb-release rpm-build \
+    shadow lsb-release rpm-build \
     git make cmake gcc gcc-c++ tar gettext-tools \
     glibc-devel glib2-devel glib2-tools dbus-1-devel libgnutls-devel alsa-devel libpulse-devel libnotify-devel \
     boost-devel libboost_headers-devel protobuf-devel sqlite3-devel fftw3-devel taglib-devel \
