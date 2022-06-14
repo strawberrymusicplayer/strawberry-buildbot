@@ -4,7 +4,7 @@ RUN dnf update --assumeyes
 RUN dnf upgrade --assumeyes
 RUN dnf install --assumeyes \
     redhat-lsb-core \
-    glibc gcc-c++ git tar rpmdevtools make cmake glib man gettext \
+    glibc gcc-c++ which git tar rpmdevtools make cmake glib man gettext \
     boost-devel dbus-devel protobuf-devel protobuf-compiler sqlite-devel alsa-lib-devel pulseaudio-libs-devel libnotify-devel gnutls-devel \
     qt6-qtbase-devel qt6-qtbase-private-devel qt6-qttools-devel \
     gstreamer1-devel gstreamer1-plugins-base-devel \
