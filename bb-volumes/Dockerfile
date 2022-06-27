@@ -1,4 +1,4 @@
-FROM opensuse/leap:15.3
+FROM opensuse/leap:15.4
 
 VOLUME ["/persistent-data"]
 
