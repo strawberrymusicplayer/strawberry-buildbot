@@ -1,11 +1,13 @@
 FROM opensuse/leap:15.4
 
+RUN zypper -n ar -c -f -n 'repo-python' https://download.opensuse.org/repositories/devel:/languages:/python/15.4/ repo-python
+
 RUN zypper --non-interactive --gpg-auto-import-keys ref
 RUN zypper --non-interactive --gpg-auto-import-keys up -l -y
-RUN zypper --non-interactive --gpg-auto-import-keys install git gcc python3-pip python3-devel libcairo2 cairo-tools python3-cairo
+RUN zypper --non-interactive --gpg-auto-import-keys install shadow libcairo2 cairo-tools python3-pip python3-devel python3-cairo python3-wheel python3-requests python3-SQLAlchemy
 
 RUN pip3 install --upgrade pip
-RUN pip3 install pycairo requests buildbot==3.5.0 buildbot-www==3.5.0 buildbot-waterfall-view==3.5.0 buildbot-console-view==3.5.0 buildbot-grid-view==3.5.0 buildbot-badges sqlalchemy
+RUN pip3 install buildbot==3.5.0 buildbot-www==3.5.0 buildbot-waterfall-view==3.5.0 buildbot-console-view==3.5.0 buildbot-grid-view==3.5.0 buildbot-badges sqlalchemy
 
 RUN useradd -r -s /bin/false buildbot
 
