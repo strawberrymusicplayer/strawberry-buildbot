@@ -1,11 +1,11 @@
 {
   "linux": {
-    "fedora": ["34", "35", "36", "37"],
+    "fedora": ["34", "35", "36"],
     "opensuse": ["lp153", "lp154", "tumbleweed"],
     "mageia": ["8"],
     "openmandriva": ["lx42"],
     "debian": ["buster", "bullseye", "bookworm"],
-    "ubuntu": ["bionic", "focal", "impish", "jammy"]
+    "ubuntu": ["bionic", "focal", "impish", "jammy", "kinetic"]
   },
  "special_workers": [
     "mingw"
