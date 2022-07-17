@@ -5,7 +5,7 @@ RUN zypper -n --gpg-auto-import-keys up -l -y
 
 RUN zypper -n --gpg-auto-import-keys install \
     lsb-release rpm-build rpmdevtools \
-    git make cmake gcc gcc-c++ tar gettext-tools \
+    git make cmake gcc11 gcc11-c++ tar gettext-tools \
     glibc-devel glib2-devel glib2-tools dbus-1-devel alsa-devel libpulse-devel libnotify-devel libgnutls-devel \
     boost-devel protobuf-devel sqlite3-devel taglib-devel \
     qt6-core-devel qt6-gui-devel qt6-gui-private-devel qt6-widgets-devel qt6-concurrent-devel qt6-network-devel \
@@ -14,6 +14,15 @@ RUN zypper -n --gpg-auto-import-keys install \
     libcdio-devel libgpod-devel libplist-devel libmtp-devel libusbmuxd-devel libchromaprint-devel \
     desktop-file-utils update-desktop-files appstream-glib hicolor-icon-theme \
     python3-base python3-devel python3-pip
+
+RUN update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-11 50
+RUN update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-11 50
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 50
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 50
+RUN update-alternatives --set cc /usr/bin/gcc-11
+RUN update-alternatives --set c++ /usr/bin/g++-11
+RUN update-alternatives --set gcc /usr/bin/gcc-11
+RUN update-alternatives --set g++ /usr/bin/g++-11
 
 RUN pip3 install --upgrade pip
 RUN pip3 install buildbot_worker==3.5.0
