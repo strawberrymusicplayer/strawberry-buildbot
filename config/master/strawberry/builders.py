@@ -743,7 +743,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     "libgstwavpack.dll",
     "libgstwavparse.dll",
     "libgstxingmux.dll",
-    "ibgsttwolame.dll",
+    "libgsttwolame.dll",
   ]
 
   gstreamer_plugins_files = []
