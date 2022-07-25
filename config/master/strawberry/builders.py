@@ -647,6 +647,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     "-DENABLE_DBUS=OFF",
     "-DENABLE_LIBGPOD=OFF",
     "-DENABLE_LIBMTP=OFF",
+    "-DENABLE_AUDIOCD=OFF",
   ]
 
   strip_cmd = mxe_path + "/usr/bin/" + mingw32_name + "-strip"
