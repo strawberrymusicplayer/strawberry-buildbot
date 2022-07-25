@@ -740,6 +740,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     "libgstvolume.dll",
     "libgstvorbis.dll",
     "libgstwasapi.dll",
+    "libgstwavenc.dll",
     "libgstwavpack.dll",
     "libgstwavparse.dll",
     "libgstxingmux.dll",
