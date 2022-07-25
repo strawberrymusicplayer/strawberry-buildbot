@@ -702,7 +702,6 @@ def MakeWindowsBuilder(is_debug, is_64):
     "libgstaudiotestsrc.dll",
     "libgstautodetect.dll",
     "libgstbs2b.dll",
-    "libgstcdio.dll",
     "libgstcoreelements.dll",
     "libgstdash.dll",
     "libgstdirectsound.dll",
@@ -715,6 +714,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     "libgsthls.dll",
     "libgsticydemux.dll",
     "libgstid3demux.dll",
+    "libgstid3tag.dll",
     "libgstisomp4.dll",
     "libgstlame.dll",
     "libgstlibav.dll",
@@ -726,7 +726,6 @@ def MakeWindowsBuilder(is_debug, is_64):
     "libgstopusparse.dll",
     "libgstpbtypes.dll",
     "libgstplayback.dll",
-    "libgstremovesilence.dll",
     "libgstreplaygain.dll",
     "libgstrtp.dll",
     "libgstrtsp.dll",
@@ -735,6 +734,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     "libgstspeex.dll",
     "libgsttaglib.dll",
     "libgsttcp.dll",
+    "libgsttwolame.dll",
     "libgsttypefindfunctions.dll",
     "libgstudp.dll",
     "libgstvolume.dll",
@@ -743,7 +743,6 @@ def MakeWindowsBuilder(is_debug, is_64):
     "libgstwavpack.dll",
     "libgstwavparse.dll",
     "libgstxingmux.dll",
-    "libgsttwolame.dll",
   ]
 
   gstreamer_plugins_files = []
