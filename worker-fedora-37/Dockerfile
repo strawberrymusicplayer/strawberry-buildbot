@@ -9,7 +9,7 @@ RUN dnf install --assumeyes \
     qt6-qtbase-devel qt6-qtbase-private-devel qt6-qttools-devel \
     gstreamer1-devel gstreamer1-plugins-base-devel \
     libcdio-devel libgpod-devel libplist-devel libusbmuxd-devel libmtp-devel \
-    taglib-devel libchromaprint-devel fftw-devel \
+    taglib-devel libchromaprint-devel fftw-devel libicu-devel \
     dbus-x11 xorg-x11-server-Xvfb xorg-x11-xauth \
     desktop-file-utils libappstream-glib hicolor-icon-theme \
     python3 python3-devel python3-pip

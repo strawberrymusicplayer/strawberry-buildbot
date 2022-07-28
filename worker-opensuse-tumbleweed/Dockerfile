@@ -9,7 +9,7 @@ RUN zypper -n --gpg-auto-import-keys install \
     shadow lsb-release rpm-build \
     git make cmake gcc gcc-c++ tar gettext-tools \
     glibc-devel glib2-devel glib2-tools dbus-1-devel libgnutls-devel alsa-devel libpulse-devel libnotify-devel \
-    boost-devel libboost_headers-devel protobuf-devel sqlite3-devel fftw3-devel taglib-devel \
+    boost-devel libboost_headers-devel protobuf-devel sqlite3-devel fftw3-devel taglib-devel libicu-devel \
     qt6-core-devel qt6-gui-devel qt6-gui-private-devel qt6-widgets-devel qt6-concurrent-devel qt6-network-devel \
     qt6-sql-devel qt6-dbus-devel qt6-test-devel qt6-base-common-devel qt6-sql-sqlite qt6-linguist-devel \
     gstreamer-devel gstreamer-plugins-base-devel vlc-devel \

@@ -6,7 +6,7 @@ RUN apt-get -y upgrade
 RUN apt-get install -y \
                     git make cmake gcc g++ fakeroot wget curl gettext lsb-release dput build-essential dh-make \
                     dpkg-dev libglib2.0-dev libdbus-1-dev \
-                    libboost-dev libprotobuf-dev protobuf-compiler libsqlite3-dev libgnutls28-dev \
+                    libboost-dev libprotobuf-dev protobuf-compiler libsqlite3-dev libgnutls28-dev libicu-dev \
                     libasound2-dev libpulse-dev \
                     qtbase5-dev qtbase5-private-dev qtbase5-dev-tools qttools5-dev libqt5x11extras5-dev \
                     libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev \

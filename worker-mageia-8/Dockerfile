@@ -43,6 +43,7 @@ RUN urpmi --auto --force urpmi-debuginfo-install \
                   libgnutls-devel \
                   libfftw-devel \
                   lib64mesaegl1 \
+                  lib64icu-devel \
                   notification-daemon \
                   protobuf-compiler \
                   dbus-devel \
