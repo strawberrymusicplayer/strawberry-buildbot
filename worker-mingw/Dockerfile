@@ -2,6 +2,7 @@ FROM opensuse/leap:15.4
 
 RUN zypper -n ar -c -f -n 'repo-devel-tools-building' https://download.opensuse.org/repositories/devel:/tools:/building/15.4/ repo-devel-tools-building
 RUN zypper -n ar -c -f -n 'repo-mingw' https://download.opensuse.org/repositories/windows:/mingw:/win32/openSUSE_Leap_15.4/ repo-mingw
+RUN zypper -n ar -c -f -n 'repo-nsis' https://download.opensuse.org/repositories/home:/jonaski:/branches:/windows:/mingw:/win32/openSUSE_Leap_15.4/ repo-nsis
 
 RUN zypper -n --gpg-auto-import-keys ref
 RUN zypper -n --gpg-auto-import-keys up -l -y
@@ -13,8 +14,9 @@ RUN zypper -n --gpg-auto-import-keys install \
     tar gzip bzip2 xz p7zip p7zip-full lzip zip unzip \
     gtk-doc gettext-tools scons bison flex ruby orc \
     linux-glibc-devel glibc-devel file-devel libopenssl-devel libffi-devel gdk-pixbuf-devel libzstd-devel pcre2-devel \
-    python3-base python3-devel python3-pip python3-Mako \
-    mingw32-cross-nsis
+    python3-base python3-devel python3-pip python3-Mako
+
+RUN zypper -n --gpg-auto-import-keys in -r repo-nsis mingw32-cross-nsis
 
 RUN update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-10 50
 RUN update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-10 50
