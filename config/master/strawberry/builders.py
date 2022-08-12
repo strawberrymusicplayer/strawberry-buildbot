@@ -712,6 +712,7 @@ def MakeWindowsBuilder(is_debug, is_64):
     "libgstfdkaac.dll",
     "libgstflac.dll",
     "libgstgio.dll",
+    "libgstgme.dll",
     "libgsthls.dll",
     "libgsticydemux.dll",
     "libgstid3demux.dll",
