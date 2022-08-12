@@ -70,9 +70,9 @@ class StrawberryBuildbot(object):
     self._AddBuilder(name='MXE Debug', worker='mingw', build_factory=builders.MakeMXEBuilder(is_debug=True), auto=False, deps_lock='exclusive')
 
     # Windows.
-    #self._AddBuilder(name='Windows Release x86', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=False, is_64=False), deps_lock='counting')
+    self._AddBuilder(name='Windows Release x86', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=False, is_64=False), deps_lock='counting')
     self._AddBuilder(name='Windows Release x64', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=False, is_64=True), deps_lock='counting')
-    #self._AddBuilder(name='Windows Debug x86', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=False), deps_lock='counting')
+    self._AddBuilder(name='Windows Debug x86', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=False), deps_lock='counting')
     self._AddBuilder(name='Windows Debug x64', worker='mingw', build_factory=builders.MakeWindowsBuilder(is_debug=True, is_64=True), deps_lock='counting')
 
 
