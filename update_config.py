@@ -33,7 +33,7 @@ def CreatePassword():
 
 def WriteComposeYaml():
   compose = {
-    'version': '3.3',
+    'version': '3.9',
     'volumes': {
       'persistent-data'
     },
