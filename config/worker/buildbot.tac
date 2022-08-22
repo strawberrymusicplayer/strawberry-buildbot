@@ -18,13 +18,9 @@ from twisted.python.log import ILogObserver, FileLogObserver
 logfile = LogFile.fromFullPath(os.path.join(basedir, "twistd.log"), rotateLength=rotateLength, maxRotatedFiles=maxRotatedFiles)
 application.setComponent(ILogObserver, FileLogObserver(logfile).emit)
 
-buildmaster_host = os.environ['MASTER_PORT_9989_TCP_ADDR']
-port = int(os.environ['MASTER_PORT_9989_TCP_PORT'])
+buildmaster_host = 'master'
+port = 9989
 passwd = PASSWORDS[workername]
-
-#buildmaster_host = 'localhost'
-#port = 42012
-#passwd = 'password'
 keepalive = 600
 umask = 0o22
 maxdelay = 300
