@@ -28,7 +28,7 @@ RUN update-alternatives --set g++ /usr/bin/g++-10
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==3.5.0
+RUN pip3 install buildbot_worker==3.6.0
 
 # Patch meson
 RUN cd /tmp && wget https://patch-diff.githubusercontent.com/raw/mesonbuild/meson/pull/9841.patch
