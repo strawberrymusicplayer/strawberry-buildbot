@@ -599,7 +599,7 @@ def MakeMXEBuilder(is_debug):
     shell.Compile(
       name="compile",
       workdir="source",
-      command=["make", "-j", MAKE_JOBS, "MXE_BUILD_TYPE=" + ("Debug" if is_debug else "Release"), "VERBOSE=1"],
+      command=["make", "-j", MAKE_JOBS, "MXE_BUILD_TYPE=" + ("Debug" if is_debug else "Release"), "MXE_VERBOSE=1"],
       env=env,
       timeout=108000,
       haltOnFailure=True,
