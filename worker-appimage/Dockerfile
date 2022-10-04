@@ -30,7 +30,7 @@ RUN zypper -n --gpg-auto-import-keys install \
 RUN zypper -n --gpg-auto-import-keys dup -l -y --from repo-qt6 --allow-vendor-change
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==3.6.0
+RUN pip3 install buildbot_worker==3.6.1
 
 RUN echo "appimage-qt6" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot

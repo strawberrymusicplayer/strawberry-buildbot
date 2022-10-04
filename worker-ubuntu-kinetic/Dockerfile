@@ -15,7 +15,7 @@ RUN apt-get install -y \
                     python3-pip python3-dev
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==3.6.0
+RUN pip3 install buildbot_worker==3.6.1
 
 RUN echo "ubuntu-kinetic" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot
