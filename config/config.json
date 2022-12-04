@@ -1,6 +1,6 @@
 {
   "linux": {
-    "fedora": ["36", "37"],
+    "fedora": ["36", "37", "38"],
     "opensuse": ["lp154", "tumbleweed"],
     "mageia": ["8"],
     "openmandriva": ["lx42"],
