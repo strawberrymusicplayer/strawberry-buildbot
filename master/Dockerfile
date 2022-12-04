@@ -7,7 +7,7 @@ RUN zypper --non-interactive --gpg-auto-import-keys up -l -y
 RUN zypper --non-interactive --gpg-auto-import-keys install shadow git python3-pip python3-devel python3-cairo python3-wheel python3-requests python3-SQLAlchemy python3-service_identity
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot==3.6.1 buildbot-www==3.6.1 buildbot-waterfall-view==3.6.1 buildbot-console-view==3.6.1 buildbot-grid-view==3.6.1 buildbot-badges
+RUN pip3 install buildbot==3.7.0 buildbot-www==3.7.0 buildbot-waterfall-view==3.7.0 buildbot-console-view==3.7.0 buildbot-grid-view==3.7.0 buildbot-badges
 
 RUN useradd -r -s /bin/false buildbot
 
