@@ -23,4 +23,6 @@ RUN useradd -r -m -s /bin/false buildbot
 RUN mkdir -p /home/buildbot/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS} && \
     chown buildbot /home/buildbot/rpmbuild/{,BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
+RUN rm -rf /usr/lib64/cmake/Qt6Sql/{Qt6QMYSQL*,Qt6QODBCD*,Qt6QPSQL*}
+
 CMD ["/usr/bin/python3", "/config/worker/start.py"]
