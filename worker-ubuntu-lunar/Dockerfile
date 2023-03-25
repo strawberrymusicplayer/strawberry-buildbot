@@ -11,12 +11,8 @@ RUN apt install -y git make cmake gcc g++ fakeroot wget curl gettext lsb-release
                    libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev \
                    libtag1-dev libchromaprint-dev libfftw3-dev \
                    libcdio-dev libmtp-dev libgpod-dev libimobiledevice-dev libplist-dev libusbmuxd-dev \
-                   python3-pip python3-dev
-
-RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==3.7.0
+                   buildbot-worker
 
 RUN echo "ubuntu-lunar" > /worker-name
-RUN useradd -r -m -s /bin/false buildbot
 
 CMD ["/usr/bin/python3", "/config/worker/start.py"]
