@@ -928,6 +928,7 @@ def MakeWindowsBuilder(is_debug, is_64):
       name="run makensis",
       command=[ "makensis", "strawberry.nsi" ],
       workdir="source/build",
+      timeout=2400,
       haltOnFailure=True
     )
   )
