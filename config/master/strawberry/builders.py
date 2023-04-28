@@ -14,7 +14,7 @@ from buildbot.steps.source import git
 
 UPLOADBASE = "/srv/www/htdocs/builds"
 UPLOADURL = "https://builds.strawberrymusicplayer.org"
-MAKE_JOBS = '4'
+MAKE_JOBS = '1'
 
 def GitBaseUrl(repository):
   return "https://github.com/strawberrymusicplayer/%s.git" % repository
