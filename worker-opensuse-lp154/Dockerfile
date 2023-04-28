@@ -25,7 +25,7 @@ RUN update-alternatives --set gcc /usr/bin/gcc-11
 RUN update-alternatives --set g++ /usr/bin/g++-11
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==3.7.0
+RUN pip3 install buildbot_worker==3.8.0
 
 RUN echo "opensuse-lp154" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot

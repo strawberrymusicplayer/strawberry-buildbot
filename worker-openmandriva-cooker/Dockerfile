@@ -13,7 +13,7 @@ RUN dnf install --assumeyes \
 RUN cp /usr/bin/gtar /bin/tar
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==3.7.0
+RUN pip3 install buildbot_worker==3.8.0
 
 RUN echo "openmandriva-cooker" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot

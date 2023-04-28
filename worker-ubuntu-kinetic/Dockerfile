@@ -14,7 +14,7 @@ RUN apt install -y git make cmake gcc g++ fakeroot wget curl gettext lsb-release
                    python3-pip python3-dev
 
 RUN pip3 install --upgrade pip
-RUN pip3 install buildbot_worker==3.7.0
+RUN pip3 install buildbot_worker==3.8.0
 
 RUN echo "ubuntu-kinetic" > /worker-name
 RUN useradd -r -m -s /bin/false buildbot
