@@ -5,7 +5,7 @@
     "mageia": ["8"],
     "openmandriva": ["lx42"],
     "debian": ["buster", "bullseye", "bookworm"],
-    "ubuntu": ["bionic", "focal", "jammy", "kinetic", "lunar"]
+    "ubuntu": ["focal", "jammy", "kinetic", "lunar"]
   },
  "special_workers": [
     "mingw"
