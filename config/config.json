@@ -4,7 +4,7 @@
     "opensuse": ["lp154", "lp155", "tumbleweed"],
     "mageia": ["8"],
     "openmandriva": ["lx42"],
-    "debian": ["buster", "bullseye", "bookworm"],
+    "debian": ["bullseye", "bookworm"],
     "ubuntu": ["focal", "jammy", "kinetic", "lunar"]
   },
  "special_workers": [
