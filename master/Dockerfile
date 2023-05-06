@@ -1,9 +1,9 @@
-FROM opensuse/leap:15.4
+FROM opensuse/tumbleweed
 
-RUN zypper -n ar -c -f -n 'repo-python' https://download.opensuse.org/repositories/devel:/languages:/python/15.4/ repo-python
+RUN zypper -n ar -c -f -n 'repo-python' https://download.opensuse.org/repositories/devel:/languages:/python/openSUSE_Tumbleweed/ repo-python
 
 RUN zypper --non-interactive --gpg-auto-import-keys ref
-RUN zypper --non-interactive --gpg-auto-import-keys up -l -y
+RUN zypper --non-interactive --gpg-auto-import-keys dup -l -y
 RUN zypper --non-interactive --gpg-auto-import-keys install shadow git python3-pip python3-devel python3-cairo python3-wheel python3-requests python3-SQLAlchemy python3-service_identity
 
 RUN pip3 install --upgrade pip
