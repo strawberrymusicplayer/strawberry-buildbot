@@ -895,6 +895,16 @@ def MakeWindowsBuilder(is_debug, is_64):
     )
   )
 
+  if is_debug:
+    f.addStep(
+      shell.ShellCommand(
+        name="run strip on gdb.exe",
+        workdir="source/build",
+        command=[ strip_cmd, "gdb.exe" ],
+        haltOnFailure=True
+      )
+    )
+
   if not is_debug:
     f.addStep(
       shell.ShellCommand(
