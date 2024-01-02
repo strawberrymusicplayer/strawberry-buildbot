@@ -1,7 +1,6 @@
 FROM openmandriva/cooker
 
-RUN dnf update --assumeyes
-RUN dnf upgrade --assumeyes
+RUN dnf distro-sync --assumeyes
 RUN dnf install --assumeyes \
     glibc gcc-c++ git gnutar make cmake glib gettext lsb-release rpmdevtools rpm-build \
     glibc-devel boost-devel dbus-devel protobuf-devel protobuf-compiler sqlite-devel libasound-devel pulseaudio-devel gnutls-devel lib64GL-devel \
